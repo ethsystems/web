@@ -1,16 +1,17 @@
 ---
 import Guide from '../../layouts/Guide.astro';
-import { getNodesByType, getRelated } from '../../lib/data';
+import { getNodesByType, getRelated, getApproachesForDomain } from '../../lib/data';
 
 const domains = getNodesByType('domain').sort((a, b) => a.title.localeCompare(b.title));
 const base = import.meta.env.BASE_URL;
 
-// Gather stats per domain
+// Gather stats per domain. Case-study count is transitive:
+// domain -> use-case <- approach (via `addresses` edge).
 const domainsWithStats = domains.map(d => {
   const related = getRelated(d.id);
   return {
     ...d,
-    approachCount: related.approaches.length,
+    approachCount: getApproachesForDomain(d.id).length,
     patternCount: related.patterns.length,
     vendorCount: related.vendors.length,
   };

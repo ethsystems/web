@@ -1,16 +1,17 @@
 ---
-import { getNodesByType, getRelated, getEdgesFrom, getEdgesTo, getNodeById } from '../lib/data';
+import { getNodesByType, getRelated, getEdgesFrom, getEdgesTo, getNodeById, getApproachesForDomain } from '../lib/data';
+import { getRecentPosts, formatPostDate } from '../lib/posts';
 
 const base = import.meta.env.BASE_URL;
+const recentPosts = getRecentPosts(3);
 
 // ── Dynamic data ──
 const approaches = getNodesByType('approach');
 const domains = getNodesByType('domain');
 
-// Count approaches (and other related nodes) per domain
+// Count approaches per domain transitively (domain -> use-case <- approach).
 function countApproachesForDomain(domainId: string): number {
-  const related = getRelated(domainId);
-  return related.approaches.length;
+  return getApproachesForDomain(domainId).length;
 }
 
 // Map context value to badge class & label
@@ -40,8 +41,8 @@ function contextBadge(ctx?: string) {
     <div class="nav-inner">
       <a href="/" class="nav-brand"><div class="nav-mark"></div> IPTF</a>
       <div class="nav-links">
-        <a href="/">About</a>
-        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="https://iptf.ethereum.org/blog/">Blog</a>
       </div>
     </div>
   </header>
@@ -49,7 +50,7 @@ function contextBadge(ctx?: string) {
   <!-- HERO -->
   <section class="hero">
     <div class="hero-eyebrow">Ethereum Foundation &middot; Privacy Cluster</div>
-    <h1>Privacy for <span class="cycle-wrap"><em class="cycle" data-words="Institutions,Non-Profits,NGOs,Humanitarian Orgs,DAO Treasuries,Family Offices,Research Collectives,Govtech">Institutions</em><span class="cycle-sizer" aria-hidden="true">Research Collectives</span></span><br>on Ethereum</h1>
+    <h1>Privacy for <span class="cycle-wrap"><em class="cycle" data-words="Institutions,Non-Profits,NGOs,DAO Treasuries,Family Offices,Research Collectives,Govtech">Institutions</em><span class="cycle-sizer" aria-hidden="true">Research Collectives</span></span><br>on Ethereum</h1>
     <p class="hero-desc">We bridge institutions and the Ethereum privacy ecosystem. From requirements to deployable solutions.</p>
     <a href="#case-studies" class="hero-cta">
       Explore case studies
@@ -227,6 +228,39 @@ function contextBadge(ctx?: string) {
         </div>
       </div>
     </section>
+
+    <!-- BLOG PREVIEWS -->
+    {recentPosts.length > 0 && (
+      <section class="blog-section">
+        <div class="blog-inner">
+          <div class="blog-head">
+            <div>
+              <div class="s-label">Latest posts</div>
+            </div>
+            <a href="https://iptf.ethereum.org/blog/" class="cs-all">
+              All posts
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div class="blog-grid">
+            {recentPosts.map(post => (
+              <a class="blog-card" href={post.url}>
+                {post.image && (
+                  <div class="blog-thumb">
+                    <img src={post.image} alt="" loading="lazy" />
+                  </div>
+                )}
+                <div class="blog-body">
+                  <h3>{post.title}</h3>
+                  <div class="blog-meta">{formatPostDate(post.date)}{post.author ? ` · ${post.author}` : ''}</div>
+                  {post.description && <p class="blog-desc">{post.description}</p>}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
   </div>
 
   <!-- FOOTER -->
@@ -234,9 +268,10 @@ function contextBadge(ctx?: string) {
     <div class="footer-inner">
       <div class="footer-left"><div class="footer-mark"></div> IPTF &middot; Ethereum Foundation &middot; 2026</div>
       <div class="footer-links">
+        <a href="/about">About</a>
         <a href="/explore/galaxy">Explorer</a>
         <a href="https://github.com/ethereum/iptf-map">GitHub</a>
-        <a href="/blog">Blog</a>
+        <a href="https://iptf.ethereum.org/blog/">Blog</a>
         <a href="mailto:iptf@ethereum.org">Contact</a>
       </div>
     </div>
@@ -678,6 +713,64 @@ function contextBadge(ctx?: string) {
   .crop-a { background: rgba(245,158,11,0.1); }
   .crop-a .crop-l { color: #fcd34d; }
   .crop-a .crop-v { color: #fbbf24; }
+
+  /* -- BLOG PREVIEWS -- */
+  .blog-section {
+    padding: 5rem 2rem;
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .blog-inner { max-width: 1120px; margin: 0 auto; }
+  .blog-head {
+    display: flex; align-items: end; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .blog-card {
+    text-decoration: none; color: inherit;
+    background: var(--dark-2);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    display: flex; flex-direction: column;
+  }
+  .blog-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(129,140,248,0.25);
+  }
+  .blog-thumb {
+    aspect-ratio: 16 / 9;
+    background: var(--dark-3);
+    overflow: hidden;
+  }
+  .blog-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .blog-card:hover .blog-thumb img { transform: scale(1.04); }
+  .blog-body { padding: 1.25rem 1.25rem 1.5rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+  .blog-body h3 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem; font-weight: 500; color: var(--white);
+    letter-spacing: -0.01em; line-height: 1.3;
+  }
+  .blog-meta {
+    font-size: 0.7rem; color: var(--gray-500);
+    letter-spacing: 0.02em;
+  }
+  .blog-desc {
+    font-size: 0.82rem; color: var(--gray-500); line-height: 1.55;
+    margin-top: 0.25rem;
+  }
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: 1fr; }
+  }
   .ctx-pair { display: flex; gap: 8px; }
   .ctx-box { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid; }
   .ctx-i { border-color: rgba(129,140,248,0.25); background: rgba(99,102,241,0.08); }

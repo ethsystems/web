@@ -47,6 +47,25 @@ export function getEdgesTo(nodeId: string): (GraphEdge & { sourceNode: GraphNode
     .filter(Boolean) as (GraphEdge & { sourceNode: GraphNode })[];
 }
 
+/** Approaches reachable from a domain via its linked use-cases.
+ *  domain --(in-domain/see-also)--> use-case <--(addresses)-- approach */
+export function getApproachesForDomain(domainId: string): GraphNode[] {
+  const useCaseIds = getEdgesFrom(domainId)
+    .filter(e => e.targetNode.type === 'use-case')
+    .map(e => e.targetNode.id);
+  const seen = new Set<string>();
+  const approaches: GraphNode[] = [];
+  for (const ucId of useCaseIds) {
+    for (const e of getEdgesTo(ucId)) {
+      if (e.sourceNode.type === 'approach' && !seen.has(e.sourceNode.id)) {
+        seen.add(e.sourceNode.id);
+        approaches.push(e.sourceNode);
+      }
+    }
+  }
+  return approaches;
+}
+
 /** Get all nodes connected to a node, grouped by relationship type */
 export function getRelated(nodeId: string) {
   const outgoing = getEdgesFrom(nodeId);

@@ -67,38 +67,47 @@ body::before {
   margin-bottom: 0.75rem;
 }
 
-.prose ul, .prose ol {
-  padding-left: 1.25rem;
-  margin-bottom: 1rem;
-}
-
 .prose ul {
-  list-style: disc;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
 }
 
 .prose ol {
   list-style: decimal;
+  padding-left: 1.25rem;
+  margin: 0 0 1rem;
 }
 
 .prose li {
   font-size: 0.85rem;
   color: theme(colors.zinc.400);
   line-height: 1.6;
-  margin-bottom: 0.35rem;
 }
 
-.prose li::marker {
+.prose ul > li {
+  padding-left: 1.25rem;
+  position: relative;
+}
+.prose ul > li::before {
+  content: '';
+  position: absolute; left: 0; top: 0.55em;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: theme(colors.zinc.600);
+}
+.prose ol > li {
+  padding-left: 0.25rem;
+  margin-bottom: 0.4rem;
+}
+.prose ol > li::marker {
   color: theme(colors.zinc.600);
+  font-weight: 500;
 }
 
 /* Nested lists */
 .prose li > ul, .prose li > ol {
-  margin-top: 0.35rem;
-  margin-bottom: 0.25rem;
-}
-
-.prose li > ul {
-  list-style: circle;
+  margin: 0.4rem 0 0.25rem;
 }
 
 .prose strong {

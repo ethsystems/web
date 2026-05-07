@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title?: string;
   description?: string;
@@ -12,7 +14,6 @@ const navItems = [
   { label: 'Patterns', href: `/patterns`, key: 'patterns' },
   { label: 'Vendors', href: `/vendors`, key: 'vendors' },
   { label: 'Domains', href: `/domains`, key: 'domains' },
-  { label: 'Jurisdictions', href: `/jurisdictions`, key: 'jurisdictions' },
   { label: 'FAQ', href: `/faq`, key: 'faq' },
   { label: 'Glossary', href: `/glossary`, key: 'glossary' },
 ];
@@ -127,8 +128,8 @@ const navItems = [
             </a>
           ))}
           <span class="guide-nav-sep"></span>
-          <a href="/" class="guide-nav-link guide-nav-ext">About</a>
-          <a href="/blog" class="guide-nav-link guide-nav-ext">Blog</a>
+          <a href="/about" class="guide-nav-link guide-nav-ext">About</a>
+          <a href="https://iptf.ethereum.org/blog/" class="guide-nav-link guide-nav-ext">Blog</a>
         </nav>
       </div>
     </header>
@@ -146,9 +147,10 @@ const navItems = [
           IPTF &middot; Ethereum Foundation &middot; 2026
         </div>
         <nav style="display:flex; gap:1.5rem;">
+          <a href="/about" style="font-size:0.75rem; color:#52525b; text-decoration:none; transition:color 0.15s;">About</a>
           <a href="/explore/galaxy" style="font-size:0.75rem; color:#52525b; text-decoration:none; transition:color 0.15s;">Explorer</a>
           <a href="https://github.com/ethereum/iptf-map" style="font-size:0.75rem; color:#52525b; text-decoration:none; transition:color 0.15s;">GitHub</a>
-          <a href="/blog" style="font-size:0.75rem; color:#52525b; text-decoration:none; transition:color 0.15s;">Blog</a>
+          <a href="https://iptf.ethereum.org/blog/" style="font-size:0.75rem; color:#52525b; text-decoration:none; transition:color 0.15s;">Blog</a>
           <a href="mailto:iptf@ethereum.org" style="font-size:0.75rem; color:#52525b; text-decoration:none; transition:color 0.15s;">Contact</a>
         </nav>
       </div>

@@ -1,0 +1,173 @@
+---
+import Guide from '../layouts/Guide.astro';
+---
+
+<Guide title="About" description="The Institutional Privacy Task Force (IPTF) helps onboard institutions and enterprises onto Ethereum with privacy-preserving solutions.">
+  <div class="about-page">
+
+    <section class="about-hero">
+      <div class="about-eyebrow">Ethereum Foundation initiative</div>
+      <h1>Institutional Privacy Task Force</h1>
+      <p class="about-tagline">Advancing privacy standards for enterprise-grade Ethereum applications.</p>
+    </section>
+
+    <section class="about-body">
+      <p>The Institutional Privacy Task Force (IPTF) is a small team that helps onboard institutions and enterprises onto Ethereum, with a focus on ensuring their privacy needs are met in a performant, secure, usable, and accessible way.</p>
+      <p>We document patterns, use cases, and regulatory frameworks for implementing privacy-preserving financial applications on Ethereum, and prototype the architectures we recommend.</p>
+    </section>
+
+    <section class="about-grid">
+      <a href="https://github.com/ethereum/iptf-map" class="about-card" target="_blank" rel="noopener">
+        <div class="about-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        </div>
+        <h3>Privacy Map</h3>
+        <p>Patterns, use cases, and regulatory frameworks.</p>
+      </a>
+      <a href="https://github.com/ethereum/iptf-pocs" class="about-card" target="_blank" rel="noopener">
+        <div class="about-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Proof of Concepts</h3>
+        <p>End-to-end implementations and benchmarks.</p>
+      </a>
+      <div class="about-card">
+        <div class="about-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Coordination</h3>
+        <p>Bridging vendors, institutions, and regulators.</p>
+      </div>
+    </section>
+
+    <section class="about-contact">
+      <div class="about-eyebrow">Get in touch</div>
+      <h2>Talk to us</h2>
+      <div class="contact-grid">
+        <a href="mailto:iptf@ethereum.org" class="contact-card">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">iptf@ethereum.org</div>
+        </a>
+        <a href="https://forms.gle/6Za8suF5QHyRamcW7" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-label">Institutions</div>
+          <div class="contact-value">Contact form →</div>
+        </a>
+        <a href="https://forms.gle/znifD8h9Uw6VEX6Q9" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-label">Vendors</div>
+          <div class="contact-value">Contact form →</div>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <style>
+    .about-page {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 6rem 2rem 5rem;
+    }
+    .about-hero { margin-bottom: 3rem; }
+    .about-eyebrow {
+      font-size: 0.65rem; font-weight: 700; color: #818cf8;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .about-hero h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 2.75rem; font-weight: 400; color: white;
+      letter-spacing: -0.025em; line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .about-tagline {
+      font-size: 1.05rem; color: #a1a1aa; line-height: 1.6;
+      max-width: 640px;
+    }
+
+    .about-body {
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .about-body p {
+      font-size: 0.95rem; color: #a1a1aa; line-height: 1.75;
+      margin-bottom: 1rem; max-width: 640px;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 4rem;
+    }
+    .about-card {
+      background: #18181b;
+      padding: 1.5rem;
+      text-decoration: none; color: inherit;
+      transition: background 0.15s;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    a.about-card:hover { background: #1c1c20; }
+    .about-card-icon {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      background: rgba(129,140,248,0.1);
+      color: #a5b4fc;
+      margin-bottom: 0.5rem;
+    }
+    .about-card h3 {
+      font-size: 0.95rem; font-weight: 700; color: white;
+    }
+    .about-card p {
+      font-size: 0.8rem; color: #71717a; line-height: 1.55;
+    }
+
+    .about-contact {
+      padding-top: 1rem;
+    }
+    .about-contact h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.75rem; font-weight: 400; color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .contact-card {
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .contact-card:hover {
+      background: rgba(129,140,248,0.04);
+      border-color: rgba(129,140,248,0.2);
+    }
+    .contact-label {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #71717a;
+    }
+    .contact-value {
+      font-size: 0.9rem; font-weight: 500;
+      color: white;
+    }
+
+    @media (max-width: 720px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .about-hero h1 { font-size: 2rem; }
+      .about-page { padding: 5rem 1.5rem 3rem; }
+    }
+  </style>
+</Guide>

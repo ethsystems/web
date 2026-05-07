@@ -1,6 +1,6 @@
 ---
 import Guide from '../../layouts/Guide.astro';
-import { getNodesByType, getNodeBySlug, getRelated, getNodeById } from '../../lib/data';
+import { getNodesByType, getNodeBySlug, getRelated, getNodeById, getApproachesForDomain } from '../../lib/data';
 import { parseSections, getSection } from '../../lib/parse-sections';
 import { marked } from 'marked';
 
@@ -24,8 +24,9 @@ const useCases = getSection(sections, 'primary-use-cases') || getSection(section
 const shortestPath = getSection(sections, 'shortest-path-patterns') || getSection(sections, 'shortest');
 const adjacentVendors = getSection(sections, 'adjacent-vendors') || getSection(sections, 'adjacent');
 
-// Count related items from graph edges
-const approachCount = related.approaches.length + related.usedInApproaches.length;
+// Count related items. Case-study count is transitive via use-cases.
+const domainApproaches = getApproachesForDomain(node.id);
+const approachCount = domainApproaches.length;
 const patternCount = related.patterns.length;
 const vendorCount = related.vendors.length;
 
