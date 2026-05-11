@@ -4,13 +4,14 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
-  activeSection?: 'approaches' | 'patterns' | 'vendors' | 'domains' | 'jurisdictions' | 'faq' | 'glossary' | null;
+  activeSection?: 'approaches' | 'use-cases' | 'patterns' | 'vendors' | 'domains' | 'jurisdictions' | 'faq' | 'glossary' | null;
 }
 const { title = 'IPTF Guide', description = '', activeSection = null } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
 const navItems = [
   { label: 'Case Studies', href: `/approaches`, key: 'approaches' },
+  { label: 'Use Cases', href: `/use-cases`, key: 'use-cases' },
   { label: 'Patterns', href: `/patterns`, key: 'patterns' },
   { label: 'Vendors', href: `/vendors`, key: 'vendors' },
   { label: 'Domains', href: `/domains`, key: 'domains' },

@@ -1,0 +1,90 @@
+---
+import Guide from '../../layouts/Guide.astro';
+import { getNodesByType } from '../../lib/data';
+
+// SOURCE: iptf-map field — title and summary render verbatim.
+const useCases = getNodesByType('use-case')
+  .slice()
+  .sort((a, b) => a.title.localeCompare(b.title));
+---
+
+<Guide title="Use Cases" description="Institutional privacy problems that map to architectures and patterns" activeSection="use-cases">
+  <div class="idx-page">
+
+    <div class="idx-header">
+      <div class="idx-label">Use Cases</div>
+      <h1 class="idx-title">Privacy problems institutions need to solve</h1>
+      <p class="idx-desc">{useCases.length} use cases. Each describes the business context, actors, problems, and links to the case studies and patterns that address them.</p>
+    </div>
+
+    <div class="uc-list">
+      {useCases.map((row, i) => {
+        const idx = String(i + 1).padStart(2, '0');
+        const isLast = i === useCases.length - 1;
+        return (
+          <a href={`/use-cases/${row.slug}`} class={`uc-row ${isLast ? 'last' : ''}`}>
+            <span class="uc-idx">{idx}</span>
+            {/* Image slot reserved for P1 hero-thumbnail follow-up. */}
+            <div class="uc-thumb-slot" aria-hidden="true"></div>
+            <div class="uc-body">
+              <div class="uc-name">{row.title}</div>
+              {row.summary && <div class="uc-blurb">{row.summary}</div>}
+              {(row as any).primary_domain && (
+                <div class="uc-domain">{(row as any).primary_domain}</div>
+              )}
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+  </div>
+
+  <style is:global>
+    .uc-list { margin-top: 1rem; }
+    .uc-row {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 1.5rem;
+      align-items: baseline;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none; color: inherit;
+      transition: padding-left 0.15s;
+    }
+    .uc-row.last { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .uc-row:hover { padding-left: 0.75rem; }
+    .uc-row:hover .uc-name { color: #a5b4fc; }
+    .uc-idx {
+      font-size: 0.75rem; font-weight: 500; color: #a1a1aa;
+      font-variant-numeric: tabular-nums;
+    }
+    /* Reserved for thumbnails; currently 0-width so layout stays single-content. */
+    .uc-thumb-slot { display: none; }
+    .uc-body { min-width: 0; }
+    .uc-name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.2rem; font-weight: 500; color: white;
+      letter-spacing: -0.01em; margin-bottom: 0.35rem;
+      transition: color 0.15s;
+    }
+    .uc-blurb {
+      font-size: 0.85rem; color: #a1a1aa; line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .uc-domain {
+      font-size: 0.7rem; color: #818cf8;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      font-weight: 600;
+    }
+    @media (max-width: 640px) {
+      .uc-row {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+        padding: 1.25rem 0;
+      }
+      .uc-idx { font-size: 0.7rem; }
+      .uc-name { font-size: 1.1rem; }
+    }
+  </style>
+</Guide>
