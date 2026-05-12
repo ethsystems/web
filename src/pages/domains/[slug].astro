@@ -77,7 +77,12 @@ const S = {
     <div style="margin-bottom:3.5rem;">
       <div style={S.domLabel}>Domain</div>
       <h1 style={S.title}>{node.title}</h1>
-      {node.summary && <p style={S.tldr}>{node.summary}</p>}
+      {tldr ? (
+        /* SOURCE: iptf-map ## TLDR section, rendered verbatim. */
+        <div class="prose domain-tldr" set:html={renderMarkdown(tldr.content)} />
+      ) : (
+        node.summary && <p style={S.tldr}>{node.summary}</p>
+      )}
       <div style={S.stats}>
         <div>
           <div style={S.statNum}>{approachCount}</div>
@@ -210,4 +215,23 @@ const S = {
     )}
 
   </div>
+
+  <style>
+    .domain-tldr {
+      max-width: 720px;
+      font-size: 0.95rem;
+      color: #a1a1aa;
+      line-height: 1.65;
+    }
+    .domain-tldr :global(ul) {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+    .domain-tldr :global(li) {
+      margin-bottom: 0.35rem;
+    }
+    .domain-tldr :global(p) {
+      margin: 0 0 0.5rem;
+    }
+  </style>
 </Guide>
