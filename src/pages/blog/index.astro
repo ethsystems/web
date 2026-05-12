@@ -1,0 +1,92 @@
+---
+import Guide from '../../layouts/Guide.astro';
+import { getAllPosts, formatPostDate } from '../../lib/posts';
+
+const posts = getAllPosts();
+---
+
+<Guide title="Blog" description="Writeups from the Institutional Privacy Task Force.">
+  <div class="idx-page">
+    <div class="idx-header">
+      <div class="idx-label">Blog</div>
+      <h1 class="idx-title">Writeups</h1>
+      <p class="idx-desc">Field notes from the Institutional Privacy Task Force on building privacy on Ethereum for institutional use cases.</p>
+    </div>
+
+    <div class="post-list">
+      {posts.map((post, i) => {
+        const isLast = i === posts.length - 1;
+        return (
+          <a href={post.url} class={`post-card ${isLast ? 'last' : ''}`}>
+            {post.image && (
+              <div class="post-card-thumb">
+                <img src={post.image} alt="" loading="lazy" />
+              </div>
+            )}
+            <div class="post-card-body">
+              <div class="post-card-title">{post.title}</div>
+              {post.description && <div class="post-card-blurb">{post.description}</div>}
+              <div class="post-card-meta">
+                <time datetime={post.date}>{formatPostDate(post.date)}</time>
+                {post.author && <span class="post-card-dot">·</span>}
+                {post.author && <span>{post.author}</span>}
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+
+  <style is:global>
+    .post-list { margin-top: 1rem; }
+    .post-card {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+      align-items: start;
+      padding: 1.75rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none; color: inherit;
+      transition: padding-left 0.15s;
+    }
+    .post-card.last { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .post-card:hover { padding-left: 0.75rem; }
+    .post-card:hover .post-card-title { color: #a5b4fc; }
+    .post-card-thumb {
+      width: 200px; height: 110px;
+      border-radius: 8px; overflow: hidden;
+      background: #18181b;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .post-card-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .post-card-body { min-width: 0; }
+    .post-card-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.35rem; font-weight: 500; color: white;
+      letter-spacing: -0.01em; margin-bottom: 0.4rem;
+      transition: color 0.15s;
+    }
+    .post-card-blurb {
+      font-size: 0.9rem; color: #a1a1aa; line-height: 1.6;
+      margin-bottom: 0.6rem;
+    }
+    .post-card-meta {
+      font-size: 0.75rem; color: #71717a;
+      display: flex; gap: 0.5rem; align-items: center;
+    }
+    .post-card-dot { color: #3f3f46; }
+
+    @media (max-width: 640px) {
+      .post-card {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        padding: 1.5rem 0;
+      }
+      .post-card-thumb { width: 100%; height: 180px; }
+      .post-card-title { font-size: 1.15rem; }
+    }
+  </style>
+</Guide>
