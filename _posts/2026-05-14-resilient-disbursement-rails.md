@@ -2,7 +2,7 @@
 layout: post
 title: "Resilient Disbursement Rails"
 description: "Aid payments on Ethereum that protect recipients even when local partners are compromised, or when recipients cash out into local currency."
-date: 2026-05-14 15:00:00 +0100
+date: 2026-05-14 15:00:00 +0200
 author: "Aaryamann"
 image: /assets/images/2026-05-14-resilient-disbursement-rails/hero.png
 tags:
@@ -144,7 +144,7 @@ This builds on a few existing lines of work.
 
 [Hinkal](https://hinkal.pro/) ships a programmable shielded-pool stack focused on access control and selective disclosure. It is complementary to the per-claim-contract sub-tree partition this protocol uses to bound the relay-side proving surface.
 
-The stealth-address standards [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) (address generation) and [ERC-6538](https://eips.ethereum.org/EIPS/eip-6538) (stealth meta-address registry), with deployments at [Umbra](https://umbra.cash/) and [Fluidkey](https://fluidkey.com/), establish the recipient-derived-destination pattern. This protocol's stealth derivation runs on-card via HMAC over the master secret, not off-card from a published meta-address. The decision keeps the secret on the smartcard and trades a published-meta-address ergonomic for a tamper-resistance gain.
+The stealth-address standards [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) (address generation) and [ERC-6538](https://eips.ethereum.org/EIPS/eip-6538) (stealth meta-address registry), with deployments at [Umbra](https://app.umbra.cash/) and [Fluidkey](https://fluidkey.com/), establish the recipient-derived-destination pattern. This protocol's stealth derivation runs on-card via HMAC over the master secret, not off-card from a published meta-address. The decision keeps the secret on the smartcard and trades a published-meta-address ergonomic for a tamper-resistance gain.
 
 [Keycard](https://keycard.tech/) is the open-source secure-element wallet reference, running on EAL6+ chips. The `SIGN_VOUCHER` applet here targets a comparable JCOP-class envelope, with EAL4+ AVA_VAN.5 ([BSI-CC-PP-0084](https://www.bsi.bund.de/SharedDocs/Zertifikate_CC/PP/aktuell/PP_0084.html)) as the production-target floor. The [GridPlus Lattice1](https://gridplus.io/) is a comparable secure-element plus companion architecture, with the difference that the companion in this PoC never sees the master secret and only computes the off-card destination and nullifier.
 
