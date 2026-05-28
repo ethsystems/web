@@ -2,7 +2,7 @@
 layout: post
 title: "Resilient Civic Participation"
 description: "Petitions on Ethereum where the signer list never exists and the outcome stays verifiable from chain state alone."
-date: 2026-05-28 15:00:00 +0200
+date: 2026-05-29 15:00:00 +0200
 author: "Aaryamann"
 image: /assets/images/2026-05-28-resilient-civic-participation/hero.png
 tags:
