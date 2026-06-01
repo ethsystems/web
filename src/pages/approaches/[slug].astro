@@ -1056,11 +1056,17 @@ function maturityTone(m?: string): 'strong' | 'mid' | 'plain' | 'muted' {
   .block-bad h5  { color: var(--color-warning-strong); }
 
   /* ─── Tables (scoped CSS can't pierce set:html, use :global) ─ */
+  /* The table-wrap is also `.prose`, which caps body text at 70ch for
+     readability. A data table is not running prose — let it fill the
+     full column so its right edge lines up with the section headings
+     and option cards instead of stopping ~100px short. Scoped class
+     (gets an astro-cid attr) outweighs the global .prose rule. */
   .table-wrap {
     overflow-x: auto;
     margin: 1rem 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
+    max-width: none;
   }
   :global(.approach-main .prose table) {
     width: 100%;

@@ -59,7 +59,7 @@ const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centere
 
 <style>
   .page-header {
-    padding: 4.5rem 0 3rem;
+    padding: 4.5rem 0 2rem;
     background: radial-gradient(ellipse 60% 50% at 90% 10%, rgba(49, 130, 206, 0.05), transparent 60%);
   }
   /* Centered variant — used by blog post details (per 2026-05-22
@@ -113,6 +113,10 @@ const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centere
     text-wrap: balance;
     min-width: 0;
   }
+  /* No lede/pills/metaRow after the title (e.g. the use-cases index) —
+     drop the title's bottom margin so it doesn't stack with the header
+     padding into a dead gap above the content. */
+  .page-header h1:last-child { margin-bottom: 0; }
   .page-header .lede {
     font-size: 1.0625rem;
     line-height: 1.65;

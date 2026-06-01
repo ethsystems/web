@@ -15,16 +15,18 @@ const { tabs, ariaLabel = 'Section navigation' } = Astro.props;
 ---
 
 <nav class="anchor-nav" aria-label={ariaLabel}>
-  <div class="container anchor-nav-inner">
-    {tabs.map((t) => (
-      <a href={t.href}>
-        {t.iconSvg && <span class="ic" set:html={t.iconSvg} />}
-        <span class="lbl">
-          {t.label}
-          {typeof t.count === 'number' && <span class="count">({t.count})</span>}
-        </span>
-      </a>
-    ))}
+  <div class="container">
+    <div class="anchor-nav-inner">
+      {tabs.map((t) => (
+        <a href={t.href}>
+          {t.iconSvg && <span class="ic" set:html={t.iconSvg} />}
+          <span class="lbl">
+            {t.label}
+            {typeof t.count === 'number' && <span class="count">({t.count})</span>}
+          </span>
+        </a>
+      ))}
+    </div>
   </div>
 </nav>
 
@@ -41,9 +43,14 @@ const { tabs, ariaLabel = 'Section navigation' } = Astro.props;
     overflow-x: auto;
     flex-wrap: wrap;
     scrollbar-width: none;
+    /* Bleed the row 0.9rem into the container padding on both sides so
+       the link text — inset by its own 0.9rem padding — aligns to the
+       container edge. Done on the row (not a:first-child) so EVERY
+       wrapped row's leading item aligns, not just the first. */
+    margin-left: -0.9rem;
+    margin-right: -0.9rem;
   }
   .anchor-nav-inner::-webkit-scrollbar { display: none; }
-  .anchor-nav-inner > a:first-child { margin-left: -0.9rem; }
 
   .anchor-nav a {
     display: inline-flex;

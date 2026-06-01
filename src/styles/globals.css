@@ -232,6 +232,15 @@ section.block {
   max-width: 70ch;
 }
 .prose > * + * { margin-top: 1.1em; }
+/* The first element of a prose block never gets top spacing or a
+   section-break divider — those belong *between* sections. Without this
+   a leading <h2> (margin-top + padding-top + border-top) drops ~100px of
+   dead space and a stray rule directly under the page lede. */
+.prose > :first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
 .prose h1 {
   font-family: var(--font-sans);
   font-size: clamp(1.75rem, 3vw, 2.1rem);

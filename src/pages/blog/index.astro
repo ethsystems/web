@@ -78,7 +78,10 @@ const today = new Date().toISOString().slice(0, 10);
   .post-list {
     list-style: none;
     padding: 0;
-    margin: 2rem 0 4rem;
+    /* No top margin — the shared .list-body already supplies the 2rem
+       top padding. A margin here doubled it, leaving a ~96px gap under
+       the header. */
+    margin: 0 0 4rem;
     display: flex;
     flex-direction: column;
     gap: 1px;
