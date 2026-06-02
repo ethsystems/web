@@ -20,7 +20,7 @@ Map content (patterns, approaches, use-cases, vendors, domains, jurisdictions) i
 - `content/` — iptf-map submodule.
 - `scripts/build-graph.mjs` — Reads iptf-map → `src/data/graph.json`.
 - `src/posts/` — Blog post markdown (filename: `YYYY-MM-DD-slug.md`).
-- `src/pages/` — Routes. `[slug].astro` is the post detail page at root.
+- `src/pages/` — Routes. `blog/[slug].astro` is the post detail page.
 - `src/layouts/` — `Guide.astro` (default), `Post.astro` (writeups).
 - `src/lib/` — Data access (`data.ts`), post loader (`posts.ts`), markdown renderer (`render.ts`).
 - `public/` — Static assets served verbatim (`assets/`, `CNAME`, `robots.txt`, `tee-protocol-page.html`).

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://iptf.ethereum.org/sitemap.xml
+Sitemap: https://iptf.ethereum.org/sitemap-index.xml
