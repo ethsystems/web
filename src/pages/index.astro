@@ -5,6 +5,7 @@ import PipelineAnimation from '../components/PipelineAnimation.astro';
 import { getStats } from '../lib/stats';
 import { getCollection } from 'astro:content';
 import { jekyllSlugify } from '../lib/jekyllSlug';
+import { isPublished } from '../lib/posts';
 import { findFaq } from '../data/faq';
 
 const stats = await getStats();
@@ -18,7 +19,8 @@ function toISODate(d: string | Date | undefined): string {
   return String(d).slice(0, 10);
 }
 const allPosts = await getCollection('posts');
-const latestPosts = [...allPosts]
+const latestPosts = allPosts
+  .filter((p) => isPublished(p))
   .map((p) => ({
     slug: jekyllSlugify(p.data.title),
     title: p.data.title,

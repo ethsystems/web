@@ -10,6 +10,7 @@ import { getCollection, render } from 'astro:content';
 import DetailPageLayout from '../../layouts/DetailPageLayout.astro';
 import ArticleFooter from '../../components/ArticleFooter.astro';
 import { jekyllSlugify } from '../../lib/jekyllSlug';
+import { isPublished } from '../../lib/posts';
 
 function toISODate(d: string | Date | undefined): string {
   if (!d) return '';
@@ -19,7 +20,7 @@ function toISODate(d: string | Date | undefined): string {
 
 export async function getStaticPaths() {
   const entries = await getCollection('posts');
-  return entries.map((entry) => ({
+  return entries.filter((entry) => isPublished(entry)).map((entry) => ({
     params: { slug: jekyllSlugify(entry.data.title) },
     props: { entry },
   }));
