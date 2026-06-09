@@ -8,7 +8,7 @@ image: /assets/images/2026-06-11-next-iteration-shielded-pools/hero.png
 
 Shielded pools are one way to make a private payment on a public blockchain. Two earlier posts on this blog built one, first for [private bonds](/building-private-bonds-on-ethereum/), then for [private payments](/building-private-transfers-on-ethereum/). The primitive works. What comes next is a run of bigger iterations meant to make it both more resilient and more scalable: hard for any single party to watch, censor, or quietly take control of, and fast enough to carry payments at Visa scale. The trick is getting there without giving up the four things that make shielding worth having in the first place: censorship resistance, openness, privacy, and security.
 
-A shielded pool has a few moving parts, and each is where that gets hard. Through a wallet, it writes and reads the Ethereum contract state. And it proves, on the user's own device, the zero-knowledge proof that makes each spend valid, which is also where the post-quantum question bites. We will walk the open problems, then go deep on the two our prototype takes on.
+A shielded pool has a few moving parts, and each one makes that hard in its own way. Through a wallet, it writes and reads the Ethereum contract state. And it generates, on the user's own device, the zero-knowledge proof that makes each spend valid, which is also where the post-quantum question bites. We will walk the open problems, then go deep on the two our prototype takes on.
 
 ## The open problems
 
@@ -58,11 +58,11 @@ for i in siblingIndicesOnPath(leafIndex):   // ~log(N) positions in the flat tre
 
 ### What it costs
 
-None of this is free. PIR makes the server work over the whole database on every query, and schemes differ in how much precomputation each side keeps. The specification targets a recent scheme, InsPIRe, whose appeal is that it needs no per-database hint on the client: no chunk of client-side data, precomputed from the public database, that the wallet has to hold before queries can start. Our prototype ships an older, simpler one, SimplePIR, which gives the same privacy but does keep such a hint on the client, derived from the public database. That hint is not a secret, so losing your phone loses nothing sensitive: you recompute or re-download it, and it has to be refreshed as the database grows. For real figures, the [PSE writeup on scaling Semaphore with PIR](https://pse.dev/projects/scaling-semaphore-pir) and the tree-pir benchmarks are the places to look. PIR is practical enough to build with today, and getting cheaper.
+None of this is free. PIR makes the server work over the whole database on every query, and schemes differ in how much precomputation each side keeps. The specification targets a recent scheme, InsPIRe, whose appeal is that it needs no per-database hint on the client: no chunk of client-side data, precomputed from the public database, that the wallet has to hold before queries can start. Our prototype ships an older, simpler one, SimplePIR, which gives the same privacy but does keep such a hint on the client. That hint is not a secret, so losing your phone loses nothing sensitive: you recompute or re-download it, and it has to be refreshed as the database grows. For real figures, the [PSE writeup on scaling Semaphore with PIR](https://pse.dev/projects/scaling-semaphore-pir) and the tree-pir benchmarks are the places to look. PIR is practical enough to build with today, and getting cheaper.
 
 ## Reducing trust in the server
 
-So how much trust does this server need? Less than it first appears, and the design works to keep it minimal. On-chain, the contract keeps only a Merkle root, a single short fingerprint of every note. The server rebuilds the full tree from Ethereum's public event log and serves you the path you ask for. It cannot hand you a fake path: you fetch the current root separately, recompute a root from the path the server returned, and check that the two match. A forged path will not hash to the right root. In the target design the wallet gets that trusted root from a consensus light client, which verifies it against Ethereum rather than trusting the server. The prototype implements the storage-proof verifier behind a `RootVerifier` port and leaves wiring up a full consensus light client as production integration work; in its place, the in-process end-to-end test trusts a local development `stateRoot`.
+So how much trust does this server need? Less than it first appears. On-chain, the contract keeps only a Merkle root, a single short fingerprint of every note. The server rebuilds the full tree from Ethereum's public event log and serves you the path you ask for. It cannot hand you a fake path: you fetch the current root separately, recompute a root from the path the server returned, and check that the two match. A forged path will not hash to the right root. In the target design the wallet gets that trusted root from a consensus light client, which verifies it against Ethereum rather than trusting the server. The prototype implements the storage-proof verifier behind a `RootVerifier` port and leaves wiring up a full consensus light client as production integration work; in its place, the in-process end-to-end test trusts a local development `stateRoot`.
 
 ```
 // The wallet trusts a root from consensus, not from the server.
@@ -81,7 +81,7 @@ Now the write side, and the second problem we took on: keeping that permanent nu
 
 ### Closing the book each epoch
 
-Think of accounting periods. Instead of one ledger that grows forever, you close the books at the end of each epoch, a month, say, and open a fresh one. The sealed book leaves only its Merkle root on-chain. The trick is in the nullifier itself, which now folds in the current epoch:
+Think of accounting periods. Instead of one ledger that grows forever, you close the books at the end of each epoch, a month, say, and open a fresh one. The sealed book leaves only its Merkle root on-chain. The change is in the nullifier itself, which now folds in the current epoch:
 
 ```
 nullifier = hash(commitment, spending_key, epoch)
@@ -101,15 +101,13 @@ But sorting breaks the clean PIR story. To prove your nullifier is absent, you f
 
 ## The hinge: finding a leaf, finding a note
 
-Look at the shape of what we just hit. PIR fetches a row when you already know its index. Finding that neighbor leaf is a different kind of request: you are asking the server to find, among everything it holds, the one value sitting just below yours, without telling it your value. PIR does not search, it fetches, so here it is necessary but not enough.
+Look at the shape of what we just hit. PIR fetches a row when you already know its index. Finding that neighbor leaf is a different kind of request: you are asking the server to find, among everything it holds, the one value sitting just below yours, without telling it your value. That is a search, so here PIR is necessary but not enough.
 
 Now recall the other read-side problem, the cold wallet that takes minutes to find your money. It takes minutes because the wallet pulls every recent note and tries to decrypt each one, since nothing on the outside marks which are yours. You could ask the server to filter, but the thing that picks out your notes, your key, is exactly what you cannot hand over.
 
-Both are the same private-selection problem. In each, a server holds a big set, you need the few elements that match a private criterion, and revealing the criterion is the whole risk. That is private selection, and it is strictly harder than PIR's known-index fetch. The two are not identical: finding a neighbor is an ordering question over public values, finding your notes is an ownership question over ciphertexts. Same family, different test. No single primitive drops cleanly into both, which is why our prototype punts on the neighbor problem, and why the same handful of primitives keeps reappearing across projects. Every team building private payments at scale runs into this and reaches for one of them.
+Both are the same problem. In each, a server holds a big set, you need the few elements that match a private criterion, and revealing the criterion is the whole risk. That is private selection, and it is strictly harder than PIR's known-index fetch. The two are not identical: finding a neighbor is an ordering question over public values, finding your notes is an ownership question over ciphertexts. Same family, different test. No single primitive drops cleanly into both, which is why our prototype punts on the neighbor problem, and why every team building private payments at scale ends up reaching for the same short list of primitives.
 
 ## The primitives, and who's building with them
-
-That shared problem, private selection, comes with a handful of primitives, and the teams building private payments at scale each reach for a different one.
 
 PIR reads a known row without revealing which one. That is the part our prototype uses, for the commitment path. Oblivious Message Retrieval (OMR) hands you the messages addressed to you without the server learning which are yours, aimed straight at note discovery. Fuzzy Message Detection (FMD) is the lighter cousin: it flags your notes plus a tunable share of decoys, so you trial-decrypt a smaller, blurred set, and [Penumbra](https://protocol.penumbra.zone/main/crypto/fmd.html) runs it in production.
 
@@ -117,8 +115,8 @@ PIR reads a known row without revealing which one. That is the part our prototyp
 
 ## What the PoC settles, and what it doesn't
 
-Four problems stand between a working shielded pool and private payments at scale. The prototype settles two of them. Epoch nullifiers bound the *active* nullifier state, so the set every validator has to consult stays a fixed size instead of growing without end. PIR lets a wallet read a known row, its note's commitment path, without revealing which row to the provider. What it does not settle is the harder problem the work surfaced: private selection. Finding your neighbor leaf in a nullifier tree and finding your notes in the crowd are both private selection, and neither reduces to PIR's known-index fetch.
+Four problems stand between a working shielded pool and private payments at scale. The prototype settles two of them. Epoch nullifiers bound the *active* nullifier state, so the set every validator has to consult stays a fixed size instead of growing without end. PIR lets a wallet read a known row, its note's commitment path, without revealing which row to the provider. What it does not settle is the harder problem the work surfaced. Finding the neighbor leaf in a nullifier tree and finding your notes in the crowd are both private selection, and neither reduces to a known-index fetch.
 
 This was a proof-of-concept, built to make that gap concrete. The [specification and code](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/shielded-pool-extension) are open, the [earlier](/building-private-bonds-on-ethereum/) [posts](/building-private-transfers-on-ethereum/) build the pool it extends, and the IPTF map carries the [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/private-stablecoins.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-payments.md) for context.
 
-The work splits across two fronts. Ethereum's roadmap is taking on censorship resistance, gas abstraction, and scaling at the protocol level. Cryptographic research is closing the rest, private selection included, the part that stands between today's shielded pools and fully private payments at scale.
+The work splits across two fronts. Ethereum's roadmap is taking on censorship resistance, gas abstraction, and scaling at the protocol level. Cryptographic research is closing the rest, and private selection is the hardest piece left.
