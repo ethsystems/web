@@ -138,7 +138,7 @@ A handful of smaller limitations are answered at the operational layer rather th
 
 This builds on a few existing lines of work.
 
-[Railgun](https://railgun.org/) with Private Proofs of Innocence is a production shielded-pool deployment on Ethereum mainnet, with the most developed answer to the off-ramp compliance question available today. This protocol's `IShieldedPool` interface is satisfiable by any Railgun-class deployment.
+[Railgun](https://railgun.org/) with Private Proofs of Innocence is a production shielded-pool deployment on Ethereum mainnet. This protocol's `IShieldedPool` interface is satisfiable by any Railgun-class deployment.
 
 [Privacy Pools](https://privacypools.com/) formalized the association-set model that bounds this PoC's pool-level k-anonymity argument. The reachable anonymity set at the off-ramp is the calling claim contract's sub-tree, which is exactly the association-set framing.
 
@@ -146,7 +146,7 @@ This builds on a few existing lines of work.
 
 The stealth-address standards [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) (address generation) and [ERC-6538](https://eips.ethereum.org/EIPS/eip-6538) (stealth meta-address registry), with deployments at [Umbra](https://app.umbra.cash/) and [Fluidkey](https://fluidkey.com/), establish the recipient-derived-destination pattern. This protocol's stealth derivation runs on-card via HMAC over the master secret, not off-card from a published meta-address. The decision keeps the secret on the smartcard and trades a published-meta-address ergonomic for a tamper-resistance gain.
 
-[Keycard](https://keycard.tech/) is the open-source secure-element wallet reference, running on EAL6+ chips. The `SIGN_VOUCHER` applet here targets a comparable JCOP-class envelope, with EAL4+ AVA_VAN.5 ([BSI-CC-PP-0084](https://www.bsi.bund.de/SharedDocs/Zertifikate_CC/PP/aktuell/PP_0084.html)) as the production-target floor. The [GridPlus Lattice1](https://gridplus.io/) is a comparable secure-element plus companion architecture, with the difference that the companion in this PoC never sees the master secret and only computes the off-card destination and nullifier.
+[Keycard](https://keycard.tech/) is the open-source secure-element wallet reference for this prototype, running on EAL6+ chips. The `SIGN_VOUCHER` applet here targets a comparable JCOP-class envelope, with EAL4+ AVA_VAN.5 ([BSI-CC-PP-0084](https://www.bsi.bund.de/SharedDocs/Zertifikate_CC/PP/aktuell/PP_0084.html)) as the production-target floor. The [GridPlus Lattice1](https://gridplus.io/) is a comparable secure-element plus companion architecture.
 
 [Briar](https://briarproject.org/) (Bluetooth LE plus Tor), [Meshtastic](https://meshtastic.org/) (LoRa), and [Reticulum](https://reticulum.network/) (LoRa, packet radio, and other transports) are the candidate `ISubmission` transports for offline voucher delivery from companion to relay. The PoC's port abstraction makes any conforming mesh transport interoperable.
 
