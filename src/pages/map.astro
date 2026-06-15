@@ -1,13 +1,13 @@
 ---
 /*
- * /explore/galaxy/ — full-viewport d3 force graph of all 135 nodes.
+ * /map/ — full-viewport d3 force graph of all 135 nodes.
  * React island, light theme. Uses our NavBar but the canvas spans
- * full width below it.
+ * full width below it. (Formerly /explore/galaxy/; redirected in astro.config.)
  */
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHeader from '../../components/PageHeader.astro';
-import { Galaxy } from '../../components/explore/Galaxy';
-import graphData from '../../data/graph.json';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { Galaxy } from '../components/explore/Galaxy';
+import graphData from '../data/graph.json';
 
 const description =
   'Force-directed map of every entry on the site. Drag, zoom, click to drill into any node: patterns, approaches, vendors, use cases, jurisdictions.';
@@ -34,7 +34,7 @@ const description =
 
   <div class="explore-nav">
     <div class="container">
-      <a href="/explore/galaxy/" class="explore-tab active">Galaxy</a>
+      <a href="/map/" class="explore-tab active">Galaxy</a>
       <a href="/explore/tree/" class="explore-tab">Tree</a>
       <a href="/explore/browse/" class="explore-tab">Browse</a>
     </div>
