@@ -16,6 +16,9 @@ export default defineConfig({
   // Legacy Jekyll URLs (permalink: /:title/, slug from filename) → new
   // title-derived slugs under /blog/. Keeps inbound links alive post-migration.
   redirects: {
+    // Galaxy explorer view relocated from /explore/galaxy/ to /map/.
+    '/explore/galaxy/': '/map/',
+    '/map/tree/': '/map/',
     '/cypherpunk-institutional-privacy': '/blog/cypherpunk-x-institutional-privacy/',
     '/building-private-bonds-on-ethereum': '/blog/building-private-bonds-on-ethereum/',
     '/public-rails-vs-private-ledgers': '/blog/public-rails-vs-private-ledgers/',
