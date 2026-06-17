@@ -28,6 +28,12 @@ const canon = canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
     <link rel="canonical" href={canon} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="IPTF Blog"
+      href={new URL('/blog/rss.xml', Astro.site ?? Astro.url).toString()}
+    />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
