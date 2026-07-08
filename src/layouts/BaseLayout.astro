@@ -43,6 +43,12 @@ const ogImage = new URL('/og.png', Astro.site ?? Astro.url).toString();
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canon} />
     <meta name="theme-color" content="#F4F1E6" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Ethereum Systems · Writeups"
+      href="/rss.xml"
+    />
 
     {/* Font preload: Fraunces display + Geist body. crossorigin required (CORS fetch). */}
     <link rel="preload" href={frauncesDisplayHref} as="font" type="font/woff2" crossorigin />
