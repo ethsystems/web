@@ -19,12 +19,16 @@ interface Props {
    *  article body reads as one centred reading column. Used by
    *  blog post details (per 2026-05-22 meeting: writeups centred). */
   centered?: boolean;
+  /** Optional per-page OG/Twitter image; forwarded to BaseLayout. */
+  image?: string;
+  /** Optional page-specific JSON-LD; forwarded to BaseLayout. */
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, pageTitle, description, current, breadcrumbs, lede, ledeBullets, pills, centered = false } = Astro.props;
+const { title, pageTitle, description, current, breadcrumbs, lede, ledeBullets, pills, centered = false, image, structuredData } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} current={current}>
+<BaseLayout title={title} description={description} current={current} image={image} structuredData={structuredData}>
   <PageHeader breadcrumbs={breadcrumbs} title={pageTitle} lede={lede} ledeBullets={ledeBullets} pills={pills} centered={centered} />
   <section class={`detail ${centered ? 'detail--centered' : ''}`}>
     <div class="container">

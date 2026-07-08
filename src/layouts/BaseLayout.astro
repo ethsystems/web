@@ -4,6 +4,7 @@ import '../styles/globals.css';
 import NavBar from '../components/NavBar.astro';
 import NavOverlay from '../components/NavOverlay.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { siteGraphSchema } from '../lib/schema';
 
 // Content-hashed URLs for the two above-the-fold critical font files. Vite emits
 // the same hashed asset fonts.css already references, so preloading adds no extra
@@ -19,9 +20,14 @@ interface Props {
   canonical?: string;
   /** When true, emit a robots noindex,nofollow meta (hidden pages). */
   noindex?: boolean;
+  /** Optional per-page OG/Twitter image (site-root-relative path); defaults to /og.png. */
+  image?: string;
+  /** Optional page-specific JSON-LD (e.g. FAQPage, BlogPosting), on top of the
+   *  sitewide Organization/WebSite graph this layout always emits. */
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, current, canonical, noindex } = Astro.props;
+const { title, description, current, canonical, noindex, image, structuredData } = Astro.props;
 const fullTitle = title
   ? `${title} · Ethereum Systems`
   : 'Ethereum Systems · Institutional Privacy on Ethereum';
@@ -29,7 +35,12 @@ const desc =
   description ??
   "Ethereum Systems helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.";
 const canon = canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
-const ogImage = new URL('/og.png', Astro.site ?? Astro.url).toString();
+const ogImage = new URL(image ?? '/og.png', Astro.site ?? Astro.url).toString();
+const structuredDataList = structuredData
+  ? Array.isArray(structuredData)
+    ? structuredData
+    : [structuredData]
+  : [];
 ---
 
 <!doctype html>
@@ -75,6 +86,14 @@ const ogImage = new URL('/og.png', Astro.site ?? Astro.url).toString();
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />
     <meta name="twitter:image" content={ogImage} />
+
+    {/* Structured data: sitewide Organization/WebSite graph on every page,
+        plus any page-specific schema (FAQPage, BlogPosting, ...). `<`
+        is escaped so no payload can prematurely close the script tag. */}
+    <script type="application/ld+json" set:html={JSON.stringify(siteGraphSchema()).replace(/</g, '\\u003c')} />
+    {structuredDataList.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+    ))}
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>

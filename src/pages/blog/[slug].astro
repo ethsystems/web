@@ -11,6 +11,8 @@ import DetailPageLayout from '../../layouts/DetailPageLayout.astro';
 import ArticleFooter from '../../components/ArticleFooter.astro';
 import { jekyllSlugify } from '../../lib/jekyllSlug';
 import { isPublished } from '../../lib/posts';
+import { blogPostingSchema } from '../../lib/schema';
+import { site } from '../../lib/site';
 
 function toISODate(d: string | Date | undefined): string {
   if (!d) return '';
@@ -27,6 +29,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
+const { slug } = Astro.params;
 const { Content } = await render(entry);
 const date = toISODate(entry.data.date);
 const sibling = { href: '/blog/', label: 'More writeups' };
@@ -35,6 +38,15 @@ const pills = [
   ...(date ? [{ label: date, emphasis: true }] : []),
   ...(entry.data.author ? [{ label: entry.data.author }] : []),
 ];
+
+const postSchema = blogPostingSchema({
+  title: entry.data.title,
+  description: entry.data.description,
+  date,
+  authors: entry.data.author,
+  image: entry.data.image,
+  url: `${site.domain}/blog/${slug}/`,
+});
 ---
 
 <DetailPageLayout
@@ -49,6 +61,8 @@ const pills = [
   ]}
   lede={entry.data.description}
   pills={pills}
+  image={entry.data.image}
+  structuredData={postSchema}
   centered
 >
   {entry.data.image && (
