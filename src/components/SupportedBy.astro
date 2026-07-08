@@ -1,0 +1,139 @@
+---
+/*
+ * "Supported by" coalition tier — a light-theme adaptation of the tier
+ * row from ~/Repos/coalition/coalition-card.html. Four cells separated
+ * by 1px vertical hairlines, each = wordmark on top + small uppercase
+ * caption below. The SharpLink and SNZ marks are SVG <symbol> defs
+ * (copied verbatim from the coalition card); BitMine and Joseph Lubin
+ * render as type set in --font-sans.
+ */
+---
+
+<section class="supported">
+  <!-- Hidden symbol defs — sym-sharplink + sym-snz-ink copied verbatim
+       from coalition-card.html (light theme; sym-es / sym-snz-gold not
+       needed here). currentColor lets the marks inherit --color-primary
+       from .logo-slot. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="sym-sharplink" viewBox="0 0 136 34"><path fill-rule="evenodd" clip-rule="evenodd" d="M92.644 11.8461C95.8412 11.8461 98.2296 14.7116 98.2296 18.75C98.2296 22.7884 95.8605 25.6346 92.644 25.6346C91.6598 25.623 90.7007 25.3268 89.8841 24.7807C89.0674 24.2345 88.426 23.4615 88.0408 22.5577V30H85.3249V12.1154H88.0408V15.2885C88.6186 13.5193 90.1979 11.8462 92.644 11.8461ZM91.7003 13.7884C89.2735 13.7884 87.9059 15.7307 87.9059 18.7307C87.9059 21.7307 89.2927 23.673 91.7003 23.673C94.1271 23.673 95.4753 21.7499 95.4753 18.7307C95.4753 15.7115 94.1271 13.7884 91.7003 13.7884Z" fill="currentColor"></path><path d="M24.6537 18.6922L6.16344 29.1538L0 25.6731V22.1922L6.18262 25.6731L24.6537 15.2115V18.6922Z" fill="currentColor"></path><path d="M39.6192 6.36538C43.4713 6.36538 46.3604 8.4616 46.8997 11.5385H43.9914C43.4329 9.51931 41.7957 8.65391 39.6 8.65391C37.4043 8.65392 35.5552 9.74999 35.5552 11.3654C35.5552 12.9807 36.7109 13.6154 39.5229 14.2308L41.9499 14.7692C45.6671 15.5769 47.4006 16.9615 47.4006 19.8845C47.4006 23.3076 44.3188 25.6152 39.6577 25.6152C35.6323 25.6152 32.7239 23.3845 32.1461 19.6922H35.0737C35.4204 22.096 37.3079 23.3269 39.7155 23.3269C42.8743 23.3269 44.5884 22.0192 44.5884 20.2115C44.5884 18.4038 43.1631 17.7883 40.2548 17.1537L37.8472 16.6153C34.8618 15.9807 32.7624 14.4807 32.7624 11.6538C32.7624 8.82693 35.7671 6.36541 39.6192 6.36538Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M68.78 11.827C72.8248 11.827 74.4042 14.2885 74.4042 16.8846V25.3461H71.7077V22.6538C70.8217 24.4615 69.7045 25.6152 67.162 25.6152C64.6233 25.6152 62.699 23.8319 62.6935 21.3567C62.6992 18.2873 65.7198 17.6728 68.1251 17.423L71.6883 17.0576V16.8076C71.6883 15.1538 70.7831 13.7692 68.78 13.7692C66.777 13.7692 66.045 14.8653 65.8524 16.0384H63.0981C63.387 13.5 65.5828 11.827 68.78 11.827ZM69.1652 19.0961C67.3933 19.2885 65.448 19.5385 65.448 21.3462C65.448 23.1538 66.6998 23.8653 68.1828 23.8653C70.5134 23.8653 71.6883 22.0192 71.6883 19.7116V18.8268L69.1652 19.0961Z" fill="currentColor"></path><path d="M83.784 14.5384H82.9944C80.5676 14.5384 79.412 15.2884 79.412 17.6345V25.3653H76.7155V12.1154H79.412V15.0962C80.0091 13.2116 81.2995 11.8462 83.784 11.8461V14.5384Z" fill="currentColor"></path><path d="M102.872 25.3653H100.156V6.65384H102.872V25.3653Z" fill="currentColor"></path><path d="M107.899 25.3653H105.183V12.1346H107.899V25.3653Z" fill="currentColor"></path><path d="M117.086 11.8461C120.091 11.8461 121.651 14.1346 121.651 17.0961V25.3653H118.935V17.5577C118.935 14.9615 117.779 13.8269 115.93 13.8269C114.081 13.8269 112.926 14.9808 112.926 17.6153V25.3653H110.21V12.1154H112.926V14.8077C113.503 13.2501 114.794 11.8461 117.086 11.8461Z" fill="currentColor"></path><path d="M126.678 17.7115L132.417 12.1346H135.75L129.702 18.0191L136 25.3653H132.668L126.678 18.3076V25.3653H123.962V6.65384H126.678V17.7115Z" fill="currentColor"></path><path d="M52.0232 14.7884C52.6203 13.2307 53.9108 11.827 56.2028 11.827C59.2074 11.827 60.7674 14.1154 60.7674 17.0769V25.3461H58.0518V17.5383C58.0517 14.9423 56.8961 13.8077 55.0472 13.8077C53.1981 13.8077 52.0424 14.9616 52.0424 17.5962V25.3461H49.3267V6.63468H52.0232V14.7884Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24.6537 11.7308V15.2115L20.0312 12.5962V16.0769L6.16344 23.923L0 20.4423V16.9423L4.62258 19.5576V16.0769L18.4903 8.23079L24.6537 11.7308ZM4.62258 19.5576L6.16344 20.4423L20.0312 12.5962L18.4903 11.7308L4.62258 19.5576Z" fill="currentColor"></path><path d="M24.6537 6.48068V9.98071L18.4903 6.48068L0 16.9423V13.4616L18.4903 3L24.6537 6.48068Z" fill="currentColor"></path><path d="M107.899 9.98071H105.183V6.65384H107.899V9.98071Z" fill="currentColor"></path></symbol>
+      <symbol id="sym-snz-ink" viewBox="0 0 188 74.5"><path d="M25.59 0C37.7223 0 45.7766 7.80566 49.3449 14.8924L39.4555 20.7466C35.6833 15.0978 31.6052 11.9139 25.59 11.9139C19.8807 11.9139 15.8026 15.3032 15.8026 19.925C15.8026 24.3413 18.4534 26.909 24.5705 29.1685L29.4642 31.0172C44.6551 36.4607 51.282 43.1366 51.282 53.4072C51.282 67.3752 38.1302 74.6673 25.9978 74.6673C13.2538 74.6673 3.26247 67.0671 0 57.0019L10.2972 51.5585C12.846 57.31 17.6377 62.4453 25.9978 62.4453C32.3189 62.4453 37.4165 59.3641 37.4165 53.6126C37.4165 47.7583 33.7462 45.1907 25.7939 42.2122L21.2061 40.5689C10.603 36.6661 2.54881 31.3254 2.54881 19.4115C2.54881 8.11378 12.846 0 25.59 0ZM108.375 1.23247H121.731V73.1267H111.536L74.3232 25.7792V73.1267H60.9675V1.23247H71.2646L108.375 48.6827V1.23247ZM187.592 1.23247L152.725 61.521H188V73.1267H131.416L166.284 12.7356H133.354V1.23247H187.592Z" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="container">
+    <div class="section-head">
+      <h2>Supported by</h2>
+      <p class="meta">The coalition standing behind Ethereum Systems.</p>
+    </div>
+    <div class="tier">
+      <div class="cell">
+        <div class="logo-slot"><span class="wm-bitmine">BitMine</span></div>
+        <div class="cap">Ethereum Treasury&thinsp;·&thinsp;BMNR</div>
+      </div>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="cell">
+        <div class="logo-slot"><svg class="wm-sharplink"><use href="#sym-sharplink" /></svg></div>
+        <div class="cap">Ethereum Treasury&thinsp;·&thinsp;SBET</div>
+      </div>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="cell">
+        <div class="logo-slot"><span class="wm-lubin">Joseph Lubin</span></div>
+        <div class="cap">Co-Founder, Ethereum</div>
+      </div>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="cell">
+        <div class="logo-slot"><svg class="wm-snz"><use href="#sym-snz-ink" /></svg></div>
+        <div class="cap">Early Ethereum Backer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .supported {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  /* Tier row mirrors the coalition card: cells stretch to equal height,
+     hairlines run between them. */
+  .tier {
+    display: flex;
+    align-items: stretch;
+  }
+  .cell {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 24px;
+  }
+  .rule {
+    width: 1px;
+    align-self: center;
+    height: 72px;
+    flex: none;
+    background: var(--color-border-strong);
+  }
+  .logo-slot {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+  }
+  .cap {
+    margin-top: 16px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-text-muted);
+  }
+  /* Partner wordmarks — scaled ~70% from the 1600px card. The card uses
+     Inter for BitMine; the site ships Geist (--font-sans) so it stands
+     in. SharpLink + SNZ are SVG marks in ink via currentColor. */
+  .wm-bitmine {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.015em;
+    line-height: 1;
+  }
+  .wm-sharplink {
+    width: 132px;
+    height: 33px;
+    display: block;
+    color: inherit;
+  }
+  .wm-lubin {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: -0.005em;
+    line-height: 1;
+  }
+  .wm-snz {
+    width: 70px;
+    height: 28px;
+    display: block;
+    color: inherit;
+  }
+  /* Collapse to 2×2 (drop hairlines) on tablet, single column on phone. */
+  @media (max-width: 900px) {
+    .tier {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem 0;
+    }
+    .rule { display: none; }
+  }
+  @media (max-width: 560px) {
+    .tier {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

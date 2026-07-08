@@ -17,9 +17,11 @@ interface Props {
   current?: string;
   /** Optional canonical override; defaults to Astro.url. */
   canonical?: string;
+  /** When true, emit a robots noindex,nofollow meta (hidden pages). */
+  noindex?: boolean;
 }
 
-const { title, description, current, canonical } = Astro.props;
+const { title, description, current, canonical, noindex } = Astro.props;
 const fullTitle = title
   ? `${title} · Ethereum Systems`
   : 'Ethereum Systems · Institutional Privacy on Ethereum';
@@ -38,6 +40,7 @@ const ogImage = new URL('/og.png', Astro.site ?? Astro.url).toString();
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canon} />
     <meta name="theme-color" content="#F4F1E6" />
 

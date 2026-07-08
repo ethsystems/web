@@ -14,6 +14,8 @@ tags:
   - proof-of-concept
 ---
 
+*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+
 *This post opens our three-part resilience series on identity, payments, and coordination. Where previous IPTF writeups started from an institutional requirement and designed forward, these start from a failure mode (a sanctioned jurisdiction, a collapsed issuer, an internet shutdown) and work back to what Ethereum can offer. Expect the voice to shift accordingly.*
 
 Self-sovereign identity is a user having the final say over who they are online, and over the status they carry into any system they join. Most coordination problems we care about, whether voting in a DAO, posting in a community forum, claiming aid from an NGO, or settling a regulated transaction, eventually need to answer a question about the person on the other side: are they real, are they unique, do they meet some criterion. Today that question is almost always answered by a single outside authority. A government issues a passport. A platform issues an account. A compliance vendor maintains a list. Identity is where self-sovereignty meets its hardest test, because dependence on that authority is the weak link.

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroMark from '../components/HeroMark.astro';
+import SupportedBy from '../components/SupportedBy.astro';
 import MarkDither from '../components/MarkDither.astro';
 import { site } from '../lib/site';
 import { getStats } from '../lib/stats';
@@ -32,16 +33,20 @@ const latestPosts = allPosts
   .sort((a, b) => b.date.localeCompare(a.date))
   .slice(0, 3);
 
-// FAQ teaser — 5 hand-curated featured questions resolved against the
+// FAQ teaser — 9 hand-curated featured questions resolved against the
 // shared FAQ dataset (src/data/faq.ts). The homepage renders these inline
 // as expandable accordions so the full answer is one click away without a
-// page jump.
+// page jump. Strings must match faq.ts exactly (findFaq is strict equality).
 const FEATURED_FAQ_QS = [
-  'Is Ethereum private enough for institutional use?',
-  'What does MiCA say about on-chain privacy?',
-  'How do viewing keys work for regulatory access?',
-  'Can institutions use DeFi and stay compliant?',
-  'Which privacy solutions are production-ready today?',
+  'What is Ethereum Systems?',
+  'Who is behind it?',
+  'What have you actually built?',
+  'Why does this matter?',
+  'What do you offer institutions?',
+  "What's your relationship with the Ethereum Foundation?",
+  'How do you relate to EthLabs and Ethereum Institutional?',
+  'Is your work open source?',
+  'Where do you operate?',
 ];
 const faqTeasers = FEATURED_FAQ_QS
   .map((q) => findFaq(q))
@@ -341,6 +346,10 @@ const faqTeasers = FEATURED_FAQ_QS
     </div>
   </section>
 
+  <!-- SUPPORTED BY — coalition tier row, between hero and reading paths. -->
+  <SupportedBy />
+
+
   <!-- HOME-FAQ — paired with MarkDither on the right so the
        diamond visual carries some of the section's weight and the FAQ
        column doesn't stretch the full container width. -->
@@ -351,7 +360,7 @@ const faqTeasers = FEATURED_FAQ_QS
         <div class="home-faq-content">
           <div class="section-head">
             <h2>What institutions ask us most</h2>
-            <p class="meta">Five questions we hear repeatedly. Each one links into the full FAQ where the answer cites the relevant pattern, jurisdiction, and approach.</p>
+            <p class="meta">The questions we hear most, answered directly. Each one links into the full FAQ where answers cite the relevant pattern, jurisdiction, and approach.</p>
           </div>
           <div class="home-faq-list">
             {faqTeasers.map((item) => (

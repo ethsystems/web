@@ -8,6 +8,7 @@ export const site = {
   x: 'https://x.com/eth_systems',
   linkedin: 'https://www.linkedin.com/company/ethsystems/',
   email: 'hello@ethsystems.org',
+  careersEmail: 'careers@ethsystems.org',
   // Source repos for the map + PoC content.
   mapRepo: 'https://github.com/ethsystems/map',
   pocsRepo: 'https://github.com/ethsystems/pocs',

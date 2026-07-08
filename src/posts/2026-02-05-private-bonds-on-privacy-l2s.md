@@ -14,6 +14,8 @@ tags:
   - proof-of-concept
 ---
 
+*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+
 In [Part 1](/building-private-bonds-on-ethereum/), we built private zero-coupon bonds from scratch on Ethereum. The result worked, but required three distinct components: a Noir circuit for ZK proofs, a Solidity contract for on-chain state, and a Rust wallet for key management and proof generation. We also needed a trusted relayer (the issuer) to coordinate transactions and prevent frontrunning.
 
 _That architecture raised an obvious question: what if the network itself handled all this complexity?_

@@ -13,6 +13,8 @@ tags:
   - proof-of-concept
 ---
 
+*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+
 In a [recent post](/building-private-transfers-on-ethereum/), we built a shielded pool for private stablecoin transfers on Ethereum L1. The approach works: KYC-gated entry, UTXO commitments, dual-key architecture for selective disclosure. But every transfer writes new commitments and nullifiers to the chain. The pool contract's state grows with every transaction, and every state transition requires on-chain ZK proof verification.
 
 Rather than iterating on the shielded pool, we explored a different approach.

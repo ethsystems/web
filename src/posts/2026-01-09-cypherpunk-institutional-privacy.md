@@ -12,6 +12,8 @@ tags:
   - privacy-map
 ---
 
+*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+
 *The following write-up is based on a [talk](https://youtu.be/NkgErrMXuIk?si=vrccSYpwruI1DK3J) given at Cypherpunk Congress, Devconnect in Buenos Aires, November, 2025.*
 
 Today I'm going to talk about cypherpunks and institutional privacy. These are two words you usually don't see in the same sentence, and I thought it'd be interesting to explore both the overlap and tension between them - cypherpunks and institutions are very different groups of people. What is the intersection, if any, between them when it comes to privacy? How should we think about this?

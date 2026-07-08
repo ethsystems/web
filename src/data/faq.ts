@@ -16,6 +16,71 @@ export interface FaqCategory {
 
 export const faqCategories: FaqCategory[] = [
   {
+    label: 'About Ethereum Systems',
+    questions: [
+      {
+        q: 'What is Ethereum Systems?',
+        a: [
+          'An engineering and research company building confidential systems for institutional Ethereum: the privacy and compliance infrastructure institutions need to put real financial activity on the network.',
+        ],
+        links: [{ label: 'About us', href: '/about/' }],
+      },
+      {
+        q: 'Who is behind it?',
+        a: [
+          "The team behind the Ethereum Foundation's Institutional Privacy Task Force (IPTF).",
+        ],
+        links: [{ label: 'Meet the team', href: '/about/' }],
+      },
+      {
+        q: 'What have you actually built?',
+        a: [
+          'A year of public, open-source work: private bonds (ZK, privacy L2s, FHE), compliance-first private stablecoin transfers, private cross-chain atomic swaps, a validium proof-of-concept, privacy-preserving identity, the Public Rails vs Private Ledgers decision framework, and the Ethereum Privacy Map.',
+        ],
+        links: [
+          { label: 'Writeups', href: '/blog/' },
+          { label: 'Explore the map', href: '/explore/' },
+        ],
+      },
+      {
+        q: 'Why does this matter?',
+        a: [
+          'Every institutional use of Ethereum (tokenization, stablecoins, settlement) eventually hits the same blocker: a public ledger exposes positions, counterparties, and flows that regulated institutions cannot reveal. Confidentiality with built-in compliance is what makes those deployments viable.',
+        ],
+      },
+      {
+        q: 'What do you offer institutions?',
+        a: [
+          'Hands-on engineering engagements: privacy architecture and advisory, workshops that turn interest into concrete requirements, proof-of-concepts that de-risk decisions, and the design and build of confidential systems integrated with existing vendors and infrastructure, through to live implementation. Engagements can start small and scoped.',
+        ],
+        links: [{ label: 'Approaches', href: '/approaches/' }],
+      },
+      {
+        q: "What's your relationship with the Ethereum Foundation?",
+        a: [
+          'We created and ran the Institutional Privacy Task Force at the EF, and we continue that body of work in active collaboration with EF and EF-aligned teams: coordinating the transition together, keeping the artifacts public, and collaborating on public goods, specs, and privacy work. Ethereum Systems is its own company because commercial delivery needs a commercial structure; the collaboration continues.',
+        ],
+      },
+      {
+        q: 'How do you relate to EthLabs and Ethereum Institutional?',
+        a: [
+          "As complementary nodes in the same network, often with overlapping supporters, and as collaborators. EthLabs advances Ethereum's core protocol R&D. Ethereum Institutional is a neutral, non-commercial front door helping institutions understand and navigate the ecosystem. Ethereum Systems is the specialist builder: when an institution moves from evaluating Ethereum to building on it, we're the accountable commercial counterparty that designs and delivers the confidential systems involved.",
+        ],
+      },
+      {
+        q: 'Is your work open source?',
+        a: [
+          "Yes. Our proof-of-concepts, libraries, frameworks, and the Ethereum Privacy Map are public, and we'll keep publishing. Open, verifiable work is how we earn trust.",
+        ],
+        links: [{ label: 'GitHub · map', href: 'https://github.com/ethsystems/map' }],
+      },
+      {
+        q: 'Where do you operate?',
+        a: ['Globally, with deep roots in Asia-Pacific.'],
+      },
+    ],
+  },
+  {
     label: 'Privacy basics',
     questions: [
       {

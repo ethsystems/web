@@ -12,6 +12,8 @@ tags:
   - ethereum
 ---
 
+*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+
 *An institutional decision framework*
 
 Over the past decade, many of us have watched a familiar pattern play out.

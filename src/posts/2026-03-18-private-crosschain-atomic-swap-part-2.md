@@ -13,6 +13,8 @@ tags:
   - proof-of-concept
 ---
 
+*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+
 In [Part 1](/private-crosschain-atomic-swap-part-1/), we built a protocol for private crosschain settlement. Shielded UTXO notes on two chains hide amounts and asset types. Stealth addresses let each party lock a note that only the counterparty can claim, without revealing who that counterparty is on-chain. A fallback timeout guarantees that if anything goes wrong, both parties reclaim their own funds.
 
 The remaining problem is coordination. Each party holds a secret (an ephemeral key and an encrypted salt) that the other needs to claim. Revealing these secrets must happen simultaneously, otherwise whoever goes first can be cheated, whoever goes second can defect. We left the coordinator as a black box. This post opens it.
