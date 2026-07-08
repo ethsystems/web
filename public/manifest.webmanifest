@@ -1,0 +1,32 @@
+{
+  "id": "/",
+  "name": "Ethereum Systems · Institutional Privacy on Ethereum",
+  "short_name": "Ethereum Systems",
+  "description": "Ethereum Systems helps institutions move on-chain with privacy that's performant, secure, usable, and accessible.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#F4F1E6",
+  "background_color": "#F4F1E6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}

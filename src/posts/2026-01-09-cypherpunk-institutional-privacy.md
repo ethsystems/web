@@ -186,9 +186,9 @@ Institutions want privacy on Ethereum. We're building an open, shared privacy ma
 ## Join us
 
 ### Resources
-- GitHub: [ethereum/iptf-map](https://github.com/ethereum/iptf-map)
-- Web: [iptf.ethereum.org](https://iptf.ethereum.org/)
-- X: [@iptf_updates](https://twitter.com/iptf_updates)
+- GitHub: [ethsystems/map](https://github.com/ethsystems/map)
+- Web: [ethsystems.org](https://ethsystems.org/)
+- X: [@eth_systems](https://x.com/eth_systems)
 
 You can contribute patterns, approaches, and vendor notes. Also feel free to come talk with us - bring real constraints and feedback.
 

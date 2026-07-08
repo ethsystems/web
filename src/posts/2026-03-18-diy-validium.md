@@ -121,7 +121,7 @@ Withdrawal is a single-leaf state transition. The bridge verifies the proof, upd
 
 Disclosure is the compliance proof detailed above. Read-only, no state mutation.
 
-The full [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/diy-validium/SPEC.md) covers each operation in detail.
+The full [specification](https://github.com/ethsystems/pocs/tree/master/pocs/diy-validium/SPEC.md) covers each operation in detail.
 
 ## Trust, safety, and trade-offs
 
@@ -139,7 +139,7 @@ If the operator refuses to process your withdrawal (censorship), you can submit 
 
 If the operator disappears entirely (seven days of inactivity), anyone can freeze the bridge permanently. Once frozen, users recover funds by revealing their balance on-chain via a Merkle proof. No ZK proof needed, because there's no one left to hide from. Privacy gets sacrificed for fund recovery. This is the same escape hatch pattern that StarkEx and ZKSync use.
 
-There's a real catch, though. To use the escape hatch, you need to have saved your current public key, balance, salt, leaf index, and Merkle sibling path. The salt changes on every state transition. Lose your current salt and you can't construct a valid commitment. For multi-device setups and institutional key management, this is not a trivial problem. The [SPEC](https://github.com/ethereum/iptf-pocs/tree/master/pocs/diy-validium/SPEC.md) describes layered DA extensions to reduce the burden: blob checkpoints (operator periodically posts Merkle snapshots to EIP-4844 blobs) and encrypted blobs (data encrypted to a DA committee, preserving privacy until escape is actually needed).
+There's a real catch, though. To use the escape hatch, you need to have saved your current public key, balance, salt, leaf index, and Merkle sibling path. The salt changes on every state transition. Lose your current salt and you can't construct a valid commitment. For multi-device setups and institutional key management, this is not a trivial problem. The [SPEC](https://github.com/ethsystems/pocs/tree/master/pocs/diy-validium/SPEC.md) describes layered DA extensions to reduce the burden: blob checkpoints (operator periodically posts Merkle snapshots to EIP-4844 blobs) and encrypted blobs (data encrypted to a DA committee, preserving privacy until escape is actually needed).
 
 ### The trust model
 
@@ -182,7 +182,7 @@ On the engineering side: the operator is centralized (production would use a DA 
 
 A few questions we keep returning to:
 
-**Private shared state.** This validium gives one operator full visibility. But what about two institutions that want to share a ledger (bilateral netting positions, a shared collateral pool) without either seeing the other's full book? That's the private shared state problem. TACEO's Merces uses MPC with co-SNARKs: parties secret-share their inputs and jointly produce a ZK proof without any single node seeing plaintext. FHE-based approaches compute over encrypted data directly. TEE-based approaches (like the [Nitro enclave work](/private-crosschain-atomic-swap-part-2/) we explored earlier) use hardware isolation. Each makes different bets on simplicity, throughput, and trust. The [IPTF map](https://github.com/ethereum/iptf-map) breaks down these patterns in detail.
+**Private shared state.** This validium gives one operator full visibility. But what about two institutions that want to share a ledger (bilateral netting positions, a shared collateral pool) without either seeing the other's full book? That's the private shared state problem. TACEO's Merces uses MPC with co-SNARKs: parties secret-share their inputs and jointly produce a ZK proof without any single node seeing plaintext. FHE-based approaches compute over encrypted data directly. TEE-based approaches (like the [Nitro enclave work](/private-crosschain-atomic-swap-part-2/) we explored earlier) use hardware isolation. Each makes different bets on simplicity, throughput, and trust. The [IPTF map](https://github.com/ethsystems/map) breaks down these patterns in detail.
 
 **Cross-validium transfers.** Moving funds between validiums currently requires a public withdraw-then-deposit cycle, which links the two operations on-chain. Private atomic bridges are unsolved. The fundamental tension is between privacy, atomicity, and latency, and it's not clear you can have all three.
 
@@ -190,4 +190,4 @@ A few questions we keep returning to:
 
 The `assert!` line in the guest program is the whole point. The guest program is where business logic lives. Everything else, the Merkle tree, the bridge contract, the escape hatch, exists to make that one line trustworthy on a public chain.
 
-The full implementation is [open source](https://github.com/ethereum/iptf-pocs/tree/master/pocs/diy-validium), with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/diy-validium/SPEC.md) and [formal requirements](https://github.com/ethereum/iptf-pocs/tree/master/pocs/diy-validium/REQUIREMENTS.md). For production validium infrastructure, ZKSync's Prividium provides this architecture with production DA and sequencing. The code is open and we'd welcome feedback.
+The full implementation is [open source](https://github.com/ethsystems/pocs/tree/master/pocs/diy-validium), with a detailed [specification](https://github.com/ethsystems/pocs/tree/master/pocs/diy-validium/SPEC.md) and [formal requirements](https://github.com/ethsystems/pocs/tree/master/pocs/diy-validium/REQUIREMENTS.md). For production validium infrastructure, ZKSync's Prividium provides this architecture with production DA and sequencing. The code is open and we'd welcome feedback.

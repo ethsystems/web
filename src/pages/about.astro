@@ -1,19 +1,20 @@
 ---
 /*
- * About page — ported from ethereum/iptf-web (`src/pages/about.astro`,
- * test_guide branch). Light theme + our tokens. Copy adapted to use
- * "institutional" instead of "enterprise" per Yanis's tweak (already
- * applied site-wide elsewhere).
+ * About page — ported from ethsystems/web (`src/pages/about.astro`,
+ * test_guide branch). Light theme + our tokens. Copy uses
+ * "institutional" rather than "enterprise", consistent with the rest
+ * of the site.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { site } from '../lib/site';
 
 const pageDescription =
-  'The Institutional Privacy Task Force (IPTF) helps onboard institutions onto Ethereum with privacy-preserving solutions.';
+  'Ethereum Systems helps institutions move on-chain with privacy-preserving solutions.';
 ---
 
 <BaseLayout
-  title="About IPTF"
+  title="About"
   description={pageDescription}
   current="/about/"
 >
@@ -22,8 +23,8 @@ const pageDescription =
       { label: 'Home', href: '/' },
       { label: 'About' },
     ]}
-    title="Institutional Privacy Task Force"
-    lede="The Institutional Privacy Task Force (IPTF) is a small team that helps onboard institutions onto Ethereum with a focus on privacy needs being met in a performant, secure, usable, and accessible way."
+    title="Ethereum Systems"
+    lede="Ethereum Systems is a small team that helps onboard institutions onto Ethereum with a focus on privacy needs being met in a performant, secure, usable, and accessible way."
   />
 
   <section class="about-section">
@@ -35,7 +36,7 @@ const pageDescription =
            the prominent slot now, source repos live in the footer. -->
       <div class="about-pipeline">
         <h2>Our own research and prototypes</h2>
-        <p class="about-pipeline-lede">The Privacy Cluster prototypes and tests its own solutions directly with institutions, gathering real insights and best practices along the way.</p>
+        <p class="about-pipeline-lede">Ethereum Systems prototypes and tests its own solutions directly with institutions, gathering real insights and best practices along the way.</p>
         <ol class="about-pipeline-steps">
           {[
             ['1', 'Interview', 'Meet institutions under NDA to gather concrete requirements.'],
@@ -53,19 +54,16 @@ const pageDescription =
         </ol>
       </div>
 
-      <!-- TEAM — 4 people working on IPTF. Twitter handle is the
-           public-facing one. Mo & Aaryamann have dedicated headshots
-           supplied by the team; Oskar & Yanis fall back to their
-           GitHub avatars (GitHub allows referrer-free hotlinks via
-           the `<user>.png` URL; Twitter does not). -->
+      <!-- TEAM — 3 people at Ethereum Systems. The X (Twitter) handle
+           is the public-facing one; each member has a dedicated
+           headshot supplied by the team. -->
       <div class="about-team">
-        <h2>Who is behind IPTF</h2>
+        <h2>Who is behind Ethereum Systems</h2>
         <ul class="about-team-grid">
           {[
             { name: 'Mo Jalil',           handle: 'motypes',     avatar: '/assets/images/team/mo-jalil.jpg',                  linkedin: 'motypes' },
             { name: 'Oskar Thorén',       handle: 'oskarth',     avatar: '/assets/images/team/oskar-thoren.jpg',              linkedin: null },
-            { name: 'Yanis Meziane',      handle: 'yanis_mezn',  avatar: '/assets/images/team/yanis-meziane.jpg',             linkedin: 'yanism' },
-            { name: 'Aaryamann Challani', handle: 'p1ge0nh8er',  avatar: '/assets/images/team/aaryamann-challani.jpg',        linkedin: 'aaryamannc' },
+            { name: 'Aaryamann Challani', handle: '_rymnc',  avatar: '/assets/images/team/aaryamann-challani.jpg',        linkedin: 'aaryamannc' },
           ].map((p) => (
             <li class="about-team-card">
               <img
@@ -105,7 +103,7 @@ const pageDescription =
       <div class="about-workshops">
         <div class="about-workshops-text">
           <h2>Workshops</h2>
-          <p>The task force travels to meet institutions where they are. Each session is built around the host's actual context: their regulatory environment, in-flight projects, and technical maturity. We've held workshops in Asia, Europe, and online, with sessions on the calendar across more regions.</p>
+          <p>The team travels to meet institutions where they are. Each session is built around the host's actual context: their regulatory environment, in-flight projects, and technical maturity. We've held workshops in Asia, Europe, and online, with sessions on the calendar across more regions.</p>
           <aside class="about-workshops-cta">
             <div class="about-workshops-cta-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -115,7 +113,7 @@ const pageDescription =
             </div>
             <div class="about-workshops-cta-body">
               <strong>Host a session</strong>
-              <p>Institutions, vendors, and regulators who would benefit from a tailored workshop in their region can <a href="mailto:iptf@ethereum.org">get in touch</a>.</p>
+              <p>Institutions, vendors, and regulators who would benefit from a tailored workshop in their region can <a href={`mailto:${site.email}`}>get in touch</a>.</p>
             </div>
           </aside>
         </div>
@@ -124,20 +122,20 @@ const pageDescription =
               UA presentational hints that compete with CSS aspect-ratio
               and silently force the photos back to their intrinsic
               tall proportions. CSS below is the single source of truth. */}
-          <img class="workshop-photos__a" src="/assets/images/workshops/workshop-1.jpg" alt="IPTF workshop in session" loading="lazy" />
-          <img class="workshop-photos__b" src="/assets/images/workshops/workshop-2.jpg" alt="IPTF workshop attendees in discussion" loading="lazy" />
+          <img class="workshop-photos__a" src="/assets/images/workshops/workshop-1.jpg" alt="Ethereum Systems workshop in session" loading="lazy" />
+          <img class="workshop-photos__b" src="/assets/images/workshops/workshop-2.jpg" alt="Ethereum Systems workshop attendees in discussion" loading="lazy" />
         </figure>
       </div>
 
       <div class="about-contact">
         <h2>Talk to us</h2>
-        <p class="about-contact-lede">Complete this form so we can understand your request and respond promptly.</p>
+        <p class="about-contact-lede">Book a call so we can understand your request and respond promptly.</p>
         <div class="contact-row">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScK2SW0fxXU_h6SGPiBCRiodWFuv-H1BfA3wXh79RPbOT8OKg/viewform" target="_blank" rel="noopener" class="contact-card">
+          <a href={site.bookACallUrl} target="_blank" rel="noopener noreferrer" class="contact-card">
             <div class="contact-label">Institutions &amp; vendors</div>
-            <div class="contact-value">Contact form<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" /></svg></div>
+            <div class="contact-value">Book a call<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" /></svg></div>
           </a>
-          <a href="mailto:iptf@ethereum.org" class="contact-email">iptf@ethereum.org</a>
+          <a href={`mailto:${site.email}`} class="contact-email">{site.email}</a>
         </div>
       </div>
 
@@ -319,7 +317,7 @@ const pageDescription =
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
   }
   @media (max-width: 720px) {

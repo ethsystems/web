@@ -37,7 +37,7 @@ for (const uc of useCases) {
 const orderedDomains: Domain[] = domainIndex.names.filter((d) => grouped.get(d)!.length > 0);
 
 // Per-domain primer is the domain's frontmatter `description` (a curated
-// one-liner, iptf-map PR #173). Falls back to the first ## TLDR bullet
+// one-liner, ethsystems/map PR #173). Falls back to the first ## TLDR bullet
 // where no description exists yet. Links to the domain detail page.
 function domainPrimer(d: Domain): { html: string; href: string } | undefined {
   const entry = domainIndex.entryFor(d) as

@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This is the IPTF (Institutional Privacy Task Force) website repository. Astro static site deployed at https://iptf.ethereum.org/.
+This is the Ethereum Systems website repository. Astro static site deployed at https://ethsystems.org/.
 
-Map content (patterns, approaches, use-cases, vendors, domains, jurisdictions) is the projection of the [`iptf-map`](https://github.com/ethereum/iptf-map) repo, pinned as a submodule at `content/`. Blog writeups live in `src/posts/`.
+Map content (patterns, approaches, use-cases, vendors, domains, jurisdictions) is the projection of the [`map`](https://github.com/ethsystems/map) repo, pinned as a submodule at `content/`. Blog writeups live in `src/posts/`.
 
 ## Tech Stack
 
@@ -17,8 +17,8 @@ Map content (patterns, approaches, use-cases, vendors, domains, jurisdictions) i
 ## Key Files
 
 - `astro.config.mjs` — Astro config (site URL, integrations).
-- `content/` — iptf-map submodule.
-- `scripts/build-graph.mjs` — Reads iptf-map → `src/data/graph.json`.
+- `content/` — map submodule (`ethsystems/map`).
+- `scripts/build-graph.mjs` — Reads the map submodule → `src/data/graph.json`.
 - `src/posts/` — Blog post markdown (filename: `YYYY-MM-DD-slug.md`).
 - `src/pages/` — Routes. `blog/[slug].astro` is the post detail page.
 - `src/layouts/` — `Guide.astro` (default), `Post.astro` (writeups).
@@ -39,7 +39,7 @@ Requires Node 22.
 
 ## Source-of-truth rule
 
-iptf-map main is the only source of truth for map content. Anything sourced from the submodule renders verbatim. Render sites are marked with `SOURCE: iptf-map field — do not alter` comments.
+The map repo (`ethsystems/map`) main is the only source of truth for map content. Anything sourced from the submodule renders verbatim. Render sites are marked with `SOURCE: map field — do not alter` comments.
 
 UI chrome (landing copy, FAQ, blog index, post layout) is the site's own and stays curated.
 
@@ -75,12 +75,12 @@ The published URL derives from the title via Jekyll-compatible slugify. Hero ima
 - Location: `public/assets/images/<date-slug>/`.
 - Format: JPG, PNG, WEBP, or SVG.
 
-## Updating iptf-map content
+## Updating map content
 
 ```bash
 git submodule update --remote content
 git add content
-git commit -m "chore(content): bump iptf-map submodule"
+git commit -m "chore(content): bump map submodule"
 ```
 
 ## Deployment

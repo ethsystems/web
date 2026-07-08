@@ -8,7 +8,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://iptf.ethereum.org',
+  site: 'https://ethsystems.org',
   trailingSlash: 'always',
   build: {
     format: 'directory',

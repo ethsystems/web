@@ -12,12 +12,13 @@
  *         spec: pocs/<approach-folder>/<variant>/SPEC.md
  *         status: implemented | benchmarked | ...
  *
- * The folder + requirements + spec paths are relative to the `iptf-pocs`
+ * The folder + requirements + spec paths are relative to the `ethsystems/pocs`
  * repo, not the rendered site. We link them to the GitHub repo so users
  * can browse the spec without needing local clones.
  */
 
 import { statusTone } from '../lib/statusTone';
+import { site } from '../lib/site';
 
 interface Poc {
   name: string;
@@ -35,16 +36,16 @@ interface Props {
 const { folder, requirements, pocs = [] } = Astro.props;
 if (!folder && !requirements && pocs.length === 0) return null;
 
-const REPO_BASE = 'https://github.com/ethereum/iptf-pocs/tree/master';
-const BLOB_BASE = 'https://github.com/ethereum/iptf-pocs/blob/master';
+const REPO_BASE = `${site.pocsRepo}/tree/master`;
+const BLOB_BASE = `${site.pocsRepo}/blob/master`;
 
 function repoLink(path: string, kind: 'tree' | 'blob' = 'blob'): string {
   return `${kind === 'tree' ? REPO_BASE : BLOB_BASE}/${path}`;
 }
 ---
 
-<section class="iptf-pocs">
-  <h3>IPTF prototypes</h3>
+<section class="pocs">
+  <h3>Prototypes</h3>
   {(folder || requirements) && (
     <div class="links">
       {folder && (
@@ -82,14 +83,14 @@ function repoLink(path: string, kind: 'tree' | 'blob' = 'blob'): string {
 </section>
 
 <style>
-  .iptf-pocs {
+  .pocs {
     margin: 2rem 0;
     padding: 1.4rem 1.5rem;
     background: var(--color-bg-subtle);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
   }
-  .iptf-pocs h3 {
+  .pocs h3 {
     font-family: var(--font-sans);
     font-size: 1.15rem;
     font-weight: 700;
@@ -120,7 +121,7 @@ function repoLink(path: string, kind: 'tree' | 'blob' = 'blob'): string {
     font-family: var(--font-mono);
     font-size: 12px;
   }
-  .iptf-pocs ul {
+  .pocs ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -128,7 +129,7 @@ function repoLink(path: string, kind: 'tree' | 'blob' = 'blob'): string {
     flex-direction: column;
     gap: 0.7rem;
   }
-  .iptf-pocs li {
+  .pocs li {
     padding: 0.85rem 1rem;
     background: var(--color-bg);
     border: 1px solid var(--color-border);

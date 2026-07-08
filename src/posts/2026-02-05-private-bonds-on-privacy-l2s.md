@@ -214,6 +214,6 @@ The tradeoffs are also structural to this approach:
 
 For teams that want to ship a prototype without building cryptographic infrastructure from scratch, privacy L2s offer a faster starting point. For teams that need precise control over every layer, the custom UTXO approach from Part 1 remains viable.
 
-The full implementation (on Aztec) is [open source](https://github.com/ethereum/iptf-pocs/tree/main/pocs/private-bond/privacy-l2), with a detailed [specification](https://github.com/ethereum/iptf-pocs/blob/main/pocs/private-bond/privacy-l2/SPEC.md) covering the protocol design.
+The full implementation (on Aztec) is [open source](https://github.com/ethsystems/pocs/tree/main/pocs/private-bond/privacy-l2), with a detailed [specification](https://github.com/ethsystems/pocs/blob/main/pocs/private-bond/privacy-l2/SPEC.md) covering the protocol design.
 
 In Part 3, we will explore a third approach: fully homomorphic encryption (FHE). Where UTXO models hide data by never putting it on-chain, FHE allows computation on encrypted data directly. Different cryptography, different tradeoffs, same institutional requirements.

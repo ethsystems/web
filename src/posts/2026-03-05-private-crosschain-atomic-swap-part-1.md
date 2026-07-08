@@ -71,7 +71,7 @@ What we need is a way for Alice to lock a note that _only_ Bob can spend, withou
 
 ### Stealth addresses
 
-[Stealth addresses](https://github.com/ethereum/iptf-map/blob/master/patterns/pattern-stealth-addresses.md) solve a simple problem: Bob has a public key known to everyone, and Alice wants to send him funds without anyone else being able to tell that Bob is the recipient. She uses Bob's public key to derive a fresh one-time address that only Bob can spend from, but that no observer can link back to him.
+[Stealth addresses](https://github.com/ethsystems/map/blob/master/patterns/pattern-stealth-addresses.md) solve a simple problem: Bob has a public key known to everyone, and Alice wants to send him funds without anyone else being able to tell that Bob is the recipient. She uses Bob's public key to derive a fresh one-time address that only Bob can spend from, but that no observer can link back to him.
 
 Each participant has a long-lived meta key pair `(meta_sk, meta_pk)` that is published. To lock a note for a counterparty, the sender generates a fresh ephemeral key pair `(eph_sk, eph_pk)` (conventionally written `r, R = r·G`) and computes a shared secret via ECDH:
 
@@ -144,7 +144,7 @@ ZK circuits verify note formation and ownership. Shielded pools prevent double-s
 
 The coordinator is the only component not yet specified. It could be built from a Trusted Execution Environment, a multi-party computation protocol, or fully homomorphic encryption, each with different trust assumptions and performance trade-offs. In Part 2, we pick one: a TEE running in AWS Nitro Enclaves. We go inside the enclave, examine what attestation actually proves, work through the real attack surfaces, and walk through what the demo logs show.
 
-The full implementation is open source, with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
+The full implementation is open source, with a detailed [specification](https://github.com/ethsystems/pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
 
 ## References
 

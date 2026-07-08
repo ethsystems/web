@@ -1,8 +1,8 @@
 ---
 /*
- * Approach detail — section-routed render ported from ethereum/iptf-web.
+ * Approach detail — section-routed render ported from ethsystems/web.
  *
- * Per the iptf-web merge handoff (notes/iptf-web-merge-handoff.md): the
+ * Per the ethsystems/web merge handoff (notes/ethsystems/web-merge-handoff.md): the
  * upstream approach markdown has a fixed H2 structure (Problem framing,
  * Approaches, Comparison, Persona perspectives, Recommendation, Open
  * questions, Example scenario). Instead of flat-rendering the body, we
@@ -558,7 +558,7 @@ function maturityTone(m?: string): 'strong' | 'mid' | 'plain' | 'muted' {
       {entry.data.iptf_pocs && Array.isArray(entry.data.iptf_pocs.pocs) && entry.data.iptf_pocs.pocs.length > 0 && (
         <details class="rail-section">
           <summary class="rail-label">
-            <span>IPTF prototypes</span>
+            <span>Prototypes</span>
             <span class="rail-count">{entry.data.iptf_pocs.pocs.length}</span>
           </summary>
           {entry.data.iptf_pocs.pocs.map((poc: any) => (
@@ -1280,7 +1280,7 @@ function maturityTone(m?: string): 'strong' | 'mid' | 'plain' | 'muted' {
   }
   .rail-link:hover { color: var(--color-cta); }
 
-  /* IPTF prototypes — one row per POC, compact. */
+  /* Ethereum Systems prototypes — one row per POC, compact. */
   .rail-poc {
     padding: 0.55rem 0;
     border-bottom: 1px solid var(--color-border);

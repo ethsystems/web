@@ -34,7 +34,7 @@ export const faqCategories: FaqCategory[] = [
         q: 'What does "private" actually mean on a public blockchain?',
         a: [
           'Privacy on Ethereum means controlling what information is visible and to whom. The spectrum ranges from anonymity (unlinkable addresses, but amounts may be visible) to full confidentiality (amounts, counterparties, and transaction patterns all hidden). Most institutional solutions sit somewhere in between, using selective disclosure to reveal specific data to authorized parties like regulators.',
-          'The IPTF uses the I2I/I2U distinction to clarify threat models: in institution-to-institution contexts, both parties have symmetric trust and shared compliance burden. In institution-to-user contexts, the power dynamic is asymmetric and privacy protections must favor the weaker party.',
+          'Ethereum Systems uses the I2I/I2U distinction to clarify threat models: in institution-to-institution contexts, both parties have symmetric trust and shared compliance burden. In institution-to-user contexts, the power dynamic is asymmetric and privacy protections must favor the weaker party.',
         ],
         links: [
           { label: 'Regulatory disclosure', href: '/patterns/pattern-regulatory-disclosure-keys-proofs/' },

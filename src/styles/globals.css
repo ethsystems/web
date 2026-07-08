@@ -15,7 +15,7 @@ body {
   font-size: 16px;
   line-height: 1.65;
   color: var(--color-text);
-  background: var(--color-bg);
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -58,13 +58,14 @@ a:hover { color: var(--color-cta-hover); }
   margin-bottom: 3rem;
 }
 .section-head h2 {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: clamp(2.15rem, 3.8vw, 2.85rem);
-  line-height: 1.14;
-  letter-spacing: -0.025em;
+  font-family: var(--font-display);
+  font-weight: 420;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  font-size: clamp(2.15rem, 3.8vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.012em;
   color: var(--color-primary);
-  max-width: 30ch;
+  max-width: 24ch;
   margin-bottom: 0.25rem;
 }
 .section-head .meta {
@@ -173,8 +174,8 @@ section.block {
      result was text visibly sitting above center. With nowrap (single line)
      and no overflow:hidden, descenders render safely outside the line box. */
   line-height: 1;
-  letter-spacing: -0.005em;
-  border-radius: var(--radius-sm);
+  letter-spacing: 0;
+  border-radius: 0;
   padding: 0.6rem 1.05rem;
   border: 1px solid transparent;
   transition: background var(--duration-fast) var(--easing-soft),
@@ -242,19 +243,21 @@ section.block {
   border-top: none;
 }
 .prose h1 {
-  font-family: var(--font-sans);
-  font-size: clamp(1.75rem, 3vw, 2.1rem);
-  font-weight: 700;
-  letter-spacing: -0.022em;
-  line-height: 1.18;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 2.5rem);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  letter-spacing: -0.014em;
+  line-height: 1.08;
   color: var(--color-primary);
 }
 .prose h2 {
-  font-family: var(--font-sans);
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.018em;
-  line-height: 1.25;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 420;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  letter-spacing: -0.01em;
+  line-height: 1.14;
   color: var(--color-primary);
   /* Symmetric spacing: equal breathing room above and below the
      divider line so it reads as a section break, not as crowded
@@ -437,6 +440,56 @@ section.block {
   color: var(--color-neutral-strong);
   background: var(--color-neutral-tint);
 }
+
+/* ───── kicker (eyebrow) ───── */
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-kicker);
+  font-weight: 500;
+  letter-spacing: var(--tr-kicker);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ───── skip link ───── */
+.skip-link {
+  position: absolute;
+  top: var(--s-2);
+  left: var(--s-2);
+  z-index: 200;
+  transform: translateY(-150%);
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--paper);
+  background-color: var(--ink);
+  border-radius: var(--r-sm);
+  transition: transform var(--dur-1) var(--ease);
+}
+.skip-link:focus { transform: translateY(0); }
+
+/* ───── focus ring + selection ───── */
+:where(a, area, button, input, label[for], select, summary, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+::selection { background: color-mix(in srgb, var(--navy) 15%, transparent); }
+
+/* ───── paper grain overlay ─────
+   Fixed, non-interactive, multiply-blended paper grain. Inline SVG data URI
+   (fractalNoise). No network request. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-repeat: repeat;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='120'%20height='120'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.9'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media print { .grain { display: none; } }
 
 /* ───── reduced motion ───── */
 @media (prefers-reduced-motion: reduce) {

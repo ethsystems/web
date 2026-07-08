@@ -25,7 +25,7 @@ Zero-coupon bonds are bonds sold at a discount that pay their full face value at
 
 A simple example is: Alice buys a bond from Bob for $950 today that will be worth $1,000 in one year. Alice holds the bond until maturity, then redeems it for the full $1,000. The $50 difference is her return, no interest payments needed in between.
 
-Private bonds are one of the use cases documented in the [IPTF Map](https://github.com/ethereum/iptf-map), specifically in the [private bonds approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-bonds.md) where we're drawing the foundation of the explored PoC. The Map is the knowledge base we're building to help institutions navigate privacy on Ethereum. This particular use case emerged from discussions with a major European bank, who laid out their requirements in detail.
+Private bonds are one of the use cases documented in the [IPTF Map](https://github.com/ethsystems/map), specifically in the [private bonds approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-bonds.md) where we're drawing the foundation of the explored PoC. The Map is the knowledge base we're building to help institutions navigate privacy on Ethereum. This particular use case emerged from discussions with a major European bank, who laid out their requirements in detail.
 
 When you're trying to bring privacy to financial products on-chain, you want to start with the simplest possible instrument. Zero-coupon bonds are ideal: no periodic coupon payments, no price feeds from oracles, no daily rebalancing. A single timestamp check is enough to enforce the entire contract.
 

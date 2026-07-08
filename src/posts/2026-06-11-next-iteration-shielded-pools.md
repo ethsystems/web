@@ -26,7 +26,7 @@ No design solves all of these at once. Our prototype tries to solve two: the on-
 
 ## What our prototype takes on
 
-We built an extension on top of the working pool from the last post, keeping its note format and flows intact, and pointed it at two of those problems: keeping the on-chain state bounded, and letting a wallet read what it needs without anyone watching. The full [specification and implementation](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/shielded-pool-extension) are open.
+We built an extension on top of the working pool from the last post, keeping its note format and flows intact, and pointed it at two of those problems: keeping the on-chain state bounded, and letting a wallet read what it needs without anyone watching. The full [specification and implementation](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/shielded-pool-extension) are open.
 
 The rest of this post follows a spend through both, starting with the read.
 
@@ -117,6 +117,6 @@ PIR reads a known row without revealing which one. That is the part our prototyp
 
 Four problems stand between a working shielded pool and private payments at scale. The prototype settles two of them. Epoch nullifiers bound the *active* nullifier state, so the set every validator has to consult stays a fixed size instead of growing without end. PIR lets a wallet read a known row, its note's commitment path, without revealing which row to the provider. What it does not settle is the harder problem the work surfaced. Finding the neighbor leaf in a nullifier tree and finding your notes in the crowd are both private selection, and neither reduces to a known-index fetch.
 
-This was a proof-of-concept, built to make that gap concrete. The [specification and code](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/shielded-pool-extension) are open, the [earlier](/building-private-bonds-on-ethereum/) [posts](/building-private-transfers-on-ethereum/) build the pool it extends, and the IPTF map carries the [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/private-stablecoins.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-payments.md) for context.
+This was a proof-of-concept, built to make that gap concrete. The [specification and code](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/shielded-pool-extension) are open, the [earlier](/building-private-bonds-on-ethereum/) [posts](/building-private-transfers-on-ethereum/) build the pool it extends, and the IPTF map carries the [use case](https://github.com/ethsystems/map/blob/master/use-cases/private-stablecoins.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-payments.md) for context.
 
 The work splits across two fronts. Ethereum's roadmap is taking on censorship resistance, gas abstraction, and scaling at the protocol level. Cryptographic research is closing the rest, and private selection is the hardest piece left.

@@ -1,4 +1,7 @@
 ---
+import { site } from '../lib/site';
+import logoHorizontal from '../assets/logos/logo-horizontal-black.svg?raw';
+
 interface Props {
   /** Optional active path so the current section can be highlighted. */
   current?: string;
@@ -14,8 +17,8 @@ function isActive(path: string): boolean {
 
 <header class="nav-bar">
   <div class="container nav-inner">
-    <a class="brand" href="/" aria-label="IPTF — Institutional Privacy Task Force, an Ethereum Foundation initiative">
-      <img class="brand-logo" src="/logo.svg" alt="IPTF — Institutional Privacy Task Force" width="219" height="40" />
+    <a class="brand" href="/" aria-label="Ethereum Systems">
+      <span class="brand-logo" aria-hidden="true" set:html={logoHorizontal}></span>
     </a>
     <nav class="nav-primary">
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
@@ -26,7 +29,7 @@ function isActive(path: string): boolean {
       <a href="/patterns/" class:list={[{ active: isActive('/patterns') }]}>Building blocks</a>
       <a href="/blog/" class:list={[{ active: isActive('/blog') }]}>Blog</a>
       <a href="/about/" class:list={[{ active: isActive('/about') }]}>About</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScK2SW0fxXU_h6SGPiBCRiodWFuv-H1BfA3wXh79RPbOT8OKg/viewform" class="btn ghost nav-cta" target="_blank" rel="noopener">Contact us<span class="ext-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+      <a href={site.bookACallUrl} class="btn primary nav-cta" target="_blank" rel="noopener noreferrer">Book a call</a>
     </nav>
   </div>
 </header>
@@ -34,7 +37,7 @@ function isActive(path: string): boolean {
 <style>
   .nav-bar {
     border-bottom: 1px solid var(--color-border);
-    background: rgba(255, 255, 255, 0.88);
+    background: color-mix(in srgb, var(--paper) 85%, transparent);
     backdrop-filter: saturate(180%) blur(12px);
     -webkit-backdrop-filter: saturate(180%) blur(12px);
     position: sticky;
@@ -52,32 +55,18 @@ function isActive(path: string): boolean {
   .brand {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
     text-decoration: none;
-    color: var(--color-primary);
+    color: var(--ink);
     min-width: 0;
   }
   .brand-logo {
-    height: 32px;
-    width: auto;
+    display: inline-flex;
     flex-shrink: 0;
   }
-  .brand-text {
-    font-weight: 700;
-    font-size: 14.5px;
-    letter-spacing: -0.005em;
-    line-height: 1.25;
-    color: var(--color-primary);
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-  .brand-text .org-tag {
+  .brand-logo :global(svg) {
     display: block;
-    font-weight: 400;
-    font-size: 11.5px;
-    color: var(--color-text-muted);
-    margin-top: 1px;
-    letter-spacing: 0;
+    height: 30px;
+    width: auto;
   }
   .nav-primary {
     display: flex;
@@ -85,7 +74,7 @@ function isActive(path: string): boolean {
     gap: 0.25rem;
     min-width: 0;
   }
-  /* Plain nav links — exclude .btn so the primary CTA keeps its white-on-blue. */
+  /* Plain nav links — exclude .btn so the primary CTA keeps its white-on-navy. */
   .nav-primary > a:not(.btn) {
     padding: 0.5rem 0.85rem;
     color: var(--color-text-secondary);
@@ -101,12 +90,7 @@ function isActive(path: string): boolean {
     color: var(--color-primary);
     background: var(--color-bg-subtle);
   }
-  .nav-primary .sep {
-    width: 1px;
-    height: 18px;
-    background: var(--color-border);
-    margin: 0 0.5rem;
-  }
+  .nav-cta { margin-left: 0.5rem; }
 
   /* hamburger toggle */
   .nav-toggle {
@@ -139,8 +123,6 @@ function isActive(path: string): boolean {
   }
   @media (max-width: 500px) {
     .nav-inner { gap: 0.75rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
-    .brand { gap: 0.6rem; }
-    .brand-text { font-size: 13px; }
-    .brand-text .org-tag { font-size: 10.5px; }
+    .brand-logo :global(svg) { height: 26px; }
   }
 </style>

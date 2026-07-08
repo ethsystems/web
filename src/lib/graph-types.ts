@@ -37,7 +37,9 @@ export interface OpenSourceImpl {
   language?: string;
 }
 
-export interface IptfPocsBlock {
+// `iptf_pocs` is the upstream frontmatter field name in the map content
+// (ethsystems/map); the key stays verbatim, the block type is ours.
+export interface PocsBlock {
   folder?: string;
   requirements?: string;
   pocs?: Array<{
@@ -93,7 +95,7 @@ export interface GraphNode {
   standards?: string[];
   related_patterns?: RelatedPatterns;
   open_source_implementations?: OpenSourceImpl[];
-  iptf_pocs?: IptfPocsBlock;
+  iptf_pocs?: PocsBlock;
   primary_patterns?: string[];
   supporting_patterns?: string[];
   related_use_cases?: string[];

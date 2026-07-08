@@ -2,7 +2,7 @@
  * Detail-page "Related" data: outgoing markdown links from a body,
  * grouped by collection, plus sibling-in-same-domain helpers.
  *
- * iptf-map cross-link conventions (verified):
+ * ethsystems/map cross-link conventions (verified):
  *   - `../{collection}/{slug}.md` for cross-folder
  *   - `{slug}.md` for same-folder (no `./`)
  *   - No anchor fragments are used in internal links
@@ -312,7 +312,7 @@ let cachedIndex: Promise<RawIndex> | null = null;
 
 /*
  * Per-collection frontmatter conventions for cross-links, as observed
- * in iptf-map's authored content. Each entry tells us which keys on
+ * in ethsystems/map's authored content. Each entry tells us which keys on
  * `entry.data` carry slug references to which target collection.
  */
 interface FmRefRule {

@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 /*
- * Content collections wired directly to the iptf-map submodule at
+ * Content collections wired directly to the ethsystems/map submodule at
  * ../content-source/. Upstream frontmatter is the single source of
  * truth — schemas declare every field we consume in the renderer so
  * the build catches missing or mistyped values early. Unknown extras
@@ -158,7 +158,7 @@ const domains = defineCollection({
     .object({
       title: z.string(),
       status: z.string().optional(),
-      // One-line domain summary (iptf-map PR #173). Used as the section
+      // One-line domain summary (ethsystems/map PR #173). Used as the section
       // primer on the /use-cases/ and /approaches/ listings.
       description: z.string().optional(),
     })
@@ -215,8 +215,8 @@ const weeklyUpdates = defineCollection({
 });
 
 /*
- * Long-form posts authored upstream at ethereum/iptf-web (NOT in
- * iptf-map). Wired in via the posts-source/ submodule pinned to the
+ * Long-form posts authored upstream at ethsystems/web (NOT in
+ * ethsystems/map). Wired in via the posts-source/ submodule pinned to the
  * test_guide branch, so build-time pulls always reflect upstream and
  * we never copy markdown into this repo. Filenames follow Jekyll's
  * YYYY-MM-DD-slug.md convention.

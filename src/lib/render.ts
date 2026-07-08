@@ -1,5 +1,5 @@
 /**
- * Shared markdown renderer for iptf-map content.
+ * Shared markdown renderer for ethsystems/map content.
  *
  * Map authors write portable Markdown with relative GitHub-style links
  * (e.g. `../patterns/pattern-foo.md`). When rendered through marked() the
@@ -12,7 +12,7 @@
  *   - renderMarkdownInline(md)  — inline-only  (marked.parseInline)
  *
  * Unresolved links are warned once at build time and passed through unchanged
- * so the page still renders; the warning surfaces real data drift in iptf-map.
+ * so the page still renders; the warning surfaces real data drift in ethsystems/map.
  *
  * IMPORTANT: This file must stay browser-safe (no `fs` / `path` imports). It
  * ships to the client via DetailPanel.tsx (React island).
@@ -50,7 +50,7 @@ function stripTypePrefix(title: string): string {
 }
 
 // True when the visible label is itself a `.md` filename — the upstream
-// iptf-map authoring anti-pattern where contributors paste GitHub-style
+// ethsystems/map authoring anti-pattern where contributors paste GitHub-style
 // relative links and let the filename serve as the label. Same detection
 // used by the Astro remark plugin (src/plugins/remark-rewrite-links.ts).
 function isFilenameLabel(label: string): boolean {
@@ -164,11 +164,11 @@ marked.use({
             }
             if (!resolved.exists && !warnedHrefs.has(href)) {
               warnedHrefs.add(href);
-              console.warn(`[render] unresolved iptf-map link: ${href} → ${resolved.route} (node not in graph)`);
+              console.warn(`[render] unresolved ethsystems/map link: ${href} → ${resolved.route} (node not in graph)`);
             }
           } else if (!warnedHrefs.has(href)) {
             warnedHrefs.add(href);
-            console.warn(`[render] unknown iptf-map link shape: ${href}`);
+            console.warn(`[render] unknown ethsystems/map link shape: ${href}`);
           }
         }
       }
@@ -190,7 +190,7 @@ marked.use({
  *
  * Out of the box `marked` renders the bracket text inline as plain
  * prose. We post-process the rendered HTML so each leading [tag]
- * becomes a styled chip — matches the upstream iptf-web treatment.
+ * becomes a styled chip — matches the upstream ethsystems/web treatment.
  *
  * Only the FIRST bracket-pair of any <li> is converted, and only
  * when it sits flush against the opening tag (whitespace optional);

@@ -145,7 +145,7 @@ The TEE coordinator is a starting point, not the destination. MPC could replace 
 
 The coordination problem reduces to this: two parties each hold private inputs (their ephemeral key and encrypted salt), and we need a single proof that both sets of inputs are consistent with the on-chain state. That is what co-SNARKs solve — each party contributes their secret inputs to a joint ZK proof without revealing them to anyone. The proof itself becomes the atomic revelation. If it verifies, both sides are consistent. No trusted intermediary, no hardware assumption, no coordinator to compromise. The coordinator becomes a protocol rather than a party.
 
-The full implementation is open source, with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
+The full implementation is open source, with a detailed [specification](https://github.com/ethsystems/pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
 
 ## References
 

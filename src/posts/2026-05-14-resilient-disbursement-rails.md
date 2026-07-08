@@ -27,7 +27,7 @@ We have run into versions of this in our own work. The [shielded pool](/building
 
 The constraint set is sharper when recipients live somewhere the authorities are hostile to the funder, the implementing partner, or the recipients themselves. Recipients cannot be assumed to have a phone or an internet connection. Implementing partners may get breached, coerced, or inherited by successor regimes. The protocol assumes every party in the path between funder and recipient will eventually be compromised.
 
-The implementation is [open source](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/resilient-disbursement-rails), with a detailed [specification](https://github.com/ethereum/iptf-pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md).
+The implementation is [open source](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/resilient-disbursement-rails), with a detailed [specification](https://github.com/ethsystems/pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md).
 
 ## How aid disbursement breaks today
 
@@ -162,4 +162,4 @@ There also exist multiple large-scale humanitarian cash-and-voucher programs tha
 
 Three threads we want to pull on. Forward-secure signature chains on-card, to retire the long-lived master secret and bound past-claim disclosure under card seizure. Cross-funder anonymity, by lifting the per-claim-contract sub-tree partition into a shared association set with a compatible compliance witness. Batch-withdraw circuits, to amortize verification gas across multiple claims per transaction.
 
-The [specification](https://github.com/ethereum/iptf-pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md) has the full circuit constraints, data structures, and security considerations. The IPTF Map [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/resilient-disbursement-rails.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-payments.md) documents place this in the broader institutional-privacy work. Pull requests are welcome.
+The [specification](https://github.com/ethsystems/pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md) has the full circuit constraints, data structures, and security considerations. The IPTF Map [use case](https://github.com/ethsystems/map/blob/master/use-cases/resilient-disbursement-rails.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-payments.md) documents place this in the broader institutional-privacy work. Pull requests are welcome.

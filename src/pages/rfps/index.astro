@@ -95,7 +95,7 @@ const items = (await getCollection('rfps')).slice().sort((a, b) => {
     border-radius: 999px;
     border: 1px solid var(--color-border);
     color: var(--color-text-secondary);
-    background: rgba(255, 255, 255, 0.5);
+    background: color-mix(in srgb, var(--surface) 60%, transparent);
   }
   .badge.tier-1 { background: var(--color-cta-tint-strong); color: var(--color-cta); border-color: var(--color-cta-border); }
   .rfp-card p {

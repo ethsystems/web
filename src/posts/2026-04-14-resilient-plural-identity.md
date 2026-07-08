@@ -24,7 +24,7 @@ When that authority shuts down, gets sanctioned, or turns adversarial, already-v
 
 We built a proof-of-concept that removes this dependency. After a one-time enrollment, an on-chain Merkle root on Ethereum, censorship-resistant and always available, becomes the sole trust anchor. The identity provider can go offline, revoke everything, or turn adversarial. Holders keep proving attributes. New enrollees join through any accepted identity source, not just the original provider. Plurality is the default: no single issuer holds a monopoly over who gets to participate.
 
-The implementation is [open source](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity), with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md).
+The implementation is [open source](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity), with a detailed [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md).
 
 ## How identity verification works today
 
@@ -96,7 +96,7 @@ The protocol layers three independent factors:
 
 When sources are honest, the cryptographic layer alone enforces one-to-one binding. When sources are compromised, the economic layer kicks in: N sybil leaves require N * 0.1 ETH locked. The stake is a refundable bond. Holders reclaim it by unstaking, which removes their leaf from the tree.
 
-The social layer (specified in the [README](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity#future-work-web-of-trust)) adds a third constraint: each existing member has a lifetime vouch budget of V=2, and new enrollees need K=3 vouches from existing members. Vouches are aggregated into a single recursive proof off-chain and submitted atomically with the enrollment transaction. No vouch graph is ever visible on-chain. An attacker with T fake identities creates at most 2T additional sybils. Growth is linear, not exponential.
+The social layer (specified in the [README](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity#future-work-web-of-trust)) adds a third constraint: each existing member has a lifetime vouch budget of V=2, and new enrollees need K=3 vouches from existing members. Vouches are aggregated into a single recursive proof off-chain and submitted atomically with the enrollment transaction. No vouch graph is ever visible on-chain. An attacker with T fake identities creates at most 2T additional sybils. Growth is linear, not exponential.
 
 These three factors match the plural-identity cost structure from earlier: one identity is cheap, ten cost ten times as much, a million are priced out of reach. The cryptographic factor binds each identity to a real credential. The economic factor prices the right to hold multiples.
 
@@ -183,4 +183,4 @@ The [privacy-ethereum/zkspecs](https://github.com/privacy-ethereum/zkspecs) repo
 
 The immediate extensions are multi-source identity integration (recursive verification of existing identity proof systems inside Noir, so attributes are cryptographically verified rather than self-declared and sybil resistance works across identity sources), web-of-trust vouching as a third sybil factor, and epoch-based key rotation for forward secrecy.
 
-The [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md) covers every circuit constraint, data structure, and security consideration. The [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/resilient-identity-continuity.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-identity.md) documents on the IPTF Map show how this fits into the broader institutional privacy work. Pull requests are welcome.
+The [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md) covers every circuit constraint, data structure, and security consideration. The [use case](https://github.com/ethsystems/map/blob/master/use-cases/resilient-identity-continuity.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-identity.md) documents on the IPTF Map show how this fits into the broader institutional privacy work. Pull requests are welcome.

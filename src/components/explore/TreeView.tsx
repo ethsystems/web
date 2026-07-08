@@ -151,7 +151,7 @@ export function TreeView({ graph }: Props) {
         ref={svgRef}
         width={totalWidth}
         height={Math.max(totalHeight, 600)}
-        style={{ background: '#f7fafc', display: 'block', minWidth: '100%' }}
+        style={{ background: 'var(--sunken)', display: 'block', minWidth: '100%' }}
       >
         {LAYER_LABELS.map((label, i) => (
           <text
@@ -163,7 +163,7 @@ export function TreeView({ graph }: Props) {
             fontSize={12}
             fontWeight={700}
             letterSpacing="0.12em"
-            fontFamily="JetBrains Mono, monospace"
+            fontFamily="'Geist Mono', ui-monospace, monospace"
           >
             {label.toUpperCase()}
           </text>
@@ -187,7 +187,7 @@ export function TreeView({ graph }: Props) {
                 key={i}
                 d={`M${sx},${sy} C${mx},${sy} ${mx},${ty} ${tx},${ty}`}
                 fill="none"
-                stroke={isHighlighted ? '#2257e9' : '#cbd5e0'}
+                stroke={isHighlighted ? "#133E87" : "#C6C2B4"}
                 strokeWidth={isHighlighted ? 2 : 1}
                 strokeOpacity={isDimmed ? 0.08 : isHighlighted ? 0.85 : 0.35}
                 style={{ transition: 'stroke-opacity 0.15s, stroke 0.15s, stroke-width 0.15s' }}
@@ -219,8 +219,8 @@ export function TreeView({ graph }: Props) {
                   width={LAYER_WIDTH}
                   height={NODE_HEIGHT}
                   rx={6}
-                  fill={isHovered ? '#ffffff' : '#ffffff'}
-                  stroke={isHovered ? color : '#e2e8f0'}
+                  fill={isHovered ? "#FBF9F1" : "#FBF9F1"}
+                  stroke={isHovered ? color : "#D9D5C6"}
                   strokeWidth={isHovered ? 2 : 1}
                   style={{ transition: 'stroke 0.15s, filter 0.15s', filter: isHovered ? 'drop-shadow(0 2px 6px rgba(13,20,36,0.08))' : 'none' }}
                 />
@@ -229,10 +229,10 @@ export function TreeView({ graph }: Props) {
                   x={14}
                   y={NODE_HEIGHT / 2}
                   dominantBaseline="central"
-                  fill="#1a365d"
+                  fill="#0A0A0A"
                   fontSize={12}
                   fontWeight={600}
-                  fontFamily="Inter, sans-serif"
+                  fontFamily="'Geist', system-ui, sans-serif"
                 >
                   {ln.node.title.length > 34
                     ? ln.node.title.slice(0, 32) + '…'
@@ -248,7 +248,7 @@ export function TreeView({ graph }: Props) {
                     fontSize={9.5}
                     fontWeight={700}
                     letterSpacing="0.06em"
-                    fontFamily="JetBrains Mono, monospace"
+                    fontFamily="'Geist Mono', ui-monospace, monospace"
                   >
                     {ln.node.layer}
                   </text>

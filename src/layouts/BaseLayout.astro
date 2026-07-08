@@ -1,8 +1,15 @@
 ---
+import '../styles/fonts.css';
 import '../styles/globals.css';
 import NavBar from '../components/NavBar.astro';
 import NavOverlay from '../components/NavOverlay.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+
+// Content-hashed URLs for the two above-the-fold critical font files. Vite emits
+// the same hashed asset fonts.css already references, so preloading adds no extra
+// request. Geist Mono is intentionally not preloaded (small mono labels; swap is fine).
+import frauncesDisplayHref from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
+import geistBodyHref from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -13,11 +20,14 @@ interface Props {
 }
 
 const { title, description, current, canonical } = Astro.props;
-const fullTitle = title ? `${title} · IPTF` : 'Institutional Privacy Task Force';
+const fullTitle = title
+  ? `${title} · Ethereum Systems`
+  : 'Ethereum Systems · Institutional Privacy on Ethereum';
 const desc =
   description ??
-  'A working knowledge base for institutions arriving at Ethereum with privacy requirements. Maintained by the Privacy Cluster.';
+  "Ethereum Systems helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.";
 const canon = canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+const ogImage = new URL('/og.png', Astro.site ?? Astro.url).toString();
 ---
 
 <!doctype html>
@@ -25,24 +35,44 @@ const canon = canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
     <link rel="canonical" href={canon} />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="theme-color" content="#F4F1E6" />
+
+    {/* Font preload: Fraunces display + Geist body. crossorigin required (CORS fetch). */}
+    <link rel="preload" href={frauncesDisplayHref} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={geistBodyHref} as="font" type="font/woff2" crossorigin />
+
+    {/* Favicons + web app manifest. */}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href="/icon-maskable.png" sizes="512x512" type="image/png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    {/* Open Graph */}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canon} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="grain" aria-hidden="true"></div>
+
     <NavBar current={current} />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <SiteFooter />

@@ -1,0 +1,616 @@
+---
+/*
+  HeroMark. "Ledger, compressed" animation.
+  A monospace ledger of addresses and balances renders fully legible. One
+  navy scanline descends exactly once. Each row it crosses scrambles through
+  glyphs, then seals into solid ink redaction bars in the line's wake. Each
+  sealed bar then physically flies - translate plus horizontal squash or
+  stretch, never a crossfade - to a seeded slot inside the brand glyph, so
+  the redaction bars themselves assemble the mark as a striped silhouette
+  while the line is still sealing rows below. The two rows that face the
+  gaps between the glyph's polygons have no slot; their bars fly to a seam
+  in the nearest stripe and are crushed to zero width against it. The
+  moment a bar docks it grows vertically to close its stripe's share of
+  the gaps - opaque ink expanding, never a fade over a gap, so no stripe
+  or scanline pattern can ever show. Once every stripe has grown, the
+  finished mark's thin diagonal edge slivers - the only parts the grown
+  bars cannot cover - fade in beneath the already solid mass.
+  One small settle, then it holds still forever. No idle loop, no ongoing
+  work. Strictly ink on cream except the single transient navy line.
+  Inline SVG plus scoped CSS keyframes plus a same origin module script.
+  Every value, garble string, coordinate, slot assignment, and per bar delay
+  is computed here at build time from index seeded formulas. No runtime
+  randomness, no runtime text mutation. Animates transform and opacity only.
+  The resting state (no play class) is the finished composition, so no JS
+  means the mark simply shows. Reduced motion renders it at once with at
+  most a single 300ms fade. WebKit gets the same static path: Safari's SVG
+  invalidation drops frames across this many nested CSS animations (stale
+  half-painted collages), so it shows the finished mark with the fade.
+*/
+
+// Glyph artwork. Exact points (local space, x 0..100, y 0..160).
+const TOP = "50,0 80,48 20,48";
+const BAND = "13.75,58 86.25,58 100,80 83.75,106 16.25,106 0,80";
+const BOTTOM = "22.5,116 77.5,116 50,160";
+
+// Placement inside the 280 x 340 viewBox: the glyph spans x 40..240, y 10..330.
+const GLYPH_TX = "translate(40 10) scale(2)";
+
+// Grid geometry. 13 rows of 3 cells, baselines every 24 units from y 26.
+// Bars are 14 tall and start 10.5 above the baseline, covering the caps and
+// comma tails of 12 unit mono text. Geist Mono advance is 0.6em, so 7.2.
+const ROWS = 13;
+const ROW_Y0 = 26;
+const ROW_STEP = 24;
+const ADV = 7.2;
+const BAR_H = 14;
+const BAR_RISE = 10.5;
+const BAR_PAD = 1;
+
+// Scanline mapping. The line starts at y -3 and travels 346 units in 1426ms
+// (linear), so a row seals the moment the line reaches its bar top. These
+// numbers must match the hm-sweep keyframes below.
+const SCAN_MS = 1426;
+const SCAN_Y0 = -3;
+const SCAN_TRAVEL = 346;
+
+// Deterministic content pools. The garble pool holds no dash characters.
+const HEX = "0123456789abcdef";
+const GARBLE = "#%&*+=/<>~^:;0123456789abcdef";
+
+// Short lowercase address like "0x8f3a". Index seeded, stable across builds.
+const addr = (seed, len) => {
+  let s = "0x";
+  for (let k = 0; k < len; k++) s += HEX[(seed * 7 + k * 11 + 3) % 16];
+  return s;
+};
+
+// Balance with a thousands separator, cycling 3 to 5 integer digits so bar
+// widths vary and the assembled mark keeps a data like grain.
+const amount = (i) => {
+  const spans = [
+    402 + ((i * 271) % 580),
+    1204 + ((i * 947) % 8000),
+    10240 + ((i * 3571) % 80000),
+    2048 + ((i * 733) % 7000),
+  ];
+  const units = String(spans[i % 4]);
+  const grouped =
+    units.length > 3 ? units.slice(0, -3) + "," + units.slice(-3) : units;
+  return grouped + "." + String((i * 37 + 19) % 100).padStart(2, "0");
+};
+
+// Same length garble string for the scramble flicker.
+const garble = (value, seed) =>
+  Array.from(
+    value,
+    (_, c) => GARBLE[(seed * 31 + c * 17 + 7) % GARBLE.length],
+  ).join("");
+
+// The grid. Each row carries its seal delay rd (ms) so CSS starts the
+// scramble exactly as the scanline reaches the row.
+const rows = Array.from({ length: ROWS }, (_, i) => {
+  const y = ROW_Y0 + i * ROW_STEP;
+  const barY = y - BAR_RISE;
+  const rd = Math.round(((barY - SCAN_Y0) / SCAN_TRAVEL) * SCAN_MS);
+  const cells = [
+    { x: 48, anchor: "start", value: addr(i * 2 + 1, 3 + (i % 3)) },
+    { x: 140, anchor: "middle", value: amount(i) },
+    { x: 232, anchor: "end", value: addr(i * 2 + 2, 3 + ((i + 1) % 3)) },
+  ].map((cell, j) => {
+    const w = cell.value.length * ADV + BAR_PAD * 2;
+    const barX =
+      cell.anchor === "start"
+        ? cell.x - BAR_PAD
+        : cell.anchor === "middle"
+          ? cell.x - w / 2
+          : cell.x - w + BAR_PAD;
+    return {
+      ...cell,
+      scramble: garble(cell.value, i * 3 + j),
+      barX: Number(barX.toFixed(1)),
+      barW: Number(w.toFixed(1)),
+    };
+  });
+  return { y, barY, rd, cells };
+});
+
+// ---------- Formation geometry ----------
+// The glyph decomposes into stripe rows on the ledger's own 24 unit pitch.
+// A stripe is the widest interval that keeps a 14 tall bar fully inside one
+// glyph polygon across its whole band; rows 4 and 9 face the gaps between
+// polygons and get none. That leaves 11 stripes of 3 segments: exactly 33
+// slots for the 33 bars of the 11 surviving rows. The 6 bars of the gap
+// rows are crushed to zero width against a seam in the nearest stripe.
+
+const toGlobal = (pts) =>
+  pts.split(" ").map((p) => {
+    const [x, y] = p.split(",").map(Number);
+    return [40 + 2 * x, 10 + 2 * y];
+  });
+const POLYS = [TOP, BAND, BOTTOM].map(toGlobal);
+
+// Horizontal cross section of one convex polygon at height y.
+const spanAt = (poly, y) => {
+  const xs = [];
+  for (let i = 0; i < poly.length; i++) {
+    const [x1, y1] = poly[i];
+    const [x2, y2] = poly[(i + 1) % poly.length];
+    if ((y1 <= y && y < y2) || (y2 <= y && y < y1))
+      xs.push(x1 + ((y - y1) / (y2 - y1)) * (x2 - x1));
+  }
+  return xs.length >= 2 ? [Math.min(...xs), Math.max(...xs)] : null;
+};
+
+// Conservative band interval. The polygons are convex, so intersecting the
+// spans at the band's top and bottom keeps a bar spanning [y0, y1] fully
+// inside the shape. Also reports which polygon owns the band.
+const stripeAt = (y0, y1) => {
+  for (let pi = 0; pi < POLYS.length; pi++) {
+    const a = spanAt(POLYS[pi], y0);
+    const b = spanAt(POLYS[pi], y1);
+    if (a && b) {
+      const left = Math.max(a[0], b[0]);
+      const right = Math.min(a[1], b[1]);
+      if (right > left) return { span: [left, right], poly: pi };
+    }
+  }
+  return null;
+};
+
+// Flat bar list with row and column identity.
+const fieldBars = rows.flatMap((r, ri) =>
+  r.cells.map((c, ci) => ({
+    ri,
+    ci,
+    x: c.barX,
+    y: r.barY,
+    w: c.barW,
+    rd: r.rd,
+  })),
+);
+
+const stripes = rows
+  .map((r, ri) => ({
+    ri,
+    y: r.barY,
+    rd: r.rd,
+    ...stripeAt(r.barY, r.barY + BAR_H),
+  }))
+  .filter((s) => s.span);
+
+// Growth plan. After docking, a stripe's bars grow vertically to close the
+// 10 unit gaps: half the gap plus 0.5 overlap toward each neighbour in the
+// same polygon, and nothing toward a polygon edge, so grown ink never
+// leaves the shape. The stripe's span is then re-narrowed so it stays
+// conservative over the grown band (the glyph may be slimmer there).
+const GAP_GROW = 5.5;
+stripes.forEach((s) => {
+  const above = stripes.some((t) => t.poly === s.poly && t.ri === s.ri - 1);
+  const below = stripes.some((t) => t.poly === s.poly && t.ri === s.ri + 1);
+  const g0 = above ? s.y - GAP_GROW : s.y;
+  const g1 = below ? s.y + BAR_H + GAP_GROW : s.y + BAR_H;
+  s.gy = Number(((g1 - g0) / BAR_H).toFixed(4));
+  // The pivot edge that must not move, in pre flight (ledger row) space.
+  s.gpKind = above && below ? "center" : above ? "bottom" : "top";
+  s.span = stripeAt(g0, g1).span;
+});
+
+const survivors = fieldBars.filter((b) => stripes.some((s) => s.ri === b.ri));
+const doomed = fieldBars.filter((b) => !stripes.some((s) => s.ri === b.ri));
+if (stripes.length * 3 !== survivors.length)
+  throw new Error("HeroMark: stripe slots must match surviving bars");
+
+// Seeded scatter, biased by depth: a seeded Fisher-Yates inside blocks of 6
+// slots (two stripes), so flights cross rows and columns but no sealed bar
+// idles much past 300ms waiting for its target region to seal.
+const perm = survivors.map((_, k) => k);
+for (let base = 0; base < perm.length; base += 6) {
+  const end = Math.min(base + 6, perm.length);
+  for (let k = end - 1; k > base; k--) {
+    const j = base + ((k * 31 + 11) % (k - base + 1));
+    [perm[k], perm[j]] = [perm[j], perm[k]];
+  }
+}
+
+// Partition each stripe among its three bars proportional to bar width, so
+// every bar squashes or stretches by one factor and the stripe tiles with
+// no gap. Seams (interior boundaries) double as crush targets.
+const bySlot = [];
+survivors.forEach((b, k) => (bySlot[perm[k]] = b));
+stripes.forEach((s, si) => {
+  const segs = bySlot.slice(si * 3, si * 3 + 3);
+  const total = segs.reduce((sum, b) => sum + b.w, 0);
+  const width = s.span[1] - s.span[0];
+  let x = s.span[0];
+  s.seams = [];
+  segs.forEach((b, j) => {
+    const w = (width * b.w) / total;
+    // Interior segments overlap 0.75 into their right neighbour: abutting
+    // edges leave antialiased cream hairlines between same ink rects.
+    Object.assign(b, { tx: x, ty: s.y, tw: j < 2 ? w + 0.75 : w, trd: s.rd });
+    x += w;
+    if (j < 2) s.seams.push(x);
+  });
+});
+
+// Gap row bars fly to a seam in the nearest stripe above or below (seeded
+// pick, distances tie at one row) and compress to zero width against it.
+for (const b of doomed) {
+  const near = [...stripes].sort(
+    (p, q) => Math.abs(p.y - b.y) - Math.abs(q.y - b.y),
+  );
+  const t = near[(b.ri + b.ci) % 2];
+  Object.assign(b, { tx: t.seams[b.ci % 2], ty: t.y, tw: 0, trd: t.rd });
+}
+
+// A bar launches only once both its own row (rd + 299, seal wipe done) and
+// its target's region (trd + 200, the line well past it) have sealed, plus
+// seeded jitter, so no flight ever crosses live text. flight[ri][ci] feeds
+// the per bar CSS custom properties: flight vector and squash (dx, dy, sx),
+// the seal and squash pivot (bx), and the growth pivot and factor (gp, gy).
+// Pivots are in pre flight ledger space; the flight transform carries them.
+const stripeByY = new Map(stripes.map((s) => [s.y, s]));
+const flight = rows.map(() => []);
+for (const b of fieldBars) {
+  const jit = (b.ri * 53 + b.ci * 97 + 29) % 120;
+  const t = stripeByY.get(b.ty);
+  const gp =
+    t.gpKind === "top"
+      ? b.y
+      : t.gpKind === "bottom"
+        ? b.y + BAR_H
+        : b.y + BAR_H / 2;
+  flight[b.ri][b.ci] = {
+    dx: Number((b.tx - b.x).toFixed(2)),
+    dy: Number((b.ty - b.y).toFixed(2)),
+    sx: Number((b.tw / b.w).toFixed(4)),
+    fd: Math.max(b.rd + 299, b.trd + 200) + jit,
+    bx: b.x,
+    gp,
+    gy: b.tw === 0 ? 1 : t.gy,
+  };
+}
+---
+
+<svg
+  id="hero-mark"
+  class="hero-mark"
+  viewBox="0 0 280 340"
+  width="280"
+  height="340"
+  aria-hidden="true"
+  role="presentation"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g class="hm-stage">
+    {/* Layer 0: the finished mark, underneath everything. Only its thin
+        diagonal edge slivers are ever visible - the grown bars cover the
+        rest in the same ink - and they fade in once every stripe has
+        docked and grown, over an already solid mass. */}
+    <g class="hm-under" transform={GLYPH_TX}>
+      <polygon points={TOP}></polygon>
+      <polygon points={BAND}></polygon>
+      <polygon points={BOTTOM}></polygon>
+    </g>
+
+    {/* Layer A: the ledger field. Value texts, garble texts, redaction bars.
+        The bars are the only objects that survive: each rides its flyer
+        group from the ledger to its slot inside the glyph. */}
+    <g class="hm-field">
+      {
+        rows.map((r, ri) => (
+          <g class="hm-row" style={`--rd:${r.rd}ms`}>
+            <g class="hm-vals">
+              {r.cells.map((c) => (
+                <text x={c.x} y={r.y} text-anchor={c.anchor}>{c.value}</text>
+              ))}
+            </g>
+            <g class="hm-garb">
+              {r.cells.map((c) => (
+                <text x={c.x} y={r.y} text-anchor={c.anchor}>{c.scramble}</text>
+              ))}
+            </g>
+            {r.cells.map((c, ci) => {
+              const f = flight[ri][ci];
+              return (
+                <g
+                  class="hm-flyer"
+                  style={`--fd:${f.fd}ms;--dx:${f.dx}px;--dy:${f.dy}px;--sx:${f.sx};--bx:${f.bx}px;--gp:${f.gp}px;--gy:${f.gy}`}
+                >
+                  <g class="hm-grower">
+                    <rect
+                      class="hm-bar"
+                      x={c.barX}
+                      y={r.barY}
+                      width={c.barW}
+                      height={BAR_H}
+                    />
+                  </g>
+                </g>
+              );
+            })}
+          </g>
+        ))
+      }
+    </g>
+
+    {/* Layer C: the scanline. The only navy in the scene, and it is transient. */}
+    <rect class="hm-scan" x="40" y={SCAN_Y0} width="200" height="2.5"></rect>
+  </g>
+</svg>
+
+<style>
+  .hero-mark {
+    width: 100%;
+    height: auto;
+    max-width: 440px;
+    pointer-events: none;
+  }
+
+  /* Ledger type. Sizes are viewBox units. Letter spacing must stay 0 so the
+     bar widths (length times 7.2) match the mono advance exactly. */
+  .hm-field text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0;
+    fill: var(--ink-2);
+  }
+
+  .hm-garb text {
+    fill: var(--muted);
+  }
+
+  .hm-bar,
+  .hm-under polygon {
+    fill: var(--ink);
+  }
+
+  .hm-scan {
+    fill: var(--navy);
+  }
+
+  /* Scale pivots. The stage settles around the viewBox centre. Every bar
+     transform (seal, flight squash, growth) is a pure user space matrix -
+     translate to the pivot, scale, translate back, around an explicit 0 0
+     origin - because WebKit's transform-box: fill-box handling on SVG is
+     unreliable. The pivots arrive as per bar custom properties. */
+  .hm-stage {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+  }
+
+  .hm-bar,
+  .hm-flyer,
+  .hm-grower {
+    transform-origin: 0 0;
+  }
+
+  /* ---------- Resting (final) state: no JS or JS not yet run ---------- */
+  /* The finished composition: ledger hidden, the wipe mask fully in place
+     (its untransformed position, glyph solid), scanline gone. */
+  .hm-field {
+    opacity: 0;
+  }
+
+  .hm-vals,
+  .hm-garb {
+    opacity: 0;
+  }
+
+  .hm-scan {
+    opacity: 0;
+  }
+
+  /* ---------- Play state (motion allowed, class added by the module) ---------- */
+  /* Timeline in milliseconds. Sweep runs 0 to 1426; a row seals at rd (grows
+     with depth) and its wipe ends at rd + 299. Each bar launches once both
+     its own row and its target stripe have sealed - max(rd + 299, trd + 200)
+     plus up to 119ms seeded jitter - and flies 700ms, so the last bar docks
+     near 2330 and grows for 260ms the moment it lands (all growth done by
+     2590). The edge slivers fade in beneath 2600 to 3000, and the stage
+     settles 3040 to 3270. */
+  .play .hm-field {
+    opacity: 1;
+  }
+
+  .play .hm-scan {
+    animation: hm-sweep 1426ms linear 0ms both;
+  }
+
+  .play .hm-vals {
+    animation: hm-flick-val 173ms step-end var(--rd) both;
+  }
+
+  .play .hm-garb {
+    animation: hm-flick-garb 173ms step-end var(--rd) both;
+  }
+
+  .play .hm-bar {
+    animation: hm-seal 230ms var(--ease) calc(var(--rd) + 69ms) both;
+  }
+
+  .play .hm-flyer {
+    animation: hm-fly 700ms cubic-bezier(0.7, 0, 0.25, 1) var(--fd) both;
+  }
+
+  /* Growth starts the instant the flight lands (fd + the 700ms flight). */
+  .play .hm-grower {
+    animation: hm-grow 260ms var(--ease) calc(var(--fd) + 700ms) both;
+  }
+
+  .play .hm-under {
+    animation: hm-fade-in 400ms var(--ease) 2600ms both;
+  }
+
+  .play .hm-stage {
+    animation: hm-settle 230ms var(--ease-inout) 3040ms both;
+  }
+
+  /* No will-change anywhere: WebKit has rasterization bugs with
+     will-change on SVG elements (content vanishing or not repainting),
+     and modern engines promote animated transforms on their own. */
+
+  /* The line fades in just above the first row and out as it exits past the
+     last. Travel must match SCAN_TRAVEL in the frontmatter. */
+  @keyframes hm-sweep {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    92% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(346px);
+      opacity: 0;
+    }
+  }
+
+  /* Hard cuts (step-end): real value and garble alternate, both end hidden
+     as the bar seals over them. */
+  @keyframes hm-flick-val {
+    0% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes hm-flick-garb {
+    0% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    75% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* The wipe grows from the bar's own left edge (bx), pivoted explicitly. */
+  @keyframes hm-seal {
+    from {
+      transform: translate(var(--bx), 0px) scale(0, 1)
+        translate(calc(-1 * var(--bx)), 0px);
+    }
+    to {
+      transform: translate(var(--bx), 0px) scale(1, 1)
+        translate(calc(-1 * var(--bx)), 0px);
+    }
+  }
+
+  /* Heavy, inertial flight: slow start, committed middle, clean dock with
+     no overshoot. Each bar translates to its slot while squashing or
+     stretching to the slot's exact width; the gap row bars ride the same
+     curve down to scale 0, crushed out against their seam. The custom
+     properties are set per flyer in the markup. */
+  @keyframes hm-fly {
+    from {
+      transform: translate(0px, 0px) translate(var(--bx), 0px) scale(1, 1)
+        translate(calc(-1 * var(--bx)), 0px);
+    }
+    to {
+      transform: translate(var(--dx), var(--dy)) translate(var(--bx), 0px)
+        scale(var(--sx), 1) translate(calc(-1 * var(--bx)), 0px);
+    }
+  }
+
+  /* Growth: opaque ink expands from the pivot edge (gp, in pre flight
+     space) to close the stripe gaps. Nothing is ever semi transparent
+     over a gap, so no scanline pattern can appear. */
+  @keyframes hm-grow {
+    from {
+      transform: translate(0px, var(--gp)) scale(1, 1)
+        translate(0px, calc(-1 * var(--gp)));
+    }
+    to {
+      transform: translate(0px, var(--gp)) scale(1, var(--gy))
+        translate(0px, calc(-1 * var(--gp)));
+    }
+  }
+
+  @keyframes hm-settle {
+    from {
+      transform: scale(1.008);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes hm-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Static path (WebKit, or reduced motion below): the finished mark with
+     one gentle fade. The resting styles already are the finished mark. */
+  .static .hm-stage {
+    animation: hm-fade-in 300ms var(--ease) both;
+  }
+
+  /* ---------- Reduced motion ---------- */
+  /* The final sealed composition at once: no sweep, no flights, no settle.
+     At most one 300ms opacity fade of the whole scene. */
+  @media (prefers-reduced-motion: reduce) {
+    .hm-scan,
+    .hm-vals,
+    .hm-garb,
+    .hm-bar,
+    .hm-flyer,
+    .hm-grower,
+    .hm-under,
+    .hm-stage {
+      animation: none !important;
+    }
+
+    .static .hm-stage {
+      animation: hm-fade-in 300ms var(--ease) both !important;
+    }
+  }
+</style>
+
+<script>
+  // Same origin module (Astro bundles this, so the CSP stays script-src 'self').
+  // Reads reduced motion once and flips the SVG into play or static. The
+  // reveal is a one shot: nothing loops, so nothing needs pausing.
+  // WebKit takes the static path: its SVG invalidation loses frames across
+  // this many nested CSS animations, leaving a stale collage of half
+  // painted states. The vendor check catches Safari and every iOS browser
+  // (all WebKit by platform rule); Chromium and Firefox report other
+  // vendors and play the full sequence.
+  const svg = document.getElementById("hero-mark");
+  if (svg) {
+    const webkit = /apple/i.test(navigator.vendor);
+    if (webkit || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      svg.classList.add("static");
+    } else {
+      svg.classList.add("play");
+    }
+  }
+</script>

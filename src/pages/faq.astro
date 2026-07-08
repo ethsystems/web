@@ -1,6 +1,6 @@
 ---
 /*
- * FAQ page — ported from ethereum/iptf-web (`src/pages/faq.astro`,
+ * FAQ page — ported from ethsystems/web (`src/pages/faq.astro`,
  * test_guide branch).
  *
  * Content is a hand-written categories array — kept verbatim from
@@ -34,12 +34,13 @@ const pageDescription =
   />
 
   <section class="faq">
-    <div class="faq-inner">
+    <div class="container">
+      <div class="faq-inner">
       {categories.map((cat) => (
         <div class="faq-category">
           <div class="faq-cat-label">{cat.label}</div>
           {cat.questions.map((item, qIdx) => (
-            <details class="faq-item" name="iptf-faq" open={cat === categories[0] && qIdx === 0}>
+            <details class="faq-item" name="faq" open={cat === categories[0] && qIdx === 0}>
               <summary>
                 <span class="faq-q">{item.q}</span>
                 <span class="faq-toggle" aria-hidden="true"></span>
@@ -66,6 +67,7 @@ const pageDescription =
           ))}
         </div>
       ))}
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -77,7 +79,7 @@ const pageDescription =
   .faq-inner {
     max-width: 800px;
     margin: 0;
-    padding: 0 var(--container-pad);
+    padding: 0;
   }
 
   .faq-category {

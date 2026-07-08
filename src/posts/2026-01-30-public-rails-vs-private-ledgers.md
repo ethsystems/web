@@ -134,7 +134,7 @@ Multiple production systems now exist for cryptographic privacy on public infras
 
 **Mature shielding:** Railgun and similar ZK privacy pools have processed billions in shielded volume across Ethereum and L2s.
 
-**Others:** Fhenix and Zama (FHE-based), Shutter Network (encrypted mempool), Renegade (dark pools), EY Nightfall and Miden (privacy rollups). For a comprehensive map of privacy solutions, see the [IPTF Privacy Map](https://github.com/ethereum/iptf-map).
+**Others:** Fhenix and Zama (FHE-based), Shutter Network (encrypted mempool), Renegade (dark pools), EY Nightfall and Miden (privacy rollups). For a comprehensive map of privacy solutions, see the [IPTF Privacy Map](https://github.com/ethsystems/map).
 
 **Why this matters beyond features:**
 
@@ -193,7 +193,7 @@ For institutions with genuine privacy requirements (adversarial counterparties, 
 
 The Ethereum privacy stack is live, battle-tested, and increasingly enterprise-ready. The seven questions above will tell you whether it fits your requirements.
 
-For implementation patterns and institutional guidance, see the [IPTF Privacy Map](https://github.com/ethereum/iptf-map) or contact the [Institutional Privacy Task Force](https://iptf.ethereum.org/).
+For implementation patterns and institutional guidance, see the [IPTF Privacy Map](https://github.com/ethsystems/map) or contact the [Institutional Privacy Task Force](https://ethsystems.org/).
 
 ## References
 

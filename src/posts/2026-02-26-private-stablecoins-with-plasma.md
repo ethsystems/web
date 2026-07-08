@@ -29,7 +29,7 @@ For institutions, this changes the operating model. Transaction contents (amount
 
 The tradeoffs are different from the shielded pool. On-chain costs drop significantly since the chain only stores block roots and signatures. Privacy against public observers is stronger because transfer details are never published, but client-side proof generation is computationally intensive, the anonymity set depends on the deployment model, and the infrastructure stack (block builders, store vaults, provers) introduces new operational dependencies.
 
-We built a proof-of-concept on [Intmax2](https://eprint.iacr.org/2025/021), a ZK-plasma protocol that implements this model with recursive proofs via [Plonky2](https://github.com/0xPolygonZero/plonky2). The [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/plasma/SPEC.md) covers every protocol flow and data structure in detail.
+We built a proof-of-concept on [Intmax2](https://eprint.iacr.org/2025/021), a ZK-plasma protocol that implements this model with recursive proofs via [Plonky2](https://github.com/0xPolygonZero/plonky2). The [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/plasma/SPEC.md) covers every protocol flow and data structure in detail.
 
 ## Architecture
 
@@ -54,7 +54,7 @@ Each component is pluggable: the proof backend, storage layer, and contract inte
 
 Deposits convert public ERC-20 tokens into a private balance on the plasma chain. The user locks tokens in a Liquidity contract on L1. The contract relays deposit data to the Rollup contract on the L2 via a cross-chain messenger. The Rollup contract inserts the deposit into its Merkle tree, and the validity prover asynchronously generates a proof for the new block state. The user polls until the deposit is confirmed, then updates their local balance proof.
 
-In the target architecture, deposits are gated by an attestation registry: a ZK proof of Merkle inclusion in an on-chain KYC attestation tree, identical in concept to the [shielded pool's approach](/building-private-transfers-on-ethereum/). The [attestation registry](https://github.com/ethereum/iptf-pocs/pull/15) from the shielded pool PoC can be reused here with minimal modification; the core mechanism is the same.
+In the target architecture, deposits are gated by an attestation registry: a ZK proof of Merkle inclusion in an on-chain KYC attestation tree, identical in concept to the [shielded pool's approach](/building-private-transfers-on-ethereum/). The [attestation registry](https://github.com/ethsystems/pocs/pull/15) from the shielded pool PoC can be reused here with minimal modification; the core mechanism is the same.
 
 The attestation proof is zero-knowledge: the on-chain verifier learns only that the depositor holds a valid, non-expired KYC attestation. It does not learn which attestation leaf was used, which compliance authority issued it, or when the attestation was granted. An observer sees that someone deposited a known amount of a known token, but cannot determine who deposited it or which compliance authority verified them.
 
@@ -114,7 +114,7 @@ The design maps each privacy mechanism to a specific regulatory obligation:
 - **Compromised store vault:** operator learns access patterns (who queries when) but cannot decrypt data.
 - **Compromised viewing key:** leaks one user's full history without granting spending authority.
 
-The [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/plasma/SPEC.md) documents mitigations for each adversary class in detail.
+The [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/plasma/SPEC.md) documents mitigations for each adversary class in detail.
 
 ## Limitations
 
@@ -144,4 +144,4 @@ Private transfers are one layer of an institutional payment pipeline. Upcoming p
 
 On the proving layer, [PlasmaBlind](https://pse.dev/mastermap/ptr) is an emerging alternative that uses [folding-scheme-based IVC](https://sonobe.pse.dev/) rather than Plonky2's recursive SNARKs for the balance proof pipeline. Folding schemes reduce client-side proving costs, which could make generating balance proofs on mobile and browser clients more practical. It is under active R&D by PSE.
 
-The implementation is [open source](https://github.com/ethereum/iptf-pocs/pull/19). The [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/plasma/SPEC.md) covers every protocol flow, data structure, and security consideration in detail. The [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/private-stablecoins.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-payments.md) documents on the IPTF Map provide additional context. Pull requests are welcome.
+The implementation is [open source](https://github.com/ethsystems/pocs/pull/19). The [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/plasma/SPEC.md) covers every protocol flow, data structure, and security consideration in detail. The [use case](https://github.com/ethsystems/map/blob/master/use-cases/private-stablecoins.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-payments.md) documents on the IPTF Map provide additional context. Pull requests are welcome.
