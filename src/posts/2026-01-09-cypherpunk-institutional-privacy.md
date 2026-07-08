@@ -4,7 +4,7 @@ title: "Cypherpunk x Institutional Privacy"
 description: "Exploring the overlap and tension between cypherpunks and institutions - and how the Institutional Privacy Task Force is mapping real institutional privacy requirements to solutions on Ethereum."
 date: 2026-01-09
 author: "Oskar"
-image: /assets/images/2026-01-09-cypherpunk-institutional-privacy/cypherpunk_institutional_privacy.webp
+image: ../assets/posts/2026-01-09-cypherpunk-institutional-privacy/cypherpunk_institutional_privacy.webp
 tags:
   - institutional-privacy
   - cypherpunks
@@ -122,7 +122,7 @@ How is the map structured? We have the following categories:
 
 Regarding jurisdictions: we aren't legal experts, but it is useful to have a TL;DR of various regulations. For example: how does the GENIUS Act impact stablecoin design?
 
-![The map: structure on GitHub](/assets/images/2026-01-09-cypherpunk-institutional-privacy/iptf-map-github.png)
+![The map: structure on GitHub](../assets/posts/2026-01-09-cypherpunk-institutional-privacy/iptf-map-github.png)
 
 ### The Map: how to navigate
 Depending on what type of user you are, you might navigate the map differently. We have identified three primary personas: business, technical, and legal/compliance. These reflect different levels of expertise as well as concern.

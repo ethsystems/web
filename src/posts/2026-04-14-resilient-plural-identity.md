@@ -4,7 +4,7 @@ title: "Resilient Plural Identity"
 description: "Designing identity on Ethereum that survives issuer failure: plural attestation sources, vOPRF sybil resistance, and an on-chain trust anchor that no single party can revoke."
 date: 2026-04-22 10:00:00 +0100
 author: "Aaryamann, Oskar"
-image: /assets/images/2026-04-14-resilient-private-identity/hero.png
+image: ../assets/posts/2026-04-14-resilient-private-identity/hero.png
 tags:
   - identity
   - plural-identity
@@ -40,7 +40,7 @@ Every step depends on the issuer being live and cooperative. [ZKPassport](https:
 
 The issuer can fail in several ways. It can shut down (bankruptcy, sanctions, corporate dissolution). It can turn adversarial (mass-revoke credentials, publish false revocation lists, forge credentials for non-holders, refuse new issuance). It can simply go offline. In every case, the holder is left with a credential that cannot be independently verified.
 
-![Traditional identity systems require the issuer to be online for every revocation check; resilient private identity replaces the issuer with an on-chain Merkle root as the sole trust anchor](/assets/images/2026-04-14-resilient-private-identity/resilient_identity_comparison.png)
+![Traditional identity systems require the issuer to be online for every revocation check; resilient private identity replaces the issuer with an on-chain Merkle root as the sole trust anchor](../assets/posts/2026-04-14-resilient-private-identity/resilient_identity_comparison.png)
 
 ## Breaking the issuer dependency
 
@@ -60,7 +60,7 @@ In this view, sybil resistance is not bolted on top of identity. It is the prope
 
 Enrollment is a single on-chain transaction. The work before that transaction is what makes the protocol resilient. The holder proves identity ownership using an existing source (passport, national ID, email, web2 account), then obtains a deterministic sybil-resistant tag from a [vOPRF](https://www.rfc-editor.org/rfc/rfc9497) (verifiable Oblivious Pseudorandom Function) network: a cryptographic protocol that maps an input to a deterministic but unpredictable output using a secret key, without the key holder learning the input or the requester learning the key. The tag ensures one real-world identity maps to exactly one on-chain leaf, regardless of when enrollment happens. The holder generates a ZK proof binding everything together and submits it in a single transaction.
 
-![Enrollment flow: the holder obtains identity evidence, blinds it, sends it to the vOPRF MPC network for evaluation with a link proof, then submits the enrollment proof and leaf to the on-chain contract](/assets/images/2026-04-14-resilient-private-identity/resilient_identity_flow.png)
+![Enrollment flow: the holder obtains identity evidence, blinds it, sends it to the vOPRF MPC network for evaluation with a link proof, then submits the enrollment proof and leaf to the on-chain contract](../assets/posts/2026-04-14-resilient-private-identity/resilient_identity_flow.png)
 
 After this transaction, the holder stores their secret and attributes locally. The issuer is no longer involved. Ethereum itself becomes the trust anchor: a censorship-resistant, permissionless ledger that no single party can take offline or tamper with. The smart contract with its ZK verifier is the resilient issuer.
 
@@ -72,7 +72,7 @@ The holder generates a ZK membership proof demonstrating three things: they have
 
 The nullifier is deterministic per holder and per verifier scope: the same holder always produces the same nullifier for the same verifier, preventing duplicate presentations within a single application. Across different verifiers, the nullifiers are unrelated. An observer who sees a proof submitted to Verifier A and another to Verifier B cannot determine whether the same holder produced both.
 
-![Verification flow: the verifier requests an attribute proof, the holder generates a ZK membership proof, and the on-chain IdentityVerifier checks root freshness, nullifier uniqueness, and proof validity](/assets/images/2026-04-14-resilient-private-identity/resilient_identity_verification_flow.png)
+![Verification flow: the verifier requests an attribute proof, the holder generates a ZK membership proof, and the on-chain IdentityVerifier checks root freshness, nullifier uniqueness, and proof validity](../assets/posts/2026-04-14-resilient-private-identity/resilient_identity_verification_flow.png)
 
 The verifier calls `IdentityVerifier.verifyProof(...)`. The contract checks root freshness (last 1000 roots in a circular buffer), nullifier uniqueness, and proof validity. If the call does not revert, the proof is valid.
 

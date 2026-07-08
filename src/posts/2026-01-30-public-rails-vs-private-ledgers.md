@@ -4,7 +4,7 @@ title: "Public Rails vs Private Ledgers"
 description: "An institutional decision framework for choosing between public blockchains with cryptographic privacy and private ledgers with trust-based privacy."
 date: 2026-01-30
 author: "Oskar"
-image: /assets/images/2026-01-30-public-rails-vs-private-ledgers/public_rails_vs_private_ledgers_hero.jpg
+image: ../assets/posts/2026-01-30-public-rails-vs-private-ledgers/public_rails_vs_private_ledgers_hero.jpg
 tags:
   - institutional-privacy
   - decision-framework
@@ -107,7 +107,7 @@ Bitcoin and Ethereum answered this clearly. They demonstrated that you can have 
 
 Permissioned blockchains tried to capture blockchain benefits while preserving institutional control. But in doing so, they sacrificed resilience, the core value proposition. If you trust the consortium operators to run the network honestly, to respect your data boundaries, to not change the rules against your interests, you are back to trusting people. At that point, the question becomes: why not a database with legal contracts?
 
-![Why not just a database?](/assets/images/2026-01-30-public-rails-vs-private-ledgers/why_not_database.png)
+![Why not just a database?](../assets/posts/2026-01-30-public-rails-vs-private-ledgers/why_not_database.png)
 
 **Trust-based privacy** says: "I promise I won't look at your data." Operators, validators, and governance commit to respect data boundaries. If incentives shift, if regulators demand access, if governance evolves, the promise breaks.
 
@@ -181,11 +181,11 @@ How the two approaches compare across key dimensions:
 | TCO model | SaaS | Utility |
 | Track record | Canton Network: ~2 years | ~10 years, no complete outages |
 
-![Architecture Comparison](/assets/images/2026-01-30-public-rails-vs-private-ledgers/architecture_comparison.png)
+![Architecture Comparison](../assets/posts/2026-01-30-public-rails-vs-private-ledgers/architecture_comparison.png)
 
 **Key difference:** Canton failures are correlated (one domain down stops the entire cross-domain transaction). Public L2 failures are isolated (L2 down doesn't stop the L1 or other L2s).
 
-![What You're Betting On](/assets/images/2026-01-30-public-rails-vs-private-ledgers/betting_slips.png)
+![What You're Betting On](../assets/posts/2026-01-30-public-rails-vs-private-ledgers/betting_slips.png)
 
 ## Closing
 

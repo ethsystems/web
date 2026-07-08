@@ -12,6 +12,7 @@ export default defineConfig({
   trailingSlash: 'always',
   build: {
     format: 'directory',
+    inlineStylesheets: 'always',
   },
   // Legacy Jekyll URLs (permalink: /:title/, slug from filename) → new
   // title-derived slugs under /blog/. Keeps inbound links alive post-migration.

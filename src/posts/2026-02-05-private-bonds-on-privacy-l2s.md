@@ -4,7 +4,7 @@ title: "Building Private Bonds on Ethereum - Part 2"
 description: "Part 2 of our private bonds series: we rebuild the same protocol on Aztec, where notes, nullifiers, and ZK proofs are handled by the network itself. 200 lines of Noir replace three separate components."
 date: 2026-02-05 09:00:00 +0100
 author: "Yanis"
-image: /assets/images/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
+image: ../assets/posts/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
 tags:
   - private-bonds
   - privacy-L2
@@ -34,7 +34,7 @@ When we built the custom UTXO system, we had to implement every privacy primitiv
 
 **Encrypted mempool** solves frontrunning without a trusted relayer. In our custom implementation, the issuer had to batch transactions to prevent competitors from seeing pending trades. On Aztec, transactions are encrypted before entering the mempool. Sequencers process them without knowing the contents until execution.
 
-![PXE architecture and encrypted transaction flow](/assets/images/2026-02-05-private-bonds-on-privacy-l2s/img-2-public-private-aztec.png)
+![PXE architecture and encrypted transaction flow](../assets/posts/2026-02-05-private-bonds-on-privacy-l2s/img-2-public-private-aztec.png)
 _Source: [Aztec Documentation](https://docs.aztec.network/developers/docs/foundational-topics)_
 
 **Decentralized sequencing** removes the single point of trust. Our custom system required the issuer to relay all transactions. On Aztec, a decentralized sequencer network orders and executes transactions. The issuer remains important for business logic (whitelist management, distribution), but loses their privileged position in transaction ordering.
@@ -133,7 +133,7 @@ For atomic DvP (Delivery-vs-Payment), the flow becomes:
 4. Contract verifies both authwits, atomically swaps assets
 5. Both authwits are nullified (cannot be replayed)
 
-![Authwit DvP flow](/assets/images/2026-02-05-private-bonds-on-privacy-l2s/img-1-authwit-dvp.png)
+![Authwit DvP flow](../assets/posts/2026-02-05-private-bonds-on-privacy-l2s/img-1-authwit-dvp.png)
 
 The key property: both parties commit to exact terms before execution. The seller cannot receive less than expected. The buyer cannot pay more. If either authwit is missing or mismatched, the transaction fails atomically.
 

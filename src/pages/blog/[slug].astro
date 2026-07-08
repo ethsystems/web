@@ -3,9 +3,9 @@
  * /blog/{slug}/ — post detail. slug is jekyllSlugify(post.data.title),
  * matching ethsystems/web's permalink convention.
  *
- * Source: the `posts` content collection, which loads from the
- * posts-source/ submodule.
+ * Source: the `posts` content collection, tracked directly in src/posts/.
  */
+import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import DetailPageLayout from '../../layouts/DetailPageLayout.astro';
 import ArticleFooter from '../../components/ArticleFooter.astro';
@@ -44,7 +44,7 @@ const postSchema = blogPostingSchema({
   description: entry.data.description,
   date,
   authors: entry.data.author,
-  image: entry.data.image,
+  image: entry.data.image?.src,
   url: `${site.domain}/blog/${slug}/`,
 });
 ---
@@ -61,13 +61,13 @@ const postSchema = blogPostingSchema({
   ]}
   lede={entry.data.description}
   pills={pills}
-  image={entry.data.image}
+  image={entry.data.image?.src}
   structuredData={postSchema}
   centered
 >
   {entry.data.image && (
     <div class="post-hero-image">
-      <img src={entry.data.image} alt="" loading="eager" />
+      <Image src={entry.data.image} alt="" width={1440} format="webp" loading="eager" />
     </div>
   )}
 

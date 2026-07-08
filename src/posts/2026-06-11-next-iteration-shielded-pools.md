@@ -3,7 +3,7 @@ title: "Exploring Hardened Shielded Pools"
 description: "Extending a working shielded pool with epoch nullifiers and PIR, and why private selection is the harder problem left for private payments at scale."
 date: 2026-06-11T07:00:00-04:00
 author: "Yanis"
-image: /assets/images/2026-06-11-next-iteration-shielded-pools/hero.png
+image: ../assets/posts/2026-06-11-next-iteration-shielded-pools/hero.png
 ---
 
 *This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*

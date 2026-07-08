@@ -3,7 +3,7 @@ layout: post
 title: "Building Private Bonds on Ethereum - Part 3"
 date: 2026-02-12 09:00:00 +0100
 author: "Yanis"
-image: /assets/images/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
+image: ../assets/posts/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
 description: "Exploring Fully Homomorphic Encryption as a path to confidential institutional bonds on Ethereum, the third approach in our Private Bond PoC series."
 tags:
   - private-bonds
@@ -24,7 +24,7 @@ Fully Homomorphic Encryption (FHE) allows computations directly on encrypted dat
 
 Imagine a locked box that you can manipulate from the outside (adding, subtracting, comparing what's inside) without ever opening it. Only the keyholder can peek inside, but anyone can perform operations.
 
-![FHE transfer flow showing encryption, on-chain computation, and threshold decryption](/assets/images/2026-02-12-private-bonds-fhe/fhe-homomorphic-property.png)
+![FHE transfer flow showing encryption, on-chain computation, and threshold decryption](../assets/posts/2026-02-12-private-bonds-fhe/fhe-homomorphic-property.png)
 
 This property makes FHE compelling for privacy-preserving finance: a smart contract can update encrypted balances, verify encrypted conditions, and transfer encrypted amounts, all while the actual values remain hidden from everyone including the blockchain observers.
 
@@ -89,7 +89,7 @@ Zama's architecture separates concerns:
 
 **Threshold Network**: When decryption is needed (e.g., user wants to see their balance), they request it through a Gateway. The threshold network coordinates: if 9 of 13 operators agree, the value is decrypted and returned.
 
-![Zama architecture: on-chain contract, off-chain coprocessor, and threshold decryption network](/assets/images/2026-02-12-private-bonds-fhe/zama-architecture.png)
+![Zama architecture: on-chain contract, off-chain coprocessor, and threshold decryption network](../assets/posts/2026-02-12-private-bonds-fhe/zama-architecture.png)
 
 This means:
 

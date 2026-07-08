@@ -4,7 +4,7 @@ title: "Building Private Transfers on Ethereum with Plasma"
 description: "Explore how ZK-plasma enables private stablecoin transfers on Ethereum. Covers off-chain execution, balance proofs, and deployment tradeoffs for institutions."
 date: 2026-02-26 09:00:00 +0100
 author: "Aaryamann"
-image: /assets/images/2026-02-26-private-stablecoins-with-plasma/hero.png
+image: ../assets/posts/2026-02-26-private-stablecoins-with-plasma/hero.png
 tags:
   - private-transfers
   - plasma
@@ -35,7 +35,7 @@ We built a proof-of-concept on [Intmax2](https://eprint.iacr.org/2025/021), a ZK
 
 ## Architecture
 
-![Architecture](/assets/images/2026-02-26-private-stablecoins-with-plasma/architecture.png)
+![Architecture](../assets/posts/2026-02-26-private-stablecoins-with-plasma/architecture.png)
 
 - **Institution**: holds keys locally, initiates deposits, transfers, and withdrawals
 - **Store Vault**: encrypted off-chain storage where senders publish transaction data for recipients to retrieve
@@ -60,7 +60,7 @@ In the target architecture, deposits are gated by an attestation registry: a ZK 
 
 The attestation proof is zero-knowledge: the on-chain verifier learns only that the depositor holds a valid, non-expired KYC attestation. It does not learn which attestation leaf was used, which compliance authority issued it, or when the attestation was granted. An observer sees that someone deposited a known amount of a known token, but cannot determine who deposited it or which compliance authority verified them.
 
-![Deposit Flow](/assets/images/2026-02-26-private-stablecoins-with-plasma/deposit.png)
+![Deposit Flow](../assets/posts/2026-02-26-private-stablecoins-with-plasma/deposit.png)
 
 *Deposit flow: tokens lock on L1, relay to the Rollup contract on L2, and the user updates their local balance proof after the validity prover confirms the block.*
 
@@ -74,7 +74,7 @@ After the block is posted, the sender generates a recursive ZK validity proof at
 
 The zero-knowledge property here is precise: the recipient learns only the sender's identity, the amount, and that the sender had sufficient balance at the time of the transfer. They learn nothing about the sender's total balance, other recipients in the sender's transaction batch, or what any other sender in the block was doing. The sender list (public keys) for each block is visible on-chain, so observers can see *who* participated as senders, but not *what* they sent or to *whom*. Repeated participation across blocks also reveals activity frequency: an observer can track how often a public key appears as a sender, even without knowing transfer contents or recipients.
 
-![Transfer Flow](/assets/images/2026-02-26-private-stablecoins-with-plasma/transfer.png)
+![Transfer Flow](../assets/posts/2026-02-26-private-stablecoins-with-plasma/transfer.png)
 
 *Transfer flow: the block builder only sees salted hashes. After the block is posted, the sender encrypts the transaction details for the recipient via the store vault.*
 
@@ -82,7 +82,7 @@ The zero-knowledge property here is precise: the recipient learns only the sende
 
 Withdrawals convert a private plasma balance back to public L1 tokens. The user constructs a transfer targeting an L1 address, which signals withdrawal intent and goes through the normal transfer protocol. Once the block is proven by the validity prover, the user submits a withdrawal claim to the Withdrawal contract with a ZK balance proof. The contract verifies the proof, deducts any previously withdrawn amounts, and transfers tokens to the L1 address.
 
-![Withdraw Flow](/assets/images/2026-02-26-private-stablecoins-with-plasma/withdraw.png)
+![Withdraw Flow](../assets/posts/2026-02-26-private-stablecoins-with-plasma/withdraw.png)
 
 *Withdrawal flow: the user proves their balance via a ZK proof and claims tokens on L1.*
 
