@@ -62,9 +62,9 @@ export const faqCategories: FaqCategory[] = [
         ],
       },
       {
-        q: 'How do you relate to EthLabs and Ethereum Institutional?',
+        q: 'How do you relate to Ethlabs and Ethereum Institutional?',
         a: [
-          "As complementary nodes in the same network, often with overlapping supporters, and as collaborators. EthLabs advances Ethereum's core protocol R&D. Ethereum Institutional is a neutral, non-commercial front door helping institutions understand and navigate the ecosystem. Ethereum Systems is the specialist builder: when an institution moves from evaluating Ethereum to building on it, we're the accountable commercial counterparty that designs and delivers the confidential systems involved.",
+          "As complementary nodes in the same network, often with overlapping supporters, and as collaborators. Ethlabs advances Ethereum's core protocol R&D. Ethereum Institutional is a neutral, non-commercial front door helping institutions understand and navigate the ecosystem. Ethereum Systems is the specialist builder: when an institution moves from evaluating Ethereum to building on it, we're the accountable commercial counterparty that designs and delivers the confidential systems involved.",
         ],
       },
       {

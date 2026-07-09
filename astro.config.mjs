@@ -8,7 +8,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://ethsystems.org',
+  site: process.env.OVERRIDE_URL || 'https://ethsystems.org',
   trailingSlash: 'always',
   build: {
     format: 'directory',

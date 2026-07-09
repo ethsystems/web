@@ -62,7 +62,7 @@ const pageDescription =
         <ul class="about-team-grid">
           {[
             { name: 'Mo Jalil',           handle: 'motypes',     avatar: '/assets/images/team/mo-jalil.jpg',                  linkedin: 'motypes' },
-            { name: 'Oskar Thorén',       handle: 'oskarth',     avatar: '/assets/images/team/oskar-thoren.jpg',              linkedin: null },
+            { name: 'Oskar Thorén',       handle: 'oskarth',     avatar: '/assets/images/team/oskar-thoren.jpg',              linkedin: 'oskar-thorén-51a050421' },
             { name: 'Aaryamann Challani', handle: '_rymnc',  avatar: '/assets/images/team/aaryamann-challani.jpg',        linkedin: 'aaryamannc' },
           ].map((p) => (
             <li class="about-team-card">
@@ -103,7 +103,7 @@ const pageDescription =
       <div class="about-workshops">
         <div class="about-workshops-text">
           <h2>Workshops</h2>
-          <p>The team travels to meet institutions where they are. Each session is built around the host's actual context: their regulatory environment, in-flight projects, and technical maturity. We've held workshops in Asia, Europe, and online, with sessions on the calendar across more regions.</p>
+          <p>The team travels to meet institutions where they are. Each session is built around the host's actual context: their regulatory environment, in-flight projects, and technical maturity. We hold workshops globally, spanning Asia, Europe, and the Americas..</p>
           <aside class="about-workshops-cta">
             <div class="about-workshops-cta-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -139,7 +139,6 @@ const pageDescription =
             <div class="contact-label">Careers</div>
             <div class="contact-value">{site.careersEmail}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" /></svg></div>
           </a>
-          <a href={`mailto:${site.email}`} class="contact-email">{site.email}</a>
         </div>
       </div>
 
@@ -172,9 +171,7 @@ const pageDescription =
     letter-spacing: -0.02em;
     margin: 0 0 1.25rem;
   }
-  /* Contact card on the left, email-as-link on the right.
-     Card stays at its natural width; email expands to occupy the rest
-     of the row and sits centred vertically next to the card. */
+  /* Contact cards sit at their natural width and wrap as needed. */
   .contact-row {
     display: flex;
     align-items: center;
@@ -200,15 +197,6 @@ const pageDescription =
     border-color: var(--color-cta-border);
     background: var(--color-cta-tint);
   }
-  .contact-email {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-cta);
-    text-decoration: none;
-    transition: color var(--duration-fast) var(--easing-soft);
-  }
-  .contact-email:hover { color: var(--color-cta-hover); }
   .contact-label {
     font-family: var(--font-mono);
     font-size: 0.65rem;

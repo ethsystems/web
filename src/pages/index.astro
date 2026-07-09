@@ -44,7 +44,7 @@ const FEATURED_FAQ_QS = [
   'Why does this matter?',
   'What do you offer institutions?',
   "What's your relationship with the Ethereum Foundation?",
-  'How do you relate to EthLabs and Ethereum Institutional?',
+  'How do you relate to Ethlabs and Ethereum Institutional?',
   'Is your work open source?',
   'Where do you operate?',
 ];
@@ -59,7 +59,6 @@ const faqTeasers = FEATURED_FAQ_QS
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-inner">
-        <p class="kicker hero-kicker">Institutional privacy on Ethereum</p>
         <h1>Confidential Systems for Institutional Ethereum</h1>
         <p class="lede"><strong>Ethereum Systems</strong> helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.</p>
         <div class="cta-row">
@@ -70,6 +69,24 @@ const faqTeasers = FEATURED_FAQ_QS
       <div class="hero-mark-col" aria-hidden="true">
         <HeroMark />
       </div>
+    </div>
+  </section>
+
+  <!-- NARRATIVE — the launch story in one passage. The words institutions
+       cannot reveal are sealed under ink redaction bars (the hero mark's
+       own vocabulary) and lift as the section scrolls into view: the copy
+       performs selective disclosure. Pure CSS scroll-driven animation;
+       resting state (no support, reduced motion) is the revealed text. -->
+  <section class="narrative">
+    <div class="container">
+      <p class="kicker narrative-kicker">The team institutions already know</p>
+      <p class="narrative-prose">
+        Institutions want to move real financial activity onto Ethereum.
+        A public ledger exposes <span class="redact" style="--i:0"><span class="redact-word">positions,</span></span> <span class="redact" style="--i:1"><span class="redact-word">counterparties,</span></span> and <span class="redact" style="--i:2"><span class="redact-word">flows</span></span> they are not allowed to reveal.
+      </p>
+      <p class="narrative-body">
+        <strong>Ethereum Systems</strong>, the team behind the Ethereum Foundation&rsquo;s Institutional Privacy Task Force, builds the confidential, compliant systems that make that possible, from proof-of-concept through to production, backed by a year of open-source work already shipped.
+      </p>
     </div>
   </section>
 
@@ -495,9 +512,19 @@ const faqTeasers = FEATURED_FAQ_QS
   @media (max-width: 720px) {
     .hero { padding: 3rem 0 3.5rem; }
     .hero .lede { font-size: 1.05rem; margin-bottom: 1.5rem; }
+    /* Float the ledger mark above the copy on mobile — `order` reorders
+       the stacked grid items so the animation leads, then the copy
+       (kicker, "Confidential Systems…" h1, lede, CTAs) follows. The
+       grid's row `gap` handles the spacing, so drop the mark's own
+       top margin. */
+    .hero-mark-col { order: -1; margin: 0 auto; }
   }
   @media (min-width: 920px) {
-    .hero { padding: 7rem 0; min-height: min(80vh, 820px); display: grid; align-items: center; }
+    /* Fill the first viewport exactly: 100svh minus the sticky nav
+       (30px logo + 2 x 0.95rem padding + 1px border = 62px), so the
+       hero owns the whole screen on load and the fold lands on its
+       bottom border. */
+    .hero { padding: 4rem 0; min-height: calc(100svh - 62px); display: grid; align-items: center; }
     .hero-grid {
       grid-template-columns: minmax(0, 56fr) minmax(0, 44fr);
       gap: clamp(2rem, 5vw, 4rem);
@@ -509,6 +536,80 @@ const faqTeasers = FEATURED_FAQ_QS
       align-items: center;
       justify-content: center;
     }
+  }
+
+  /* NARRATIVE — redacted prose. The bars are ink rectangles drawn by the
+     .redact::after pseudo-element over each word. Two states:
+       resting (no scroll-driven-animation support / reduced motion):
+         bars at scaleX(0), words visible.
+       supported + motion allowed: bars armed at scaleX(1), then a
+         scroll-driven animation on the section's view timeline wipes
+         each bar toward its right edge, uncovering the word left-to-
+         right in reading order, staggered by --i. Scrubs with scroll
+         (reverses on scroll-up) — unlike the old one-shot JS observer.
+     Ink on paper only; no navy, no fades over gaps. */
+  .narrative {
+    padding: 6.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .narrative-kicker { margin-bottom: 1.75rem; }
+  .narrative-prose {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+    font-size: clamp(1.6rem, 1.15rem + 2.2vw, 2.7rem);
+    line-height: 1.28;
+    letter-spacing: -0.012em;
+    color: var(--color-primary);
+    max-width: 30ch;
+    margin: 0 0 1.75rem;
+  }
+  .narrative-body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    max-width: 58ch;
+    margin: 0;
+  }
+  .narrative-body strong {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+  .redact {
+    position: relative;
+    white-space: nowrap;
+  }
+  .redact::after {
+    content: '';
+    position: absolute;
+    inset: 0.02em -0.09em -0.06em;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: 100% 50%;
+    pointer-events: none;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .narrative { view-timeline: --narrative-reveal block; }
+      .redact::after {
+        transform: scaleX(1);
+        animation: redact-lift linear both;
+        animation-timeline: --narrative-reveal;
+        /* First bar starts lifting once ~60% of the section has entered
+           the viewport; each later word trails by 20% of the entry range
+           so the wipe reads left-to-right. */
+        animation-range: entry calc(60% + var(--i) * 20%)
+          entry calc(100% + var(--i) * 20%);
+      }
+    }
+  }
+  @keyframes redact-lift {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+  }
+  @media (max-width: 720px) {
+    .narrative { padding: 4rem 0; }
   }
 
   /* ABOUT */

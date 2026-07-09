@@ -94,6 +94,8 @@ const structuredDataList = structuredData
     {structuredDataList.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
     ))}
+
+    <script is:inline src="https://cdn.usefathom.com/script.js" data-site="UKUMHBZI" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>

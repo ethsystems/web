@@ -23,9 +23,7 @@
   randomness, no runtime text mutation. Animates transform and opacity only.
   The resting state (no play class) is the finished composition, so no JS
   means the mark simply shows. Reduced motion renders it at once with at
-  most a single 300ms fade. WebKit gets the same static path: Safari's SVG
-  invalidation drops frames across this many nested CSS animations (stale
-  half-painted collages), so it shows the finished mark with the fade.
+  most a single 300ms fade.
 */
 
 // Glyph artwork. Exact points (local space, x 0..100, y 0..160).
@@ -418,12 +416,17 @@ for (const b of fieldBars) {
     animation: hm-sweep 1426ms linear 0ms both;
   }
 
+  /* The flicks fill backwards, not both: their 100% keyframe equals the
+     resting style (opacity 0), and WebKit resolves a step-end forward fill
+     at the exact active-phase boundary to the pre-jump step for some
+     delay/duration pairs, leaving garble rows stuck visible. Handing the
+     end state back to the base style sidesteps that resolution entirely. */
   .play .hm-vals {
-    animation: hm-flick-val 173ms step-end var(--rd) both;
+    animation: hm-flick-val 173ms step-end var(--rd) backwards;
   }
 
   .play .hm-garb {
-    animation: hm-flick-garb 173ms step-end var(--rd) both;
+    animation: hm-flick-garb 173ms step-end var(--rd) backwards;
   }
 
   .play .hm-bar {
@@ -568,8 +571,8 @@ for (const b of fieldBars) {
     }
   }
 
-  /* Static path (WebKit, or reduced motion below): the finished mark with
-     one gentle fade. The resting styles already are the finished mark. */
+  /* Static path (reduced motion below): the finished mark with one gentle
+     fade. The resting styles already are the finished mark. */
   .static .hm-stage {
     animation: hm-fade-in 300ms var(--ease) both;
   }
@@ -599,15 +602,9 @@ for (const b of fieldBars) {
   // Same origin module (Astro bundles this, so the CSP stays script-src 'self').
   // Reads reduced motion once and flips the SVG into play or static. The
   // reveal is a one shot: nothing loops, so nothing needs pausing.
-  // WebKit takes the static path: its SVG invalidation loses frames across
-  // this many nested CSS animations, leaving a stale collage of half
-  // painted states. The vendor check catches Safari and every iOS browser
-  // (all WebKit by platform rule); Chromium and Firefox report other
-  // vendors and play the full sequence.
   const svg = document.getElementById("hero-mark");
   if (svg) {
-    const webkit = /apple/i.test(navigator.vendor);
-    if (webkit || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
       svg.classList.add("static");
     } else {
       svg.classList.add("play");
