@@ -3,12 +3,12 @@
 export const site = {
   name: 'Ethereum Systems',
   domain: 'https://ethsystems.org',
-  bookACallUrl: 'https://calendar.app.google/yFK6o5Mzk7fKuu91A',
+  contactFormUrl: 'https://forms.gle/24Ec9Grk5VgFMLX29',
   github: 'https://github.com/ethsystems',
   x: 'https://x.com/eth_systems',
   linkedin: 'https://www.linkedin.com/company/ethsystems/',
   email: 'hello@ethsystems.org',
-  careersEmail: 'careers@ethsystems.org',
+  careersEmail: 'join@ethsystems.org',
   // Source repos for the map + PoC content.
   mapRepo: 'https://github.com/ethsystems/map',
   pocsRepo: 'https://github.com/ethsystems/pocs',

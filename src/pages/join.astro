@@ -12,13 +12,14 @@ import PageHeader from '../components/PageHeader.astro';
 import { site } from '../lib/site';
 
 const pageDescription =
-  "We're a small team building confidential systems for institutional Ethereum.";
+  "We're a team building confidential systems for institutional Ethereum.";
 ---
 
 <BaseLayout
   title="Join us"
   description={pageDescription}
   current="/join/"
+  image="/og/join.png"
   noindex
 >
   <PageHeader
@@ -27,7 +28,7 @@ const pageDescription =
       { label: 'Join us' },
     ]}
     title="Join us"
-    lede="We're a small team building confidential systems for institutional Ethereum."
+    lede="We're a team building confidential systems for institutional Ethereum."
   />
 
   <section class="join-section">

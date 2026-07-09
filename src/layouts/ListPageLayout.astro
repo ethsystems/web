@@ -13,6 +13,8 @@ interface Props {
   breadcrumbs?: Crumb[];
   lede?: string;
   pills?: Pill[];
+  /** Optional per-page OG/Twitter image, forwarded to BaseLayout. */
+  image?: string;
 }
 
 const {
@@ -23,10 +25,11 @@ const {
   breadcrumbs = [{ label: 'Home', href: '/' }],
   lede,
   pills,
+  image,
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} current={current}>
+<BaseLayout title={title} description={description} current={current} image={image}>
   <PageHeader breadcrumbs={[...breadcrumbs, { label: pageTitle }]} title={pageTitle} lede={lede} pills={pills} />
   <slot name="anchor-nav" />
   <div class="list-body">
