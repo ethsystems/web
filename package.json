@@ -9,7 +9,7 @@
   "scripts": {
     "build:graph": "node scripts/build-graph.mjs",
     "predev": "npm run build:graph",
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "prebuild": "node scripts/validate-content-refs.mjs && npm run build:graph",
     "build": "astro build",
     "prepreview": "npm run build:graph",

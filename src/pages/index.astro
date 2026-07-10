@@ -596,11 +596,11 @@ const faqTeasers = FEATURED_FAQ_QS
         transform: scaleX(1);
         animation: redact-lift linear both;
         animation-timeline: --narrative-reveal;
-        /* First bar starts lifting once ~60% of the section has entered
-           the viewport; each later word trails by 20% of the entry range
+        /* First bar starts lifting once ~40% of the section has entered
+           the viewport; each later word trails by 10% of the entry range
            so the wipe reads left-to-right. */
-        animation-range: entry calc(60% + var(--i) * 20%)
-          entry calc(100% + var(--i) * 20%);
+        animation-range: entry calc(40% + var(--i) * 10%)
+          entry calc(100% + var(--i) * 5%);
       }
     }
   }
