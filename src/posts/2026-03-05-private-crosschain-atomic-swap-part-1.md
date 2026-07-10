@@ -13,7 +13,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 Settlement risk has been around as long as trading itself. Two parties trade a bond for cash, and neither wants to go first. The buyer will not pay before receiving the asset; the seller will not hand over the asset before receiving payment. Traditional finance solved this decades ago with trusted intermediaries: custodians, depositories, clearing houses. The principle is [Delivery-versus-Payment](https://www.investopedia.com/terms/d/deliveryversuspayment.asp) (DvP) — both legs of the trade are conditioned on each other, so neither finalizes unless both do. Infrastructure like [DTCC](https://www.dtcc.com/) or [Euroclear](https://www.euroclear.com/) enforces this, holding both legs in escrow before releasing them together when conditions are met.
 

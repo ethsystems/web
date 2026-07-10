@@ -2,7 +2,7 @@
 /**
  * build-graph.mjs
  *
- * Parses all markdown content files in the Ethereum Systems map repository and produces
+ * Parses all markdown content files in the EthSystems map repository and produces
  * a graph.json file with nodes (content items) and edges (cross-references).
  *
  * Source of truth: ethsystems/map main branch. All field reads pass through verbatim;

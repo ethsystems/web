@@ -29,11 +29,11 @@ interface Props {
 
 const { title, description, current, canonical, noindex, image, structuredData } = Astro.props;
 const fullTitle = title
-  ? `${title} · Ethereum Systems`
-  : 'Ethereum Systems · Confidential Systems for Institutional Ethereum';
+  ? `${title} · EthSystems`
+  : 'EthSystems · Confidential Systems for Institutional Ethereum';
 const desc =
   description ??
-  "Ethereum Systems helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.";
+  "EthSystems helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.";
 const canon = canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
 const ogImage = new URL(image ?? '/og.png', Astro.site ?? Astro.url).toString();
 const structuredDataList = structuredData
@@ -57,7 +57,7 @@ const structuredDataList = structuredData
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="Ethereum Systems · Writeups"
+      title="EthSystems · Writeups"
       href="/rss.xml"
     />
 

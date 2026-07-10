@@ -14,7 +14,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 _This is Part 3 of our Private Bond proof-of-concept series. In [Part 1](/building-private-bonds-on-ethereum/) we explored Custom UTXOs, in [Part 2](/private-bonds-on-privacy-l2s/) we covered Privacy L2s with Aztec. Now we examine a fundamentally different approach: Fully Homomorphic Encryption._
 

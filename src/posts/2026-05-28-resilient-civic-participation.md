@@ -15,7 +15,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *This is the third and final post in the resilience series, after [Resilient Plural Identity](/resilient-plural-identity/) and [Resilient Disbursement Rails](/resilient-disbursement-rails/). The identity post asked how a person can keep proving who they are when the authority that vouched for them disappears. The disbursement post asked how money can reach that person when the rail handing it out can be subpoenaed. This post asks the third question in the same shape: how can a person co-sign a public decision (a petition, an initiative, a citizen-led inquiry) without ending up on a list that a future regime can use against them.*
 

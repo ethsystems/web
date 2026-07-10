@@ -16,7 +16,7 @@ import { DetailPanel } from './DetailPanel';
 import { NodeTooltip } from './NodeTooltip';
 
 /*
- * d3 force-directed view of the full Ethereum Systems map (135 nodes / 819 edges).
+ * d3 force-directed view of the full EthSystems map (135 nodes / 819 edges).
  * Light-theme port — SVG canvas sits on our bg-subtle, edge colors
  * remain the same encoding from graph-layout.ts but read on white.
  */

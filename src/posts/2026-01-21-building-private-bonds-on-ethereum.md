@@ -13,7 +13,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 2025 has been a turning point and an unprecedented wave of tokenization is on the horizon. For those new to the topic, tokenization means representing traditional financial assets (like bonds, stocks, or real estate) as digital tokens on a blockchain. The main standard for tokens on Ethereum is [ERC-20](https://eips.ethereum.org/EIPS/eip-20), a representation of fungible tokens that is very versatile and can represent any form of asset. This article explores solutions for the problem encountered when using the straight ERC-20 standard. Ethereum being a fully transparent ledger, using ERC-20 exposes too much: who holds what, every transfer, every counterparty relationship. For institutions, that's a dealbreaker.
 

@@ -16,10 +16,10 @@ export interface FaqCategory {
 
 export const faqCategories: FaqCategory[] = [
   {
-    label: 'About Ethereum Systems',
+    label: 'About EthSystems',
     questions: [
       {
-        q: 'What is Ethereum Systems?',
+        q: 'What is EthSystems?',
         a: [
           'An engineering and research company building confidential systems for institutional Ethereum: the privacy and compliance infrastructure institutions need to put real financial activity on the network.',
         ],
@@ -58,13 +58,13 @@ export const faqCategories: FaqCategory[] = [
       {
         q: "What's your relationship with the Ethereum Foundation?",
         a: [
-          'We created and ran the Institutional Privacy Task Force at the EF, and we continue that body of work in active collaboration with EF and EF-aligned teams: coordinating the transition together, keeping the artifacts public, and collaborating on public goods, specs, and privacy work. Ethereum Systems is its own company because commercial delivery needs a commercial structure; the collaboration continues.',
+          'We created and ran the Institutional Privacy Task Force at the EF, and we continue that body of work in active collaboration with EF and EF-aligned teams: coordinating the transition together, keeping the artifacts public, and collaborating on public goods, specs, and privacy work. EthSystems is its own company because commercial delivery needs a commercial structure; the collaboration continues.',
         ],
       },
       {
         q: 'How do you relate to Ethlabs and Ethereum Institutional?',
         a: [
-          "As complementary nodes in the same network, often with overlapping supporters, and as collaborators. Ethlabs advances Ethereum's core protocol R&D. Ethereum Institutional is a neutral, non-commercial front door helping institutions understand and navigate the ecosystem. Ethereum Systems is the specialist builder: when an institution moves from evaluating Ethereum to building on it, we're the accountable commercial counterparty that designs and delivers the confidential systems involved.",
+          "As complementary nodes in the same network, often with overlapping supporters, and as collaborators. Ethlabs advances Ethereum's core protocol R&D. Ethereum Institutional is a neutral, non-commercial front door helping institutions understand and navigate the ecosystem. EthSystems is the specialist builder: when an institution moves from evaluating Ethereum to building on it, we're the accountable commercial counterparty that designs and delivers the confidential systems involved.",
         ],
       },
       {
@@ -99,7 +99,7 @@ export const faqCategories: FaqCategory[] = [
         q: 'What does "private" actually mean on a public blockchain?',
         a: [
           'Privacy on Ethereum means controlling what information is visible and to whom. The spectrum ranges from anonymity (unlinkable addresses, but amounts may be visible) to full confidentiality (amounts, counterparties, and transaction patterns all hidden). Most institutional solutions sit somewhere in between, using selective disclosure to reveal specific data to authorized parties like regulators.',
-          'Ethereum Systems uses the I2I/I2U distinction to clarify threat models: in institution-to-institution contexts, both parties have symmetric trust and shared compliance burden. In institution-to-user contexts, the power dynamic is asymmetric and privacy protections must favor the weaker party.',
+          'EthSystems uses the I2I/I2U distinction to clarify threat models: in institution-to-institution contexts, both parties have symmetric trust and shared compliance burden. In institution-to-user contexts, the power dynamic is asymmetric and privacy protections must favor the weaker party.',
         ],
         links: [
           { label: 'Regulatory disclosure', href: '/patterns/pattern-regulatory-disclosure-keys-proofs/' },

@@ -14,7 +14,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *This post opens our three-part resilience series on identity, payments, and coordination. Where previous IPTF writeups started from an institutional requirement and designed forward, these start from a failure mode (a sanctioned jurisdiction, a collapsed issuer, an internet shutdown) and work back to what Ethereum can offer. Expect the voice to shift accordingly.*
 

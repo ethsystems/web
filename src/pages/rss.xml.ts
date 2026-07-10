@@ -37,7 +37,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: `${site.name} · Writeups`,
     description:
-      'Field notes from Ethereum Systems on building privacy on Ethereum for institutional use cases.',
+      'Field notes from EthSystems on building privacy on Ethereum for institutional use cases.',
     site: context.site ?? site.domain,
     // dc:creator carries the author name; the RSS <author> element
     // requires an email address, which posts don't have.

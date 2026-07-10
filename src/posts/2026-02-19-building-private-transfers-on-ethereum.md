@@ -14,7 +14,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 Every stablecoin transfer on Ethereum is public. When an institution moves USDC to a supplier, that payment is visible to every competitor, analyst, and observer on the network. Treasury positions, supplier relationships, settlement timing and payment frequency are visible to anyone with a block explorer.
 

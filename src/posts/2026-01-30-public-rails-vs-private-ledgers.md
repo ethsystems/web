@@ -12,7 +12,7 @@ tags:
   - ethereum
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *An institutional decision framework*
 

@@ -12,7 +12,7 @@ tags:
   - privacy-map
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *The following write-up is based on a [talk](https://youtu.be/NkgErrMXuIk?si=vrccSYpwruI1DK3J) given at Cypherpunk Congress, Devconnect in Buenos Aires, November, 2025.*
 

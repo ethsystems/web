@@ -15,7 +15,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *This is the second post in our three-part resilience series, after [Resilient Plural Identity](/resilient-plural-identity/). The identity post asked how a person can keep proving who they are when the authority that vouched for them disappears or turns hostile. This one asks how money can reach that person when the local partner handing out the funds can be forced to share its records, and when the exchange where they cash out into local currency records their identity.*
 

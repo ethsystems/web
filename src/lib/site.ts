@@ -1,7 +1,7 @@
-// Central site config for Ethereum Systems chrome (nav, footer, meta).
+// Central site config for EthSystems chrome (nav, footer, meta).
 // Mirrors the ethsystems design system's site.ts.
 export const site = {
-  name: 'Ethereum Systems',
+  name: 'EthSystems',
   domain: 'https://ethsystems.org',
   contactFormUrl: 'https://forms.gle/24Ec9Grk5VgFMLX29',
   github: 'https://github.com/ethsystems',

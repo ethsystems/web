@@ -13,7 +13,7 @@ tags:
   - proof-of-concept
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 What does a private payment system look like when the business logic is ordinary Rust, proved in zero knowledge and verified on Ethereum? We built a [validium](https://ethereum.org/developers/docs/scaling/validium/) to find out.
 

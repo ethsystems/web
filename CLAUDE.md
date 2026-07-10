@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is the Ethereum Systems website repository. Astro static site deployed at https://ethsystems.org/.
+This is the EthSystems website repository. Astro static site deployed at https://ethsystems.org/.
 
 Map content (patterns, approaches, use-cases, vendors, domains, jurisdictions) is the projection of the [`map`](https://github.com/ethsystems/map) repo, pinned as a submodule at `content/`. Blog writeups live in `src/posts/`.
 

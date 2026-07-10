@@ -38,7 +38,7 @@ const latestPosts = allPosts
 // as expandable accordions so the full answer is one click away without a
 // page jump. Strings must match faq.ts exactly (findFaq is strict equality).
 const FEATURED_FAQ_QS = [
-  'What is Ethereum Systems?',
+  'What is EthSystems?',
   'Who is behind it?',
   'What have you actually built?',
   'Why does this matter?',
@@ -60,7 +60,7 @@ const faqTeasers = FEATURED_FAQ_QS
     <div class="container hero-grid">
       <div class="hero-inner">
         <h1>Confidential Systems for Institutional Ethereum</h1>
-        <p class="lede"><strong>Ethereum Systems</strong> helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.</p>
+        <p class="lede"><strong>EthSystems</strong> helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.</p>
         <div class="cta-row">
           <a href="/approaches/" class="btn primary lg">See approaches<span class="arr">→</span></a>
           <a href="/blog/" class="btn ghost lg">See writeups<span class="arr">→</span></a>
@@ -85,7 +85,7 @@ const faqTeasers = FEATURED_FAQ_QS
         A public ledger exposes <span class="redact" style="--i:0"><span class="redact-word">positions,</span></span> <span class="redact" style="--i:1"><span class="redact-word">counterparties,</span></span> and <span class="redact" style="--i:2"><span class="redact-word">flows</span></span> they are not allowed to reveal.
       </p>
       <p class="narrative-body">
-        <strong>Ethereum Systems</strong>, the team behind the Ethereum Foundation&rsquo;s Institutional Privacy Task Force, builds the confidential, compliant systems that make that possible, from proof-of-concept through to production, backed by a year of open-source work already shipped.
+        <strong>EthSystems</strong>, the team behind the Ethereum Foundation&rsquo;s Institutional Privacy Task Force, builds the confidential, compliant systems that make that possible, from proof-of-concept through to production, backed by a year of open-source work already shipped.
       </p>
     </div>
   </section>
@@ -131,7 +131,7 @@ const faqTeasers = FEATURED_FAQ_QS
     <div class="container">
       <div class="section-head">
         <h2>Who is this for</h2>
-        <p class="meta">Ethereum Systems coordinates between vendors and protocols, institutions, and regulators. The map and the approaches are written so each group can reach the same evidence by a different door. Pick the column that fits your role; each one is a recommended reading order, not a forced path.</p>
+        <p class="meta">EthSystems coordinates between vendors and protocols, institutions, and regulators. The map and the approaches are written so each group can reach the same evidence by a different door. Pick the column that fits your role; each one is a recommended reading order, not a forced path.</p>
       </div>
 
       <div class="persona-grid">
@@ -282,7 +282,7 @@ const faqTeasers = FEATURED_FAQ_QS
       <div class="container">
         <div class="section-head">
           <h2>Recent writeups from the team</h2>
-          <p class="meta">Long-form research, guides, POCs, and analysis from the Ethereum Systems team.</p>
+          <p class="meta">Long-form research, guides, POCs, and analysis from the EthSystems team.</p>
         </div>
 
         <div class="writeups">
@@ -421,7 +421,7 @@ const faqTeasers = FEATURED_FAQ_QS
     <div class="container">
       <div class="contact-grid">
         <div>
-          <h2>Talk to Ethereum Systems</h2>
+          <h2>Talk to EthSystems</h2>
           <div class="contact-body">
             <p>If you are an institution with a privacy requirement, a builder shipping a solution, or a regulator who wants the picture, we are listening.</p>
           </div>
@@ -510,14 +510,47 @@ const faqTeasers = FEATURED_FAQ_QS
     margin: 1rem auto 0;
   }
   @media (max-width: 720px) {
-    .hero { padding: 3rem 0 3.5rem; }
+    /* Fit the whole hero — mark, h1, lede, CTAs — in the first mobile
+       viewport. The hero flexes to 100svh minus the mobile nav (40px
+       menu button + 2 × 0.75rem padding + 1px border = 65px) and the
+       mark column absorbs whatever height the copy doesn't use, so the
+       CTA row always lands above the fold regardless of how many lines
+       the h1/lede wrap to on a given device. */
+    .hero {
+      padding: 1.5rem 0 2rem;
+      display: flex;
+      min-height: calc(100svh - 65px);
+    }
     .hero .lede { font-size: 1.05rem; margin-bottom: 1.5rem; }
-    /* Float the ledger mark above the copy on mobile — `order` reorders
-       the stacked grid items so the animation leads, then the copy
-       (kicker, "Confidential Systems…" h1, lede, CTAs) follows. The
-       grid's row `gap` handles the spacing, so drop the mark's own
-       top margin. */
-    .hero-mark-col { order: -1; margin: 0 auto; }
+    .hero-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .hero-inner { flex-shrink: 0; }
+    /* Float the ledger mark above the copy on mobile — `order` puts the
+       animation first, then the copy (h1, lede, CTAs) follows. The
+       column takes the leftover viewport height (flex: 1, with a floor
+       so the mark never vanishes on short screens) and the SVG sizes
+       itself height-first into it via aspect-ratio, instead of the
+       width-driven sizing used elsewhere. */
+    .hero-mark-col {
+      order: -1;
+      flex: 1 1 0;
+      min-height: 110px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-mark-col :global(.hero-mark) {
+      height: 100%;
+      width: auto;
+      aspect-ratio: 280 / 340;
+      max-height: 400px;
+      max-width: min(80vw, 340px);
+    }
   }
   @media (min-width: 920px) {
     /* Fill the first viewport exactly: 100svh minus the sticky nav

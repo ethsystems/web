@@ -1,6 +1,6 @@
-# Ethereum Systems Website
+# EthSystems Website
 
-Static website for Ethereum Systems, live at [https://ethsystems.org/](https://ethsystems.org/).
+Static website for EthSystems, live at [https://ethsystems.org/](https://ethsystems.org/).
 
 Astro static site. Content for patterns, approaches, use-cases, vendors, domains, and jurisdictions is sourced from the [`map`](https://github.com/ethsystems/map) repo via a git submodule at `content/`. Writeups (blog posts) live in `src/posts/`.
 

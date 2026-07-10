@@ -6,7 +6,7 @@ author: "Yanis"
 image: ../assets/posts/2026-06-11-next-iteration-shielded-pools/hero.png
 ---
 
-*This post was written when IPTF (now Ethereum Systems) was at the Ethereum Foundation*
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 Shielded pools are one way to make a private payment on a public blockchain. Two earlier posts on this blog built one, first for [private bonds](/building-private-bonds-on-ethereum/), then for [private payments](/building-private-transfers-on-ethereum/). The primitive works. What comes next is a run of bigger iterations meant to make it both more resilient and more scalable: hard for any single party to watch, censor, or quietly take control of, and fast enough to carry payments at Visa scale. The trick is getting there without giving up the four things that make shielding worth having in the first place: censorship resistance, openness, privacy, and security.
 
