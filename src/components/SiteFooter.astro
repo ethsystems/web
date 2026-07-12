@@ -1,6 +1,6 @@
 ---
 import { site } from '../lib/site';
-import markBlack from '../assets/logos/mark-black.svg?raw';
+import logoHorizontal from '../assets/logos/logo-horizontal-black.svg?raw';
 ---
 
 <footer class="site">
@@ -8,8 +8,7 @@ import markBlack from '../assets/logos/mark-black.svg?raw';
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/" aria-label="EthSystems">
-          <span class="brand-mark" aria-hidden="true" set:html={markBlack}></span>
-          <span class="brand-name">EthSystems</span>
+          <span class="brand-logo" aria-hidden="true" set:html={logoHorizontal}></span>
         </a>
         <p>Institutional privacy on Ethereum. A working knowledge base for institutions moving on-chain with privacy requirements.</p>
       </div>
@@ -77,18 +76,11 @@ import markBlack from '../assets/logos/mark-black.svg?raw';
   .foot-brand .brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
     color: var(--ink);
     text-decoration: none;
   }
-  .foot-brand .brand-mark { display: inline-flex; }
-  .foot-brand .brand-mark :global(svg) { display: block; height: 34px; width: auto; }
-  .foot-brand .brand-name {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--ink);
-  }
+  .foot-brand .brand-logo { display: inline-flex; }
+  .foot-brand .brand-logo :global(svg) { display: block; height: 28px; width: auto; }
   .foot-brand p {
     font-size: 13px;
     color: var(--muted);
