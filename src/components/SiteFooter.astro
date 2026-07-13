@@ -10,7 +10,7 @@ import logoHorizontal from '../assets/logos/logo-horizontal-black.svg?raw';
         <a class="brand" href="/" aria-label="EthSystems">
           <span class="brand-logo" aria-hidden="true" set:html={logoHorizontal}></span>
         </a>
-        <p>Institutional privacy on Ethereum. A working knowledge base for institutions moving on-chain with privacy requirements.</p>
+        <p>Confidential systems for institutional Ethereum. A working knowledge base for institutions moving on-chain with privacy requirements.</p>
       </div>
       <div>
         <h5>The Guide</h5>
@@ -81,7 +81,14 @@ import logoHorizontal from '../assets/logos/logo-horizontal-black.svg?raw';
     text-decoration: none;
   }
   .foot-brand .brand-logo { display: inline-flex; }
-  .foot-brand .brand-logo :global(svg) { display: block; height: 28px; width: auto; }
+  .foot-brand .brand-logo :global(svg) {
+    display: block;
+    height: 28px;
+    width: auto;
+    /* Match the nav bar: scale visually without changing the layout box. */
+    transform: scale(1.3);
+    transform-origin: left center;
+  }
   .foot-brand p {
     font-size: 13px;
     color: var(--muted);
