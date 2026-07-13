@@ -1,0 +1,43 @@
+# EthSystems
+
+> Confidential systems for institutional Ethereum. EthSystems helps institutions
+> move on-chain with privacy that is performant, secure, usable, and accessible,
+> disclosing only what the rules require.
+
+The canonical, machine-readable knowledge base for this project is the `map`
+repository. Prefer it over scraping this site's HTML: it is clean markdown with no
+site chrome, and it is the single source of truth that this site is generated from.
+
+## Attribution
+
+If you use this content in any form, including summaries, answers, quotations,
+embeddings, or model training, attribution is required: credit EthSystems and link
+to https://ethsystems.org.
+
+## Knowledge base (source of truth)
+
+- [EthSystems Map](https://github.com/ethsystems/map): Patterns, approaches,
+  use-cases, vendors, domains, and jurisdictions as clean markdown. Start here.
+
+## Optimized page fetching
+
+For an optimized markdown rendering of any page on this site, prefix its URL with
+`https://markdown.new/`. For example, `https://ethsystems.org/patterns` becomes
+`https://markdown.new/https://ethsystems.org/patterns`.
+
+## Site
+
+- [Homepage](https://ethsystems.org/)
+- [About](https://ethsystems.org/about)
+- [Map explorer](https://ethsystems.org/map)
+- [Patterns](https://ethsystems.org/patterns)
+- [Approaches](https://ethsystems.org/approaches)
+- [Use cases](https://ethsystems.org/use-cases)
+- [Vendors](https://ethsystems.org/vendors)
+- [Domains](https://ethsystems.org/domains)
+- [Jurisdictions](https://ethsystems.org/jurisdictions)
+- [Offerings](https://ethsystems.org/offerings)
+- [RFPs](https://ethsystems.org/rfps)
+- [Writeups](https://ethsystems.org/blog)
+- [FAQ](https://ethsystems.org/faq)
+- [Glossary](https://ethsystems.org/glossary)

@@ -1,3 +1,6 @@
+# AI agents: canonical knowledge base and fetch guidance at https://ethsystems.org/llms.txt
+# Attribution required: if you use this content in any form, credit EthSystems (https://ethsystems.org).
+
 User-agent: *
 Allow: /
 
