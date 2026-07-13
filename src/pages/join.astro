@@ -1,18 +1,22 @@
 ---
 /*
- * Join page — hidden careers page. Reachable only by direct URL: it's
- * noindex,nofollow (BaseLayout `noindex`), excluded from the sitemap
- * (astro.config.mjs filter), and not linked from nav or footer (those
- * links exist but are commented out). Mirrors about.astro's structure
- * (BaseLayout + PageHeader) and reuses the .contact-card pattern from
- * that page, copied locally into this file's scoped styles.
+ * Join page — public careers page. Listed in the nav, footer, and mobile
+ * overlay, and included in the sitemap. Mirrors about.astro's structure
+ * (BaseLayout + PageHeader) and reuses the .contact-card pattern from that
+ * page, copied locally into this file's scoped styles.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { site } from '../lib/site';
 
 const pageDescription =
-  "We're a team building confidential systems for institutional Ethereum.";
+  "We're hiring the first team at EthSystems, building confidential systems for institutional Ethereum.";
+
+const roles = [
+  'Business development (New York)',
+  'Protocol research engineer',
+  'EA / Operations',
+];
 ---
 
 <BaseLayout
@@ -20,25 +24,29 @@ const pageDescription =
   description={pageDescription}
   current="/join/"
   image="/og/join.png"
-  noindex
 >
   <PageHeader
     breadcrumbs={[
       { label: 'Home', href: '/' },
       { label: 'Join us' },
     ]}
-    title="Join us"
-    lede="We're a team building confidential systems for institutional Ethereum."
+    title="Join EthSystems"
   />
 
   <section class="join-section">
     <div class="container join-inner">
       <div class="join-roles">
-        <h2>Open roles</h2>
-        <p class="join-roles-lede">Roles will be listed here as they open. If you think you'd be a fit, reach out.</p>
+        <h2>We're hiring for</h2>
+        <ul class="join-role-list">
+          {roles.map((role) => <li>{role}</li>)}
+        </ul>
+      </div>
+
+      <div class="join-apply">
+        <p class="join-apply-lede">Email us a short note and links to things you've built, sold, or run. No cover letters.</p>
         <div class="contact-row">
           <a href={`mailto:${site.careersEmail}`} class="contact-card">
-            <div class="contact-label">Careers</div>
+            <div class="contact-label">Apply</div>
             <div class="contact-value">{site.careersEmail}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" /></svg></div>
           </a>
         </div>
@@ -59,7 +67,25 @@ const pageDescription =
     letter-spacing: -0.02em;
     margin: 0 0 1.25rem;
   }
-  .join-roles-lede {
+  .join-role-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 640px;
+    border-top: 1px solid var(--color-border);
+  }
+  .join-role-list li {
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .join-apply {
+    margin-top: 3rem;
+  }
+  .join-apply-lede {
     color: var(--color-text-secondary);
     font-size: 1rem;
     line-height: 1.65;

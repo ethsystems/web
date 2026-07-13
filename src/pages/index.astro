@@ -87,6 +87,9 @@ const faqTeasers = FEATURED_FAQ_QS
       <p class="narrative-body">
         <strong>EthSystems</strong>, the team behind the Ethereum Foundation&rsquo;s Institutional Privacy Task Force, builds the confidential, compliant systems that make that possible, from proof-of-concept through to production, backed by a year of open-source work already shipped.
       </p>
+      <p class="narrative-cta">
+        <a href="/offerings/">What we offer <span class="arr">&rarr;</span></a>
+      </p>
     </div>
   </section>
 
@@ -608,6 +611,28 @@ const faqTeasers = FEATURED_FAQ_QS
   .narrative-body strong {
     color: var(--color-primary);
     font-weight: 600;
+  }
+  .narrative-cta {
+    margin: 1.75rem 0 0;
+  }
+  .narrative-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-cta);
+    text-decoration: none;
+  }
+  .narrative-cta a:hover {
+    color: var(--color-cta-hover);
+  }
+  .narrative-cta .arr {
+    transition: transform var(--duration-fast) var(--easing-soft);
+  }
+  .narrative-cta a:hover .arr {
+    transform: translateX(2px);
   }
   .redact {
     position: relative;

@@ -24,12 +24,10 @@ function isActive(path: string): boolean {
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
         <span></span><span></span><span></span>
       </button>
-      <a href="/approaches/" class:list={[{ active: isActive('/approaches') }]}>Approaches</a>
-      <a href="/use-cases/" class:list={[{ active: isActive('/use-cases') }]}>Use cases</a>
-      <a href="/patterns/" class:list={[{ active: isActive('/patterns') }]}>Building blocks</a>
       <a href="/blog/" class:list={[{ active: isActive('/blog') }]}>Blog</a>
+      <a href="/offerings/" class:list={[{ active: isActive('/offerings') }]}>Offerings</a>
       <a href="/about/" class:list={[{ active: isActive('/about') }]}>About</a>
-      {/* <a href="/join/" class:list={[{ active: isActive('/join') }]}>Join us</a> */}
+      <a href="/join/" class:list={[{ active: isActive('/join') }]}>Careers</a>
       <a href={site.contactFormUrl} class="btn primary nav-cta" target="_blank" rel="noopener noreferrer">Contact us</a>
     </nav>
   </div>

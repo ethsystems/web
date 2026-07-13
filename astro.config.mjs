@@ -45,7 +45,6 @@ export default defineConfig({
   integrations: [
     mdx(),
     react(),
-    // Keep the hidden /join/ page out of the sitemap (noindex in-page too).
-    sitemap({ filter: (page) => !page.includes('/join/') }),
+    sitemap(),
   ],
 });

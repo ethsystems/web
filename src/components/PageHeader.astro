@@ -11,6 +11,8 @@ interface Pill {
 
 interface Props {
   breadcrumbs?: Crumb[];
+  /** Optional mono eyebrow rendered above the title (e.g. "Work with us"). */
+  eyebrow?: string;
   title: string;
   /** Lede may contain inline HTML (e.g. <strong>) — passed through set:html. */
   lede?: string;
@@ -24,7 +26,7 @@ interface Props {
   centered?: boolean;
 }
 
-const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centered = false } = Astro.props;
+const { breadcrumbs = [], eyebrow, title, lede, ledeBullets, metaRow, pills = [], centered = false } = Astro.props;
 ---
 
 <header class:list={['page-header', { 'page-header--centered': centered }]}>
@@ -39,6 +41,7 @@ const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centere
         ))}
       </nav>
     )}
+    {eyebrow && <p class="kicker eyebrow">{eyebrow}</p>}
     <h1>{title}</h1>
     {ledeBullets && ledeBullets.length > 0 && (
       <ul class="lede-bullets">
@@ -100,6 +103,10 @@ const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centere
   .breadcrumb a { color: var(--color-text-secondary); }
   .breadcrumb a:hover { color: var(--color-cta); }
   .breadcrumb .sep { color: var(--color-border-strong); margin: 0 0.4rem; }
+
+  /* Mono eyebrow above the title (reuses the global .kicker styling). */
+  .page-header .eyebrow { margin: 0 0 1rem; }
+  .page-header--centered .eyebrow { text-align: center; }
 
   .page-header h1 {
     font-family: var(--font-display);
