@@ -76,7 +76,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: 'Where do you operate?',
-        a: ['Globally, with deep roots in Asia-Pacific.'],
+        a: ['Globally.'],
       },
     ],
   },
