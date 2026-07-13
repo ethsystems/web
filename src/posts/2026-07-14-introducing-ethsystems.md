@@ -4,6 +4,7 @@ description: "EthSystems builds confidential systems for institutional Ethereum,
 date: "2026-07-14"
 author: "Oskar"
 image: ../assets/posts/2026-07-14-introducing-ethsystems/hero.png
+published: false
 ---
 
 Welcome to EthSystems. **We build confidential systems for institutional Ethereum.**
