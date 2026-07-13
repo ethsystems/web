@@ -13,9 +13,21 @@ const pageDescription =
   "We're hiring the first team at EthSystems, building confidential systems for institutional Ethereum.";
 
 const roles = [
-  'Business development (New York)',
-  'Protocol research engineer',
-  'EA / Operations',
+  {
+    title: 'Business development (New York)',
+    blurb:
+      "Own our US institutional accounts from New York, working the pipeline we've built over the past year to land signed, scoped engagements early. You've closed deals with banks, asset managers, or market infrastructure, and you know what procurement and vendor onboarding actually involve.",
+  },
+  {
+    title: 'Protocol research engineer',
+    blurb:
+      'Design and build confidential systems, from shielded pools and selective disclosure to private settlement and ZK identity, taking work from spec to PoC to production in the open. You bring applied cryptography and protocol design experience, have built on Ethereum, and ship production code, not just research prototypes.',
+  },
+  {
+    title: 'EA / Operations',
+    blurb:
+      "Run day-to-day operations for a young company, from entity admin and contracts to scheduling, travel, and events, building light process where it pays off. You've done this before at a startup, ideally one selling to institutions, and you work with high autonomy and discretion across time zones.",
+  },
 ];
 ---
 
@@ -38,7 +50,12 @@ const roles = [
       <div class="join-roles">
         <h2>We're hiring for</h2>
         <ul class="join-role-list">
-          {roles.map((role) => <li>{role}</li>)}
+          {roles.map((role) => (
+            <li class="join-role">
+              <h3 class="join-role-title">{role.title}</h3>
+              <p class="join-role-blurb">{role.blurb}</p>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -71,16 +88,27 @@ const roles = [
     list-style: none;
     margin: 0;
     padding: 0;
-    max-width: 640px;
+    max-width: 720px;
     border-top: 1px solid var(--color-border);
   }
-  .join-role-list li {
+  .join-role {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .join-role-title {
     font-family: var(--font-sans);
     font-size: 1.15rem;
     font-weight: 600;
     color: var(--color-primary);
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--color-border);
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem;
+  }
+  .join-role-blurb {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
   }
   .join-apply {
     margin-top: 3rem;
