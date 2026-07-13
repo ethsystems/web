@@ -1,18 +1,18 @@
 [
   {
     "term": "CROPS (Censorship Resistance, Open Source and Free, Privacy, Security)",
-    "definition": "Four non-negotiable properties for Ethereum defined by the Ethereum Foundation. The IPTF Map evaluates solutions against all four dimensions independently. See [CONTRIBUTING.md § CROPS Evaluation](CONTRIBUTING.md#crops-evaluation) for full scoring rubrics.",
-    "category": "IPTF Evaluation Frameworks"
+    "definition": "Four non-negotiable properties for Ethereum defined by the Ethereum Foundation. The EthSystems Map evaluates solutions against all four dimensions independently. See [CONTRIBUTING.md § CROPS Evaluation](CONTRIBUTING.md#crops-evaluation) for full scoring rubrics.",
+    "category": "EthSystems Evaluation Frameworks"
   },
   {
     "term": "I2I (Institution-to-Institution)",
     "definition": "Interaction model where both counterparties are regulated entities (e.g., bank-to-bank settlement). Symmetric power dynamic; both parties have legal teams, vendor choice, and contractual recourse.",
-    "category": "IPTF Evaluation Frameworks"
+    "category": "EthSystems Evaluation Frameworks"
   },
   {
     "term": "I2U (Institution-to-End-User)",
     "definition": "Interaction model where one counterparty is a regulated entity and the other is an individual (e.g., retail payment). Asymmetric power dynamic; CROPS must protect the user from the institution. Institutions should be transparent to regulators and end users; end users should have the right to protect their private lives.",
-    "category": "IPTF Evaluation Frameworks"
+    "category": "EthSystems Evaluation Frameworks"
   },
   {
     "term": "Commitment",
