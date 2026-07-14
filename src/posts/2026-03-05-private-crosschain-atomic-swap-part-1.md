@@ -4,7 +4,7 @@ title: "Private Crosschain Atomic Swaps (Part 1 of 2)"
 description: "How to build atomic delivery-versus-payment across two chains while hiding amounts, prices, and counterparty identities. Part 1 covers the protocol: shielded UTXO notes, stealth addresses, and the coordination problem."
 date: 2026-03-06 10:00:00 +0100
 author: "Yanis, Aaryamann"
-image: /assets/images/2026-03-05-private-crosschain-swap-part-1/hero.png
+image: ../assets/posts/2026-03-05-private-crosschain-swap-part-1/hero.png
 tags:
   - atomic-swap
   - crosschain
@@ -12,6 +12,8 @@ tags:
   - stealth-addresses
   - proof-of-concept
 ---
+
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 Settlement risk has been around as long as trading itself. Two parties trade a bond for cash, and neither wants to go first. The buyer will not pay before receiving the asset; the seller will not hand over the asset before receiving payment. Traditional finance solved this decades ago with trusted intermediaries: custodians, depositories, clearing houses. The principle is [Delivery-versus-Payment](https://www.investopedia.com/terms/d/deliveryversuspayment.asp) (DvP) — both legs of the trade are conditioned on each other, so neither finalizes unless both do. Infrastructure like [DTCC](https://www.dtcc.com/) or [Euroclear](https://www.euroclear.com/) enforces this, holding both legs in escrow before releasing them together when conditions are met.
 
@@ -55,7 +57,7 @@ Alice holds USD notes on Network 1. Bob holds bond notes on Network 2. They want
 
 The core note structure is the same as the single-chain protocol (commitment, nullifier, owner key, salt), with two additions — `fallbackOwner` and `timeout` — that we will come back to:
 
-![Note fields are hashed into a commitment stored on-chain; spending reveals a nullifier that prevents double-spending](/assets/images/2026-03-05-private-crosschain-swap-part-1/diagram-3-note-structure.png)
+![Note fields are hashed into a commitment stored on-chain; spending reveals a nullifier that prevents double-spending](../assets/posts/2026-03-05-private-crosschain-swap-part-1/diagram-3-note-structure.png)
 
 The `fallbackOwner` and `timeout` fields will make sense once we explain what can go wrong. For now, the question is how Alice and Bob claim each other's locked note.
 
@@ -71,7 +73,7 @@ What we need is a way for Alice to lock a note that _only_ Bob can spend, withou
 
 ### Stealth addresses
 
-[Stealth addresses](https://github.com/ethereum/iptf-map/blob/master/patterns/pattern-stealth-addresses.md) solve a simple problem: Bob has a public key known to everyone, and Alice wants to send him funds without anyone else being able to tell that Bob is the recipient. She uses Bob's public key to derive a fresh one-time address that only Bob can spend from, but that no observer can link back to him.
+[Stealth addresses](https://github.com/ethsystems/map/blob/master/patterns/pattern-stealth-addresses.md) solve a simple problem: Bob has a public key known to everyone, and Alice wants to send him funds without anyone else being able to tell that Bob is the recipient. She uses Bob's public key to derive a fresh one-time address that only Bob can spend from, but that no observer can link back to him.
 
 Each participant has a long-lived meta key pair `(meta_sk, meta_pk)` that is published. To lock a note for a counterparty, the sender generates a fresh ephemeral key pair `(eph_sk, eph_pk)` (conventionally written `r, R = r·G`) and computes a shared secret via ECDH:
 
@@ -89,7 +91,7 @@ stealth_sk    = meta_sk + H("stealth", shared_secret)
 
 To claim, the counterparty needs two things: the ephemeral public key `eph_pk` and the salt used to construct the note commitment. With `eph_pk` and `meta_sk`, they derive `stealth_sk`. With the salt, they reconstruct the full note and generate a claim proof.
 
-![Sender derives stealth_pk from ephemeral key and recipient's meta_pk; recipient recovers stealth_sk from published eph_pk and own meta_sk](/assets/images/2026-03-05-private-crosschain-swap-part-1/diagram-2-stealth-derivation.png)
+![Sender derives stealth_pk from ephemeral key and recipient's meta_pk; recipient recovers stealth_sk from published eph_pk and own meta_sk](../assets/posts/2026-03-05-private-crosschain-swap-part-1/diagram-2-stealth-derivation.png)
 
 The construction is symmetric. Alice generates `(eph_sk_A, eph_pk_A)`, computes `stealth_pk_B` from Bob's meta-key, and locks her USD note with `owner = stealth_pk_B` on Network 1. Bob does the same on Network 2 for Alice. Neither can claim the other's note directly: Alice does not have `meta_sk_B`, Bob does not have `meta_sk_A`.
 
@@ -109,7 +111,7 @@ Before solving coordination, there is a simpler question: what happens if coordi
 
 The protocol always terminates in one of two outcomes: both parties receive the other's asset, or both receive their own back. There is no stuck state, no capital locked indefinitely.
 
-![If the timeout passes without settlement, each party reclaims their own funds using the fallbackOwner key embedded in the note](/assets/images/2026-03-05-private-crosschain-swap-part-1/diagram-5-timeout-refund.png)
+![If the timeout passes without settlement, each party reclaims their own funds using the fallbackOwner key embedded in the note](../assets/posts/2026-03-05-private-crosschain-swap-part-1/diagram-5-timeout-refund.png)
 
 ## How the pieces fit
 
@@ -140,11 +142,11 @@ The protocol hides amounts, asset types, counterparty identities, and the link b
 
 ZK circuits verify note formation and ownership. Shielded pools prevent double-spending. The coordinator makes revelation atomic across chains.
 
-![Both parties lock notes to stealth addresses on their respective chains — the contract verifies each note via ZK proof — but the two locks are independent: what makes them atomic is the subject of Part 2](/assets/images/2026-03-05-private-crosschain-swap-part-1/diagram-4-locking-flow.png)
+![Both parties lock notes to stealth addresses on their respective chains — the contract verifies each note via ZK proof — but the two locks are independent: what makes them atomic is the subject of Part 2](../assets/posts/2026-03-05-private-crosschain-swap-part-1/diagram-4-locking-flow.png)
 
 The coordinator is the only component not yet specified. It could be built from a Trusted Execution Environment, a multi-party computation protocol, or fully homomorphic encryption, each with different trust assumptions and performance trade-offs. In Part 2, we pick one: a TEE running in AWS Nitro Enclaves. We go inside the enclave, examine what attestation actually proves, work through the real attack surfaces, and walk through what the demo logs show.
 
-The full implementation is open source, with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
+The full implementation is open source, with a detailed [specification](https://github.com/ethsystems/pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
 
 ## References
 

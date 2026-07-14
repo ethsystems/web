@@ -4,7 +4,7 @@ title: "Private Crosschain Atomic Swaps (Part 2 of 2)"
 description: "How a Trusted Execution Environment (TEE) can coordinate private crosschain atomic swaps today, what the real attack surfaces are, and why TEEs are a practical bridge to stronger cryptographic solutions."
 date: 2026-03-13 10:00:00 +0100
 author: "Yanis"
-image: /assets/images/2026-03-05-private-crosschain-swap-part-1/hero.png
+image: ../assets/posts/2026-03-05-private-crosschain-swap-part-1/hero.png
 tags:
   - atomic-swap
   - crosschain
@@ -12,6 +12,8 @@ tags:
   - nitro-enclaves
   - proof-of-concept
 ---
+
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 In [Part 1](/private-crosschain-atomic-swap-part-1/), we built a protocol for private crosschain settlement. Shielded UTXO notes on two chains hide amounts and asset types. Stealth addresses let each party lock a note that only the counterparty can claim, without revealing who that counterparty is on-chain. A fallback timeout guarantees that if anything goes wrong, both parties reclaim their own funds.
 
@@ -48,7 +50,7 @@ For institution-to-institution bilateral settlement, both parties know each othe
 
 Before submitting anything to the coordinator, each party needs assurance that the code running inside the enclave is exactly the open-source coordinator, unmodified and unobserved by the operator. This is the job of remote attestation.
 
-![Remote attestation flow](/assets/images/2026-03-18-private-crosschain-swap-part-2/diagram-1-attestation-flow.png)
+![Remote attestation flow](../assets/posts/2026-03-18-private-crosschain-swap-part-2/diagram-1-attestation-flow.png)
 
 The build process is deterministic. The coordinator binary, its configuration, and its dependencies are packaged into an image. A build tool hashes everything in that image into a set of measurements (fingerprints of the code, configuration, and boot chain). These measurements are public: anyone can rebuild the image from source and verify they get the same hash.
 
@@ -60,7 +62,7 @@ When a client connects, the TLS handshake presents this certificate. The client 
 
 The coordinator's job is narrow: receive submissions from both parties, verify that their locked notes match the agreed swap terms, and publish the claim secrets atomically.
 
-![TEE coordinator architecture](/assets/images/2026-03-18-private-crosschain-swap-part-2/diagram-2-tee-coordinator.png)
+![TEE coordinator architecture](../assets/posts/2026-03-18-private-crosschain-swap-part-2/diagram-2-tee-coordinator.png)
 
 ### What the coordinator receives
 
@@ -145,7 +147,7 @@ The TEE coordinator is a starting point, not the destination. MPC could replace 
 
 The coordination problem reduces to this: two parties each hold private inputs (their ephemeral key and encrypted salt), and we need a single proof that both sets of inputs are consistent with the on-chain state. That is what co-SNARKs solve — each party contributes their secret inputs to a joint ZK proof without revealing them to anyone. The proof itself becomes the atomic revelation. If it verifies, both sides are consistent. No trusted intermediary, no hardware assumption, no coordinator to compromise. The coordinator becomes a protocol rather than a party.
 
-The full implementation is open source, with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
+The full implementation is open source, with a detailed [specification](https://github.com/ethsystems/pocs/tree/main/pocs/approach-private-trade-settlement/tee_swap/SPEC.md) and an [interactive protocol walkthrough](/tee-protocol-page).
 
 ## References
 

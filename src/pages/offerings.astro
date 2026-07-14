@@ -1,0 +1,126 @@
+---
+/*
+ * Offerings page — "What we offer". The commercial front door for paid
+ * engagements. This copy is curated site chrome (not sourced from the map
+ * submodule). Reuses BaseLayout + PageHeader (with the `eyebrow` prop) and
+ * the global .btn.primary CTA; the contact form + hello@ mirror the About
+ * page's contact affordances.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../lib/site';
+
+const pageDescription =
+  'We design and build confidential systems on Ethereum for institutions: workshops, proofs of concept, architecture review, and production systems.';
+
+const offerings = [
+  {
+    lead: 'Workshops.',
+    body: 'A structured session that turns "we want blockchain privacy" into requirements: who sees what, what has to be auditable, what stays confidential, what has to integrate. The real blocker is usually not the one you came in with.',
+  },
+  {
+    lead: 'Proofs of concept.',
+    body: 'A narrow build around a real friction point: private payments, tokenized assets, selective disclosure, private settlement. Scoped enough to ship, concrete enough to decide on.',
+  },
+  {
+    lead: 'Architecture review.',
+    body: 'We stress-test a design against Ethereum-native constraints. Where does trust sit? What is private, and from whom? Is there credible exit, or is this a private ledger with Ethereum branding?',
+  },
+  {
+    lead: 'Production systems.',
+    body: 'The systems that come out of the above, integrated with the vendors and infrastructure you already run, and taken to live implementation.',
+  },
+];
+---
+
+<BaseLayout
+  title="What we offer"
+  description={pageDescription}
+  current="/offerings/"
+  image="/og/offerings.png"
+>
+  <PageHeader
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Offerings' },
+    ]}
+    eyebrow="Work with us"
+    title="What we offer"
+    lede="We design and build confidential systems on Ethereum for institutions. Engagements start small and scoped. Most run through some version of this loop:"
+  />
+
+  <section class="offerings-section">
+    <div class="container offerings-inner">
+      <ul class="offerings-list">
+        {offerings.map((o) => (
+          <li class="offering">
+            <p><strong>{o.lead}</strong> {o.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="offerings-cta">
+        <a
+          href={site.contactFormUrl}
+          class="btn primary lg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Tell us about your requirements <span class="arr">→</span>
+        </a>
+        <p class="offerings-cta-note">
+          Or write to us: <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .offerings-section {
+    padding: 2rem 0 5rem;
+  }
+  .offerings-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 68ch;
+  }
+  .offering {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .offering:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .offering p {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+  .offering strong {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+  .offerings-cta {
+    margin-top: 3rem;
+  }
+  .offerings-cta .arr {
+    transition: transform var(--duration-fast) var(--easing-soft);
+  }
+  .offerings-cta .btn:hover .arr {
+    transform: translateX(2px);
+  }
+  .offerings-cta-note {
+    margin: 1.1rem 0 0;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+  }
+  .offerings-cta-note a {
+    color: var(--color-cta);
+    font-weight: 600;
+  }
+</style>

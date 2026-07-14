@@ -3,7 +3,7 @@ import type { GraphData } from '../../lib/graph-types';
 import { TYPE_LABELS } from '../../lib/graph-layout';
 
 /*
- * Filter controls bar — ported from iptf-web with our light-theme
+ * Filter controls bar — ported from ethsystems/web with our light-theme
  * palette and form-control tokens.
  */
 
@@ -14,13 +14,13 @@ interface Props {
 }
 
 const controlStyle: React.CSSProperties = {
-  background: '#ffffff',
-  color: '#1a202c',
-  border: '1px solid #e2e8f0',
+  background: 'var(--surface)',
+  color: 'var(--ink)',
+  border: '1px solid var(--line)',
   borderRadius: 6,
   padding: '6px 10px',
   fontSize: 13,
-  fontFamily: 'Inter, sans-serif',
+  fontFamily: 'var(--font-sans)',
   cursor: 'pointer',
   outline: 'none',
 };
@@ -120,8 +120,8 @@ export function FilterBar({ graph, filters, onFilterChange }: Props) {
           style={{
             ...controlStyle,
             cursor: 'pointer',
-            color: '#2257e9',
-            borderColor: '#2257e9',
+            color: 'var(--navy)',
+            borderColor: 'var(--navy)',
             background: 'rgba(34, 87, 233, 0.08)',
           }}
         >

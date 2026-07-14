@@ -16,7 +16,7 @@ import { DetailPanel } from './DetailPanel';
 import { NodeTooltip } from './NodeTooltip';
 
 /*
- * d3 force-directed view of the full IPTF map (135 nodes / 819 edges).
+ * d3 force-directed view of the full EthSystems map (135 nodes / 819 edges).
  * Light-theme port — SVG canvas sits on our bg-subtle, edge colors
  * remain the same encoding from graph-layout.ts but read on white.
  */
@@ -206,7 +206,7 @@ export function Galaxy({ graph }: Props) {
       .attr('dy', (d) =>
         d.type === 'domain' ? getNodeRadius(d) + 16 : getNodeRadius(d) + 12,
       )
-      .attr('fill', '#1a365d')
+      .attr('fill', '#0A0A0A')
       .attr('font-size', (d) => (d.type === 'domain' ? '12px' : '9px'))
       .attr('font-weight', (d) => (d.type === 'domain' ? '700' : '500'))
       .attr('pointer-events', 'none');
@@ -335,7 +335,7 @@ export function Galaxy({ graph }: Props) {
           left: 0,
           width: '100%',
           height: '100%',
-          background: '#f7fafc',
+          background: 'var(--sunken)',
         }}
       />
       {hovered && !selected && <NodeTooltip node={hovered} x={mousePos.x} y={mousePos.y} />}
@@ -354,11 +354,11 @@ export function Galaxy({ graph }: Props) {
           bottom: 12,
           left: 12,
           background: 'rgba(255, 255, 255, 0.92)',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--line)',
           borderRadius: 8,
           padding: '8px 12px',
           fontSize: 11,
-          color: '#4a5568',
+          color: 'var(--ink-2)',
           display: 'flex',
           gap: 12,
           flexWrap: 'wrap',
@@ -379,7 +379,7 @@ export function Galaxy({ graph }: Props) {
         <span>
           <b style={{ color: '#06B6D4' }}>●</b> Hybrid
         </span>
-        <span style={{ borderLeft: '1px solid #e2e8f0', paddingLeft: 12 }}>
+        <span style={{ borderLeft: '1px solid var(--line)', paddingLeft: 12 }}>
           <b style={{ color: '#F59E0B' }}>■</b> Use case
         </span>
         <span>

@@ -3,7 +3,7 @@ layout: post
 title: "Building Private Bonds on Ethereum - Part 3"
 date: 2026-02-12 09:00:00 +0100
 author: "Yanis"
-image: /assets/images/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
+image: ../assets/posts/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
 description: "Exploring Fully Homomorphic Encryption as a path to confidential institutional bonds on Ethereum, the third approach in our Private Bond PoC series."
 tags:
   - private-bonds
@@ -14,6 +14,8 @@ tags:
   - proof-of-concept
 ---
 
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
+
 _This is Part 3 of our Private Bond proof-of-concept series. In [Part 1](/building-private-bonds-on-ethereum/) we explored Custom UTXOs, in [Part 2](/private-bonds-on-privacy-l2s/) we covered Privacy L2s with Aztec. Now we examine a fundamentally different approach: Fully Homomorphic Encryption._
 
 ## What is Fully Homomorphic Encryption?
@@ -22,7 +24,7 @@ Fully Homomorphic Encryption (FHE) allows computations directly on encrypted dat
 
 Imagine a locked box that you can manipulate from the outside (adding, subtracting, comparing what's inside) without ever opening it. Only the keyholder can peek inside, but anyone can perform operations.
 
-![FHE transfer flow showing encryption, on-chain computation, and threshold decryption](/assets/images/2026-02-12-private-bonds-fhe/fhe-homomorphic-property.png)
+![FHE transfer flow showing encryption, on-chain computation, and threshold decryption](../assets/posts/2026-02-12-private-bonds-fhe/fhe-homomorphic-property.png)
 
 This property makes FHE compelling for privacy-preserving finance: a smart contract can update encrypted balances, verify encrypted conditions, and transfer encrypted amounts, all while the actual values remain hidden from everyone including the blockchain observers.
 
@@ -87,7 +89,7 @@ Zama's architecture separates concerns:
 
 **Threshold Network**: When decryption is needed (e.g., user wants to see their balance), they request it through a Gateway. The threshold network coordinates: if 9 of 13 operators agree, the value is decrypted and returned.
 
-![Zama architecture: on-chain contract, off-chain coprocessor, and threshold decryption network](/assets/images/2026-02-12-private-bonds-fhe/zama-architecture.png)
+![Zama architecture: on-chain contract, off-chain coprocessor, and threshold decryption network](../assets/posts/2026-02-12-private-bonds-fhe/zama-architecture.png)
 
 This means:
 
@@ -97,7 +99,7 @@ This means:
 
 ## The Smart Contract
 
-Our [`ConfidentialBond.sol`](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-bond/fhe) contract is roughly 300 lines, simpler than UTXO, comparable to Aztec. Here's the core structure:
+Our [`ConfidentialBond.sol`](https://github.com/ethsystems/pocs/tree/master/pocs/private-bond/fhe) contract is roughly 300 lines, simpler than UTXO, comparable to Aztec. Here's the core structure:
 
 ### Public State
 
@@ -131,7 +133,7 @@ Users must query their balance after the transaction to confirm whether it succe
 
 **Redemption**: After maturity, bondholders burn their holdings. Settlement occurs off-chain.
 
-**[Audit Access](https://github.com/ethereum/iptf-map/blob/master/patterns/pattern-regulatory-disclosure-keys-proofs.md)**: The issuer can grant regulators permission to decrypt specific balances:
+**[Audit Access](https://github.com/ethsystems/map/blob/master/patterns/pattern-regulatory-disclosure-keys-proofs.md)**: The issuer can grant regulators permission to decrypt specific balances:
 
 ```solidity
 function grantAuditAccess(address account, address auditor) external onlyOwner {
@@ -143,7 +145,7 @@ Access is per-ciphertext. When a balance changes (new ciphertext handle), the au
 
 ## Comparing the Three Approaches
 
-We've now built the same bond (whitelisted participants, private amounts, regulatory access) using three different privacy technologies. Here's how they compare (see also our [approach analysis](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-bonds.md) and [benchmarks](https://github.com/ethereum/iptf-pocs/blob/master/pocs/private-bond/BENCHMARK.md)):
+We've now built the same bond (whitelisted participants, private amounts, regulatory access) using three different privacy technologies. Here's how they compare (see also our [approach analysis](https://github.com/ethsystems/map/blob/master/approaches/approach-private-bonds.md) and [benchmarks](https://github.com/ethsystems/pocs/blob/master/pocs/private-bond/BENCHMARK.md)):
 
 | Aspect               | Custom UTXO        | Privacy L2 (Aztec) | FHE (Zama)              |
 | -------------------- | ------------------ | ------------------ | ----------------------- |
@@ -171,19 +173,19 @@ We've now built the same bond (whitelisted participants, private amounts, regula
 
 ## Trade-offs
 
-[Custom UTXO](https://github.com/ethereum/iptf-map/blob/master/patterns/pattern-zk-shielded-balances.md) offers the strongest privacy guarantees: even addresses are obscured via nullifiers, and users control their own keys. Railgun and similar systems prove the model works in production. But implementation complexity is significant. Our PoC required building notes, Merkle trees, and nullifier management from scratch. Nullifiers also accumulate forever, creating storage concerns at scale (mitigations like [epoch-based pruning](https://eprint.iacr.org/2025/2031) are being researched but not yet deployed).
+[Custom UTXO](https://github.com/ethsystems/map/blob/master/patterns/pattern-zk-shielded-balances.md) offers the strongest privacy guarantees: even addresses are obscured via nullifiers, and users control their own keys. Railgun and similar systems prove the model works in production. But implementation complexity is significant. Our PoC required building notes, Merkle trees, and nullifier management from scratch. Nullifiers also accumulate forever, creating storage concerns at scale (mitigations like [epoch-based pruning](https://eprint.iacr.org/2025/2031) are being researched but not yet deployed).
 
-[Privacy L2s](https://github.com/ethereum/iptf-map/blob/master/patterns/pattern-privacy-l2s.md) like Aztec handle the hard parts for you: notes, proofs, encryption. Our contract was just 200 lines. Private composability is native, meaning your bonds could interact with private lending or swaps on the same L2. The catch: neither Aztec nor Miden are live yet (both scheduled for launch later in 2026), so we can't measure real costs. And the learning curve exists: Noir is not Solidity.
+[Privacy L2s](https://github.com/ethsystems/map/blob/master/patterns/pattern-privacy-l2s.md) like Aztec handle the hard parts for you: notes, proofs, encryption. Our contract was just 200 lines. Private composability is native, meaning your bonds could interact with private lending or swaps on the same L2. The catch: neither Aztec nor Miden are live yet (both scheduled for launch later in 2026), so we can't measure real costs. And the learning curve exists: Noir is not Solidity.
 
 FHE is the gentlest onramp. If you know Solidity, you can write confidential contracts quickly. Standard wallets work. But you trade self-custody for threshold trust: your funds depend on the network's availability, and if a quorum of KMS operators collude, they could reconstruct the decryption key. In normal operation, no individual operator sees plaintext (user decryptions are re-encrypted under the user's key via MPC). For institutions already comfortable with custodial relationships, this may be acceptable. For those seeking self-sovereign privacy, it's a meaningful concession.
 
-It's worth noting that the coprocessor model isn't exclusive to FHE. [TACEO's Merces](https://merces-demo.taceo.io/) (built from their [private_deposit](https://github.com/TaceoLabs/private_deposit/tree/main) codebase) demonstrates a similar architecture using MPC instead: a three-party network maintains secret-shared balances and generates collaborative SNARKs (Groth16 proofs) to verify state transitions on-chain. This is an application of the [co-SNARK pattern](https://github.com/ethereum/iptf-map/blob/master/patterns/pattern-co-snark.md), where multiple parties jointly produce a ZK proof without revealing their individual inputs. The trust assumption is the same, you rely on an honest majority of operators rather than holding your own keys, but the MPC path avoids FHE's computational overhead and adds native verifiability through the co-SNARK proofs. We could have built our bond PoC on this stack as well.
+It's worth noting that the coprocessor model isn't exclusive to FHE. [TACEO's Merces](https://merces-demo.taceo.io/) (built from their [private_deposit](https://github.com/TaceoLabs/private_deposit/tree/main) codebase) demonstrates a similar architecture using MPC instead: a three-party network maintains secret-shared balances and generates collaborative SNARKs (Groth16 proofs) to verify state transitions on-chain. This is an application of the [co-SNARK pattern](https://github.com/ethsystems/map/blob/master/patterns/pattern-co-snark.md), where multiple parties jointly produce a ZK proof without revealing their individual inputs. The trust assumption is the same, you rely on an honest majority of operators rather than holding your own keys, but the MPC path avoids FHE's computational overhead and adds native verifiability through the co-SNARK proofs. We could have built our bond PoC on this stack as well.
 
 ## Conclusion
 
 Three paths to the same destination: private institutional bonds on Ethereum. Each works. Each makes different trade-offs on privacy, complexity, and trust. The choice depends on what your institution prioritizes.
 
-The code for all three approaches is available in the [IPTF PoC repository](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-bond), with detailed specs and benchmarks. For a broader view of privacy patterns and vendor landscape, see the [IPTF Knowledge Map](https://github.com/ethereum/iptf-map). We welcome feedback and contributions.
+The code for all three approaches is available in the [IPTF PoC repository](https://github.com/ethsystems/pocs/tree/master/pocs/private-bond), with detailed specs and benchmarks. For a broader view of privacy patterns and vendor landscape, see the [IPTF Knowledge Map](https://github.com/ethsystems/map). We welcome feedback and contributions.
 
 ---
 

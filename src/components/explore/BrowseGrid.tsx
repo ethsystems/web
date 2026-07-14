@@ -60,14 +60,14 @@ export function BrowseGrid({ graph }: Props) {
           type="search"
           placeholder="Search…"
           style={{
-            background: '#ffffff',
-            color: '#1a202c',
-            border: '1px solid #e2e8f0',
+            background: 'var(--surface)',
+            color: 'var(--ink)',
+            border: '1px solid var(--line)',
             borderRadius: 6,
             padding: '7px 12px',
             fontSize: 13.5,
             width: 240,
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: 'var(--font-sans)',
             outline: 'none',
           }}
           value={filters.search ?? ''}
@@ -75,13 +75,13 @@ export function BrowseGrid({ graph }: Props) {
         />
         <select
           style={{
-            background: '#ffffff',
-            color: '#1a202c',
-            border: '1px solid #e2e8f0',
+            background: 'var(--surface)',
+            color: 'var(--ink)',
+            border: '1px solid var(--line)',
             borderRadius: 6,
             padding: '7px 10px',
             fontSize: 13.5,
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: 'var(--font-sans)',
             cursor: 'pointer',
             outline: 'none',
           }}
@@ -95,7 +95,7 @@ export function BrowseGrid({ graph }: Props) {
             </option>
           ))}
         </select>
-        <span style={{ color: '#718096', fontSize: 13, fontFamily: 'JetBrains Mono, monospace' }}>
+        <span style={{ color: 'var(--muted)', fontSize: 13, fontFamily: 'var(--font-mono)' }}>
           {filtered.length} items
         </span>
       </div>
@@ -115,8 +115,8 @@ export function BrowseGrid({ graph }: Props) {
               key={node.id}
               onClick={() => setSelected(isOpen ? null : node)}
               style={{
-                background: '#ffffff',
-                border: `1px solid ${isOpen ? getNodeColor(node) : '#e2e8f0'}`,
+                background: 'var(--surface)',
+                border: `1px solid ${isOpen ? getNodeColor(node) : 'var(--line)'}`,
                 borderRadius: 8,
                 padding: '14px 14px',
                 cursor: 'pointer',
@@ -124,17 +124,17 @@ export function BrowseGrid({ graph }: Props) {
                 boxShadow: isOpen ? '0 4px 12px rgba(13, 20, 36, 0.06)' : 'none',
               }}
               onMouseEnter={(e) => {
-                if (!isOpen) e.currentTarget.style.borderColor = '#cbd5e0';
+                if (!isOpen) e.currentTarget.style.borderColor = 'var(--line-2)';
               }}
               onMouseLeave={(e) => {
-                if (!isOpen) e.currentTarget.style.borderColor = '#e2e8f0';
+                if (!isOpen) e.currentTarget.style.borderColor = 'var(--line)';
               }}
             >
               <div style={{ display: 'flex', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
                 <span
                   style={{
                     background: getNodeColor(node),
-                    color: '#ffffff',
+                    color: 'var(--surface)',
                     padding: '2px 7px',
                     borderRadius: 4,
                     fontSize: 10,
@@ -148,8 +148,8 @@ export function BrowseGrid({ graph }: Props) {
                 {node.layer && (
                   <span
                     style={{
-                      background: '#edf2f7',
-                      color: '#4a5568',
+                      background: 'var(--sunken)',
+                      color: 'var(--ink-2)',
                       padding: '2px 7px',
                       borderRadius: 4,
                       fontSize: 10,
@@ -163,8 +163,8 @@ export function BrowseGrid({ graph }: Props) {
                 {node.maturity && (
                   <span
                     style={{
-                      background: '#edf2f7',
-                      color: '#4a5568',
+                      background: 'var(--sunken)',
+                      color: 'var(--ink-2)',
                       padding: '2px 7px',
                       borderRadius: 4,
                       fontSize: 10,
@@ -176,13 +176,13 @@ export function BrowseGrid({ graph }: Props) {
                   </span>
                 )}
               </div>
-              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4, color: '#1a365d' }}>
+              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4, color: 'var(--ink)' }}>
                 {node.title}
               </div>
               <div
                 style={{
                   fontSize: 12.5,
-                  color: '#4a5568',
+                  color: 'var(--ink-2)',
                   lineHeight: 1.5,
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
@@ -198,19 +198,19 @@ export function BrowseGrid({ graph }: Props) {
                   style={{
                     marginTop: 12,
                     paddingTop: 12,
-                    borderTop: '1px solid #e2e8f0',
+                    borderTop: '1px solid var(--line)',
                     fontSize: 12.5,
-                    color: '#4a5568',
+                    color: 'var(--ink-2)',
                     lineHeight: 1.55,
                   }}
                 >
                   {node.privacy_goal && (
-                    <p style={{ fontStyle: 'italic', margin: '0 0 8px', color: '#1a365d' }}>
+                    <p style={{ fontStyle: 'italic', margin: '0 0 8px', color: 'var(--ink)' }}>
                       {node.privacy_goal}
                     </p>
                   )}
                   {node.primary_domain && (
-                    <p style={{ fontSize: 11.5, color: '#718096', margin: 0 }}>
+                    <p style={{ fontSize: 11.5, color: 'var(--muted)', margin: 0 }}>
                       Domain: {node.primary_domain}
                     </p>
                   )}
@@ -220,7 +220,7 @@ export function BrowseGrid({ graph }: Props) {
                       display: 'flex',
                       gap: 8,
                       fontSize: 11,
-                      fontFamily: 'JetBrains Mono, monospace',
+                      fontFamily: 'var(--font-mono)',
                     }}
                   >
                     {href && (
@@ -228,7 +228,7 @@ export function BrowseGrid({ graph }: Props) {
                         href={href}
                         onClick={(e) => e.stopPropagation()}
                         style={{
-                          color: '#2257e9',
+                          color: 'var(--navy)',
                           textDecoration: 'none',
                           fontWeight: 700,
                           textTransform: 'uppercase',

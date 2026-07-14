@@ -1,6 +1,6 @@
 /**
  * Domains are DATA-DRIVEN from the `domains` content collection (one
- * markdown file per domain in iptf-map). A domain's canonical name is
+ * markdown file per domain in ethsystems/map). A domain's canonical name is
  * its title minus the "Domain: " prefix; its stable id is the filename
  * slug (e.g. `funds-assets`).
  *

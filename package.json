@@ -1,5 +1,5 @@
 {
-  "name": "iptf-website",
+  "name": "ethsystems-website",
   "private": true,
   "type": "module",
   "version": "1.0.0",
@@ -9,7 +9,7 @@
   "scripts": {
     "build:graph": "node scripts/build-graph.mjs",
     "predev": "npm run build:graph",
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "prebuild": "node scripts/validate-content-refs.mjs && npm run build:graph",
     "build": "astro build",
     "prepreview": "npm run build:graph",
@@ -19,13 +19,18 @@
     "lint:refs": "node scripts/validate-content-refs.mjs --strict"
   },
   "devDependencies": {
+    "@napi-rs/canvas": "^1.0.2",
     "js-yaml": "^4.1.1"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^5.0.0",
     "@astrojs/react": "^5.0.5",
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource-variable/geist": "^5.2.9",
+    "@fontsource-variable/geist-mono": "^5.2.8",
     "@types/d3": "^7.4.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

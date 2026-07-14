@@ -32,7 +32,30 @@ const cleanedBody = (useCaseContent ? bodyWithout : entry.body).replace(
   '$1',
 );
 const lede = useCaseContent || bodyExcerpt(entry.body);
-const bodyHtml = renderMarkdown(cleanedBody);
+
+// Upstream use-case markdown always emits a "## 2) Additional Context"
+// heading, but it's blank for most entries (only a handful carry Market
+// Signals etc.). Drop any H2 whose section body is empty so the page
+// never renders a bare heading with nothing underneath it.
+function dropEmptySections(md: string): string {
+  const lines = md.split('\n');
+  const out: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (/^##\s+/.test(lines[i])) {
+      let j = i + 1;
+      let hasContent = false;
+      for (; j < lines.length; j++) {
+        if (/^##\s+/.test(lines[j])) break;
+        if (lines[j].trim() !== '') { hasContent = true; break; }
+      }
+      if (!hasContent) { i = j - 1; continue; }
+    }
+    out.push(lines[i]);
+  }
+  return out.join('\n');
+}
+
+const bodyHtml = renderMarkdown(dropEmptySections(cleanedBody));
 
 const domainIndex = buildDomainIndex(await getCollection('domains'));
 const domain = domainIndex.resolve(entry.data.primary_domain) ?? entry.data.primary_domain ?? null;

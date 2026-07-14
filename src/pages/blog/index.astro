@@ -2,17 +2,18 @@
 /*
  * /blog/ — long-form writeups index.
  *
- * Source: the `posts` content collection, which loads markdown from the
- * posts-source/ submodule (ethereum/iptf-web on test_guide). Single
- * unified list of all posts, sorted newest-first. Matches the upstream
- * /blog at ethereum/iptf-web — no curated "featured" section, no split
- * with weekly updates.
+ * Source: the `posts` content collection, tracked directly in src/posts/.
+ * Single unified list of all posts, sorted newest-first. Matches the
+ * upstream /blog at ethsystems/web — no curated "featured" section, no
+ * split with weekly updates.
  */
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import ListPageLayout from '../../layouts/ListPageLayout.astro';
 import NextStepCTA from '../../components/NextStepCTA.astro';
 import { jekyllSlugify } from '../../lib/jekyllSlug';
 import { isPublished } from '../../lib/posts';
+import { site } from '../../lib/site';
 
 function toISODate(d: string | Date | undefined): string {
   if (!d) return '';
@@ -39,9 +40,10 @@ const today = new Date().toISOString().slice(0, 10);
 <ListPageLayout
   title="Blog"
   pageTitle="Writeups"
-  description="Field notes from the Institutional Privacy Task Force on building privacy on Ethereum for institutional use cases."
+  description="Field notes from EthSystems on building privacy on Ethereum for institutional use cases."
   current="/blog/"
-  lede={`Field notes from the Institutional Privacy Task Force on building privacy on Ethereum for institutional use cases.`}
+  image="/og/blog.png"
+  lede={`Field notes from EthSystems on building privacy on Ethereum for institutional use cases.`}
   metaRow={`${posts.length} writeups · Updated <strong>${today}</strong>`}
 >
   <div class="container">
@@ -51,7 +53,7 @@ const today = new Date().toISOString().slice(0, 10);
           <a href={`/blog/${p.slug}/`} class="post-row">
             {p.image && (
               <div class="post-thumb">
-                <img src={p.image} alt="" loading="lazy" />
+                <Image src={p.image} alt="" width={480} format="webp" loading="lazy" />
               </div>
             )}
             <div class="post-body">
@@ -69,9 +71,9 @@ const today = new Date().toISOString().slice(0, 10);
 
     <NextStepCTA
       heading="Want the next post in your inbox?"
-      body="The cluster posts long-form research as the map evolves. Watch the iptf-map repo on GitHub or contact the team directly."
+      body="EthSystems posts long-form research as the map evolves. Watch the map repo on GitHub or contact the team directly."
       ctaLabel="Watch on GitHub"
-      ctaHref="https://github.com/ethereum/iptf-map"
+      ctaHref={site.mapRepo}
     />
   </div>
 </ListPageLayout>

@@ -1,9 +1,9 @@
 /**
- * Remark plugin: rewrite relative markdown cross-links from iptf-map
+ * Remark plugin: rewrite relative markdown cross-links from ethsystems/map
  * (e.g. "../approaches/approach-private-bonds.md") into internal Astro
  * routes ("/approaches/approach-private-bonds/").
  *
- * iptf-map convention (verified across the repo):
+ * ethsystems/map convention (verified across the repo):
  *   - All internal links are relative paths to .md files.
  *   - Anchor fragments are not used in internal links.
  *   - Same-folder links use `filename.md` (no `./`).
@@ -32,7 +32,7 @@ const KNOWN_COLLECTIONS = new Set([
   'rfps',
 ]);
 
-const GITHUB_BLOB = 'https://github.com/ethereum/iptf-map/blob/master';
+const GITHUB_BLOB = 'https://github.com/ethsystems/map/blob/master';
 
 const TYPE_PREFIXES = ['approach', 'pattern', 'rfp', 'domain', 'jurisdiction', 'vendor'];
 

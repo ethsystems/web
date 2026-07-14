@@ -73,7 +73,7 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
         bottom: 0,
         width: 420,
         maxWidth: '95vw',
-        background: '#ffffff',
+        background: 'var(--surface)',
         borderLeft: `2px solid ${getNodeColor(node)}`,
         overflowY: 'auto',
         zIndex: 20,
@@ -83,10 +83,10 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
       <div
         style={{
           padding: '18px 18px 12px',
-          borderBottom: '1px solid #e2e8f0',
+          borderBottom: '1px solid var(--line)',
           position: 'sticky',
           top: 0,
-          background: '#ffffff',
+          background: 'var(--surface)',
           zIndex: 1,
         }}
       >
@@ -104,7 +104,7 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
             >
               {TYPE_LABELS[node.type]}
             </div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: '#1a365d', letterSpacing: '-0.015em' }}>
+            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--ink)', letterSpacing: '-0.015em' }}>
               {node.title}
             </div>
           </div>
@@ -115,7 +115,7 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
             style={{
               background: 'none',
               border: 'none',
-              color: '#718096',
+              color: 'var(--muted)',
               fontSize: 22,
               cursor: 'pointer',
               padding: '0 4px',
@@ -130,8 +130,8 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
             <span
               key={i}
               style={{
-                background: '#edf2f7',
-                color: '#4a5568',
+                background: 'var(--sunken)',
+                color: 'var(--ink-2)',
                 padding: '2px 8px',
                 borderRadius: 4,
                 fontSize: 10.5,
@@ -145,7 +145,7 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
           ))}
         </div>
         {node.privacy_goal && (
-          <div style={{ fontSize: 12.5, color: '#4a5568', marginTop: 10, lineHeight: 1.55 }}>
+          <div style={{ fontSize: 12.5, color: 'var(--ink-2)', marginTop: 10, lineHeight: 1.55 }}>
             {node.privacy_goal}
           </div>
         )}
@@ -155,10 +155,10 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
             style={{
               display: 'inline-block',
               marginTop: 12,
-              fontFamily: 'JetBrains Mono, monospace',
+              fontFamily: 'var(--font-mono)',
               fontSize: 11,
               fontWeight: 700,
-              color: '#2257e9',
+              color: 'var(--navy)',
               textDecoration: 'none',
               letterSpacing: '0.06em',
               textTransform: 'uppercase',
@@ -170,7 +170,7 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
       </div>
 
       <div
-        style={{ padding: 18, fontSize: 13, lineHeight: 1.65, color: '#1a202c' }}
+        style={{ padding: 18, fontSize: 13, lineHeight: 1.65, color: 'var(--ink)' }}
         className="detail-content"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
@@ -182,10 +182,10 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
               fontSize: 10.5,
               fontWeight: 700,
               textTransform: 'uppercase',
-              color: '#718096',
+              color: 'var(--muted)',
               marginBottom: 8,
               letterSpacing: '0.12em',
-              fontFamily: 'JetBrains Mono, monospace',
+              fontFamily: 'var(--font-mono)',
             }}
           >
             Connected ({connections.length})
@@ -201,23 +201,23 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
                 gap: 8,
                 width: '100%',
                 textAlign: 'left',
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
+                background: 'var(--surface)',
+                border: '1px solid var(--line)',
                 borderRadius: 6,
                 padding: '7px 11px',
                 marginBottom: 4,
                 cursor: 'pointer',
-                color: '#1a202c',
+                color: 'var(--ink)',
                 fontSize: 12.5,
                 transition: 'border-color 0.15s, background 0.15s',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = getNodeColor(cn);
-                e.currentTarget.style.background = '#f7fafc';
+                e.currentTarget.style.background = 'var(--sunken)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#e2e8f0';
-                e.currentTarget.style.background = '#ffffff';
+                e.currentTarget.style.borderColor = 'var(--line)';
+                e.currentTarget.style.background = 'var(--surface)';
               }}
             >
               <span
@@ -233,10 +233,10 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
               <span
                 style={{
                   fontSize: 9.5,
-                  color: '#a0aec0',
+                  color: 'var(--muted)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
-                  fontFamily: 'JetBrains Mono, monospace',
+                  fontFamily: 'var(--font-mono)',
                 }}
               >
                 {edgeType}
@@ -246,31 +246,31 @@ export function DetailPanel({ node, graph, onClose, onSelectNode }: Props) {
         </div>
       )}
 
-      <div style={{ padding: '8px 18px 18px', fontSize: 11, color: '#a0aec0', fontFamily: 'JetBrains Mono, monospace' }}>
+      <div style={{ padding: '8px 18px 18px', fontSize: 11, color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>
         Source: {node.file}
       </div>
 
       <style>{`
         .detail-content h2 {
           font-size: 14.5px; font-weight: 700; margin: 16px 0 8px;
-          color: #1a365d; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;
+          color: var(--ink); border-bottom: 1px solid var(--line); padding-bottom: 4px;
         }
-        .detail-content h3 { font-size: 13.5px; font-weight: 700; margin: 12px 0 4px; color: #1a365d; }
-        .detail-content p { margin: 6px 0; color: #1a202c; }
+        .detail-content h3 { font-size: 13.5px; font-weight: 700; margin: 12px 0 4px; color: var(--ink); }
+        .detail-content p { margin: 6px 0; color: var(--ink); }
         .detail-content ul, .detail-content ol { padding-left: 18px; margin: 6px 0; }
         .detail-content li { margin: 2px 0; }
-        .detail-content strong { color: #1a365d; }
+        .detail-content strong { color: var(--ink); }
         .detail-content code {
-          background: #f7fafc; padding: 1px 5px; border-radius: 3px; font-size: 12px;
-          color: #1a365d; font-family: 'JetBrains Mono', monospace;
+          background: var(--sunken); padding: 1px 5px; border-radius: 3px; font-size: 12px;
+          color: var(--ink); font-family: var(--font-mono), monospace;
         }
-        .detail-content a { color: #2257e9; text-decoration: none; }
+        .detail-content a { color: var(--navy); text-decoration: none; }
         .detail-content a:hover { text-decoration: underline; }
         .detail-content table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 12px; }
         .detail-content th, .detail-content td {
-          border: 1px solid #e2e8f0; padding: 4px 8px; text-align: left;
+          border: 1px solid var(--line); padding: 4px 8px; text-align: left;
         }
-        .detail-content th { background: #f7fafc; font-weight: 700; color: #1a365d; }
+        .detail-content th { background: var(--sunken); font-weight: 700; color: var(--ink); }
       `}</style>
     </div>
   );

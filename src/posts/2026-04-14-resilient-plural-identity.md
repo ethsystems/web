@@ -4,7 +4,7 @@ title: "Resilient Plural Identity"
 description: "Designing identity on Ethereum that survives issuer failure: plural attestation sources, vOPRF sybil resistance, and an on-chain trust anchor that no single party can revoke."
 date: 2026-04-22 10:00:00 +0100
 author: "Aaryamann, Oskar"
-image: /assets/images/2026-04-14-resilient-private-identity/hero.png
+image: ../assets/posts/2026-04-14-resilient-private-identity/hero.png
 tags:
   - identity
   - plural-identity
@@ -13,6 +13,8 @@ tags:
   - zero-knowledge
   - proof-of-concept
 ---
+
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *This post opens our three-part resilience series on identity, payments, and coordination. Where previous IPTF writeups started from an institutional requirement and designed forward, these start from a failure mode (a sanctioned jurisdiction, a collapsed issuer, an internet shutdown) and work back to what Ethereum can offer. Expect the voice to shift accordingly.*
 
@@ -24,7 +26,7 @@ When that authority shuts down, gets sanctioned, or turns adversarial, already-v
 
 We built a proof-of-concept that removes this dependency. After a one-time enrollment, an on-chain Merkle root on Ethereum, censorship-resistant and always available, becomes the sole trust anchor. The identity provider can go offline, revoke everything, or turn adversarial. Holders keep proving attributes. New enrollees join through any accepted identity source, not just the original provider. Plurality is the default: no single issuer holds a monopoly over who gets to participate.
 
-The implementation is [open source](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity), with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md).
+The implementation is [open source](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity), with a detailed [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md).
 
 ## How identity verification works today
 
@@ -38,7 +40,7 @@ Every step depends on the issuer being live and cooperative. [ZKPassport](https:
 
 The issuer can fail in several ways. It can shut down (bankruptcy, sanctions, corporate dissolution). It can turn adversarial (mass-revoke credentials, publish false revocation lists, forge credentials for non-holders, refuse new issuance). It can simply go offline. In every case, the holder is left with a credential that cannot be independently verified.
 
-![Traditional identity systems require the issuer to be online for every revocation check; resilient private identity replaces the issuer with an on-chain Merkle root as the sole trust anchor](/assets/images/2026-04-14-resilient-private-identity/resilient_identity_comparison.png)
+![Traditional identity systems require the issuer to be online for every revocation check; resilient private identity replaces the issuer with an on-chain Merkle root as the sole trust anchor](../assets/posts/2026-04-14-resilient-private-identity/resilient_identity_comparison.png)
 
 ## Breaking the issuer dependency
 
@@ -58,7 +60,7 @@ In this view, sybil resistance is not bolted on top of identity. It is the prope
 
 Enrollment is a single on-chain transaction. The work before that transaction is what makes the protocol resilient. The holder proves identity ownership using an existing source (passport, national ID, email, web2 account), then obtains a deterministic sybil-resistant tag from a [vOPRF](https://www.rfc-editor.org/rfc/rfc9497) (verifiable Oblivious Pseudorandom Function) network: a cryptographic protocol that maps an input to a deterministic but unpredictable output using a secret key, without the key holder learning the input or the requester learning the key. The tag ensures one real-world identity maps to exactly one on-chain leaf, regardless of when enrollment happens. The holder generates a ZK proof binding everything together and submits it in a single transaction.
 
-![Enrollment flow: the holder obtains identity evidence, blinds it, sends it to the vOPRF MPC network for evaluation with a link proof, then submits the enrollment proof and leaf to the on-chain contract](/assets/images/2026-04-14-resilient-private-identity/resilient_identity_flow.png)
+![Enrollment flow: the holder obtains identity evidence, blinds it, sends it to the vOPRF MPC network for evaluation with a link proof, then submits the enrollment proof and leaf to the on-chain contract](../assets/posts/2026-04-14-resilient-private-identity/resilient_identity_flow.png)
 
 After this transaction, the holder stores their secret and attributes locally. The issuer is no longer involved. Ethereum itself becomes the trust anchor: a censorship-resistant, permissionless ledger that no single party can take offline or tamper with. The smart contract with its ZK verifier is the resilient issuer.
 
@@ -70,7 +72,7 @@ The holder generates a ZK membership proof demonstrating three things: they have
 
 The nullifier is deterministic per holder and per verifier scope: the same holder always produces the same nullifier for the same verifier, preventing duplicate presentations within a single application. Across different verifiers, the nullifiers are unrelated. An observer who sees a proof submitted to Verifier A and another to Verifier B cannot determine whether the same holder produced both.
 
-![Verification flow: the verifier requests an attribute proof, the holder generates a ZK membership proof, and the on-chain IdentityVerifier checks root freshness, nullifier uniqueness, and proof validity](/assets/images/2026-04-14-resilient-private-identity/resilient_identity_verification_flow.png)
+![Verification flow: the verifier requests an attribute proof, the holder generates a ZK membership proof, and the on-chain IdentityVerifier checks root freshness, nullifier uniqueness, and proof validity](../assets/posts/2026-04-14-resilient-private-identity/resilient_identity_verification_flow.png)
 
 The verifier calls `IdentityVerifier.verifyProof(...)`. The contract checks root freshness (last 1000 roots in a circular buffer), nullifier uniqueness, and proof validity. If the call does not revert, the proof is valid.
 
@@ -96,7 +98,7 @@ The protocol layers three independent factors:
 
 When sources are honest, the cryptographic layer alone enforces one-to-one binding. When sources are compromised, the economic layer kicks in: N sybil leaves require N * 0.1 ETH locked. The stake is a refundable bond. Holders reclaim it by unstaking, which removes their leaf from the tree.
 
-The social layer (specified in the [README](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity#future-work-web-of-trust)) adds a third constraint: each existing member has a lifetime vouch budget of V=2, and new enrollees need K=3 vouches from existing members. Vouches are aggregated into a single recursive proof off-chain and submitted atomically with the enrollment transaction. No vouch graph is ever visible on-chain. An attacker with T fake identities creates at most 2T additional sybils. Growth is linear, not exponential.
+The social layer (specified in the [README](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity#future-work-web-of-trust)) adds a third constraint: each existing member has a lifetime vouch budget of V=2, and new enrollees need K=3 vouches from existing members. Vouches are aggregated into a single recursive proof off-chain and submitted atomically with the enrollment transaction. No vouch graph is ever visible on-chain. An attacker with T fake identities creates at most 2T additional sybils. Growth is linear, not exponential.
 
 These three factors match the plural-identity cost structure from earlier: one identity is cheap, ten cost ten times as much, a million are priced out of reach. The cryptographic factor binds each identity to a real credential. The economic factor prices the right to hold multiples.
 
@@ -183,4 +185,4 @@ The [privacy-ethereum/zkspecs](https://github.com/privacy-ethereum/zkspecs) repo
 
 The immediate extensions are multi-source identity integration (recursive verification of existing identity proof systems inside Noir, so attributes are cryptographically verified rather than self-declared and sybil resistance works across identity sources), web-of-trust vouching as a third sybil factor, and epoch-based key rotation for forward secrecy.
 
-The [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md) covers every circuit constraint, data structure, and security consideration. The [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/resilient-identity-continuity.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-identity.md) documents on the IPTF Map show how this fits into the broader institutional privacy work. Pull requests are welcome.
+The [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-identity/resilient-private-identity/SPEC.md) covers every circuit constraint, data structure, and security consideration. The [use case](https://github.com/ethsystems/map/blob/master/use-cases/resilient-identity-continuity.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-identity.md) documents on the IPTF Map show how this fits into the broader institutional privacy work. Pull requests are welcome.

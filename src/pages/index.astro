@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroAnimation from '../components/HeroAnimation.astro';
-import PipelineAnimation from '../components/PipelineAnimation.astro';
+import HeroMark from '../components/HeroMark.astro';
+import SupportedBy from '../components/SupportedBy.astro';
+import MarkDither from '../components/MarkDither.astro';
+import { site } from '../lib/site';
 import { getStats } from '../lib/stats';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { jekyllSlugify } from '../lib/jekyllSlug';
 import { isPublished } from '../lib/posts';
@@ -10,9 +13,8 @@ import { findFaq } from '../data/faq';
 
 const stats = await getStats();
 
-// Top 3 long-form posts from the posts collection (sourced from the
-// posts-source submodule = ethereum/iptf-web). Sorted newest first by
-// frontmatter date.
+// Top 3 long-form posts from the posts collection (src/posts/). Sorted
+// newest first by frontmatter date.
 function toISODate(d: string | Date | undefined): string {
   if (!d) return '';
   if (d instanceof Date) return d.toISOString().slice(0, 10);
@@ -31,36 +33,63 @@ const latestPosts = allPosts
   .sort((a, b) => b.date.localeCompare(a.date))
   .slice(0, 3);
 
-// FAQ teaser — 5 hand-curated featured questions resolved against the
+// FAQ teaser — 9 hand-curated featured questions resolved against the
 // shared FAQ dataset (src/data/faq.ts). The homepage renders these inline
 // as expandable accordions so the full answer is one click away without a
-// page jump.
+// page jump. Strings must match faq.ts exactly (findFaq is strict equality).
 const FEATURED_FAQ_QS = [
-  'Is Ethereum private enough for institutional use?',
-  'What does MiCA say about on-chain privacy?',
-  'How do viewing keys work for regulatory access?',
-  'Can institutions use DeFi and stay compliant?',
-  'Which privacy solutions are production-ready today?',
+  'What is EthSystems?',
+  'Who is behind it?',
+  'What have you actually built?',
+  'Why does this matter?',
+  'What do you offer institutions?',
+  "What's your relationship with the Ethereum Foundation?",
+  'How do you relate to Ethlabs and Ethereum Institutional?',
+  'Is your work open source?',
+  'Where do you operate?',
 ];
 const faqTeasers = FEATURED_FAQ_QS
   .map((q) => findFaq(q))
   .filter((e): e is NonNullable<typeof e> => e !== undefined);
 ---
 
-<BaseLayout title="" description="A working knowledge base for institutional privacy on Ethereum." current="/">
+<BaseLayout title="" description="A working knowledge base of confidential systems for institutional Ethereum." current="/">
 
   <!-- HERO -->
   <section class="hero">
-    <HeroAnimation />
-    <div class="container">
+    <div class="container hero-grid">
       <div class="hero-inner">
-        <h1>Advancing privacy standards for institutional applications</h1>
-        <p class="lede">The <strong>Institutional Privacy Task Force (IPTF)</strong> is a dedicated team that helps onboard institutions onto Ethereum, with a focus on ensuring their privacy needs are met in a performant, secure, usable, and accessible way.</p>
+        <h1>Confidential Systems for Institutional Ethereum</h1>
+        <p class="lede"><strong>EthSystems</strong> helps institutions move on-chain with privacy that's performant, secure, usable, and accessible, disclosing only what the rules require.</p>
         <div class="cta-row">
           <a href="/approaches/" class="btn primary lg">See approaches<span class="arr">→</span></a>
           <a href="/blog/" class="btn ghost lg">See writeups<span class="arr">→</span></a>
         </div>
       </div>
+      <div class="hero-mark-col" aria-hidden="true">
+        <HeroMark />
+      </div>
+    </div>
+  </section>
+
+  <!-- NARRATIVE — the launch story in one passage. The words institutions
+       cannot reveal are sealed under ink redaction bars (the hero mark's
+       own vocabulary) and lift as the section scrolls into view: the copy
+       performs selective disclosure. Pure CSS scroll-driven animation;
+       resting state (no support, reduced motion) is the revealed text. -->
+  <section class="narrative">
+    <div class="container">
+      <p class="kicker narrative-kicker">The team institutions already know</p>
+      <p class="narrative-prose">
+        Institutions want to move real financial activity onto Ethereum.
+        A public ledger exposes <span class="redact" style="--i:0"><span class="redact-word">positions,</span></span> <span class="redact" style="--i:1"><span class="redact-word">counterparties,</span></span> and <span class="redact" style="--i:2"><span class="redact-word">flows</span></span> they are not allowed to reveal.
+      </p>
+      <p class="narrative-body">
+        <strong>EthSystems</strong>, the team behind the Ethereum Foundation&rsquo;s Institutional Privacy Task Force, builds the confidential, compliant systems that make that possible, from proof-of-concept through to production, backed by a year of open-source work already shipped.
+      </p>
+      <p class="narrative-cta">
+        <a href="/offerings/">What we offer <span class="arr">&rarr;</span></a>
+      </p>
     </div>
   </section>
 
@@ -79,7 +108,6 @@ const faqTeasers = FEATURED_FAQ_QS
             <p>Read worked architectures directly. Each names trade-offs in plain language, evaluates under CROPS, and references a working prototype where one exists.</p>
             <span class="path-link"><strong>{stats.approaches}</strong> approaches <span class="arr">→</span></span>
           </div>
-          <img class="path-img" src="/cards/casestudies.webp" alt="" width="540" height="675" loading="lazy" />
         </a>
 
         <a class="path" href="/use-cases/">
@@ -88,7 +116,6 @@ const faqTeasers = FEATURED_FAQ_QS
             <p>Begin from the institutional question that mirrors your situation. Each use case pairs with one or more approaches that demonstrate how others have built solutions.</p>
             <span class="path-link"><strong>{stats.useCases}</strong> use cases <span class="arr">→</span></span>
           </div>
-          <img class="path-img" src="/cards/usecases.webp" alt="" width="540" height="675" loading="lazy" />
         </a>
 
         <a class="path" href="/patterns/">
@@ -97,7 +124,6 @@ const faqTeasers = FEATURED_FAQ_QS
             <p>Build your own approach using the cryptographic primitives applied in our case studies. Each building block includes its risk profile, architectural layer, and trade-offs.</p>
             <span class="path-link"><strong>{stats.patterns}</strong> building blocks <span class="arr">→</span></span>
           </div>
-          <img class="path-img" src="/cards/juridictions.webp" alt="" width="540" height="675" loading="lazy" />
         </a>
       </div>
     </div>
@@ -108,7 +134,7 @@ const faqTeasers = FEATURED_FAQ_QS
     <div class="container">
       <div class="section-head">
         <h2>Who is this for</h2>
-        <p class="meta">IPTF coordinates between vendors and protocols, institutions, and regulators. The map and the approaches are written so each group can reach the same evidence by a different door. Pick the column that fits your role; each one is a recommended reading order, not a forced path.</p>
+        <p class="meta">EthSystems coordinates between vendors and protocols, institutions, and regulators. The map and the approaches are written so each group can reach the same evidence by a different door. Pick the column that fits your role; each one is a recommended reading order, not a forced path.</p>
       </div>
 
       <div class="persona-grid">
@@ -259,7 +285,7 @@ const faqTeasers = FEATURED_FAQ_QS
       <div class="container">
         <div class="section-head">
           <h2>Recent writeups from the team</h2>
-          <p class="meta">Long-form research, guides, POCs, and analysis from IPTF engineers.</p>
+          <p class="meta">Long-form research, guides, POCs, and analysis from the EthSystems team.</p>
         </div>
 
         <div class="writeups">
@@ -267,7 +293,7 @@ const faqTeasers = FEATURED_FAQ_QS
             <a class="writeup" href={`/blog/${p.slug}/`}>
               <div class="writeup-thumb">
                 {p.image ? (
-                  <img src={p.image} alt="" loading="lazy" />
+                  <Image src={p.image} alt="" width={800} format="webp" loading="lazy" />
                 ) : (
                   <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                     <defs>
@@ -340,7 +366,11 @@ const faqTeasers = FEATURED_FAQ_QS
     </div>
   </section>
 
-  <!-- HOME-FAQ — paired with PipelineAnimation on the right so the
+  <!-- SUPPORTED BY — coalition tier row, between hero and reading paths. -->
+  <SupportedBy />
+
+
+  <!-- HOME-FAQ — paired with MarkDither on the right so the
        diamond visual carries some of the section's weight and the FAQ
        column doesn't stretch the full container width. -->
 
@@ -350,7 +380,7 @@ const faqTeasers = FEATURED_FAQ_QS
         <div class="home-faq-content">
           <div class="section-head">
             <h2>What institutions ask us most</h2>
-            <p class="meta">Five questions we hear repeatedly. Each one links into the full FAQ where the answer cites the relevant pattern, jurisdiction, and approach.</p>
+            <p class="meta">The questions we hear most, answered directly. Each one links into the full FAQ where answers cite the relevant pattern, jurisdiction, and approach.</p>
           </div>
           <div class="home-faq-list">
             {faqTeasers.map((item) => (
@@ -383,7 +413,7 @@ const faqTeasers = FEATURED_FAQ_QS
           <a href="/faq/" class="home-faq-cta">Read all FAQs<span class="arr">→</span></a>
         </div>
         <div class="home-faq-visual" aria-hidden="true">
-          <PipelineAnimation />
+          <MarkDither />
         </div>
       </div>
     </div>
@@ -394,33 +424,33 @@ const faqTeasers = FEATURED_FAQ_QS
     <div class="container">
       <div class="contact-grid">
         <div>
-          <h2>Talk to the IPTF team</h2>
+          <h2>Talk to EthSystems</h2>
           <div class="contact-body">
             <p>If you are an institution with a privacy requirement, a builder shipping a solution, or a regulator who wants the picture, we are listening.</p>
           </div>
         </div>
         <div class="contact-options">
-          <a href="mailto:iptf@ethereum.org" class="contact-option">
+          <a href={site.contactFormUrl} class="contact-option" target="_blank" rel="noopener noreferrer">
+            <span class="contact-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg></span>
+            <div>
+              <h4>Contact us</h4>
+              <p>Tell us about your requirements and the team will follow up.</p>
+            </div>
+            <span class="arr">→</span>
+          </a>
+          <a href={`mailto:${site.email}`} class="contact-option">
             <span class="contact-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
             <div>
-              <h4>iptf@ethereum.org</h4>
+              <h4>{site.email}</h4>
               <p>General correspondence with the team.</p>
             </div>
             <span class="arr">→</span>
           </a>
-          <a href="https://github.com/ethereum/iptf-map" class="contact-option">
+          <a href={site.mapRepo} class="contact-option">
             <span class="contact-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span>
             <div>
-              <h4>GitHub · iptf-map</h4>
+              <h4>GitHub · map</h4>
               <p>Open issues, propose patterns, contribute use cases.</p>
-            </div>
-            <span class="arr">→</span>
-          </a>
-          <a href="https://github.com/ethereum/iptf-pocs" class="contact-option">
-            <span class="contact-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 11-5.6 5.6l-7 7v3h3l7-7a4 4 0 005.6-5.6"/><circle cx="17" cy="7" r="1.5"/></svg></span>
-            <div>
-              <h4>GitHub · iptf-pocs</h4>
-              <p>Working prototypes and reference implementations.</p>
             </div>
             <span class="arr">→</span>
           </a>
@@ -432,42 +462,42 @@ const faqTeasers = FEATURED_FAQ_QS
 </BaseLayout>
 
 <style>
-  /* HERO */
+  /* HERO — two columns on desktop (copy left, ledger mark right); single
+     column on mobile with the mark below the copy. */
   .hero {
-    padding: 8rem 0 7rem;
+    padding: 5.5rem 0 5rem;
     border-bottom: 1px solid var(--color-border);
     position: relative;
     overflow: hidden;
   }
-  @media (max-width: 720px) {
-    .hero { padding: 3rem 0 3.5rem; }
-    .hero .lede { font-size: 1.02rem; margin-bottom: 1.5rem; }
+  .hero-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
   }
-  /* Animation spans the full hero width. Headline + CTAs left-aligned
-     so they sit on the same vertical body grid as the intro paragraph
-     and every section below. Per-line white highlights keep the navy
-     headline legible over the dense dither pattern. */
   .hero-inner {
     position: relative;
     z-index: 2;
-    max-width: 880px;
+    max-width: 640px;
     text-align: left;
   }
+  .hero-kicker { margin-bottom: 1.25rem; }
   .hero h1 {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(2.6rem, 5.2vw, 3.65rem);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+    font-size: clamp(2.6rem, 5.2vw, 3.9rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
     color: var(--color-primary);
     margin-bottom: 1.5rem;
-    max-width: 18ch;
+    max-width: 16ch;
   }
   .hero .lede {
-    font-size: 1.15rem;
-    line-height: 1.6;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
     color: var(--color-text-secondary);
-    max-width: 56ch;
+    max-width: 40ch;
     margin-bottom: 2rem;
   }
   .hero .lede strong { color: var(--color-primary); font-weight: 600; }
@@ -476,6 +506,168 @@ const faqTeasers = FEATURED_FAQ_QS
     gap: 0.75rem;
     flex-wrap: wrap;
     align-items: center;
+  }
+  /* Mobile: mark sits below the copy, centered. */
+  .hero-mark-col {
+    width: min(80vw, 340px);
+    margin: 1rem auto 0;
+  }
+  @media (max-width: 720px) {
+    /* Fit the whole hero — mark, h1, lede, CTAs — in the first mobile
+       viewport. The hero flexes to 100svh minus the mobile nav (40px
+       menu button + 2 × 0.75rem padding + 1px border = 65px) and the
+       mark column absorbs whatever height the copy doesn't use, so the
+       CTA row always lands above the fold regardless of how many lines
+       the h1/lede wrap to on a given device. */
+    .hero {
+      padding: 1.5rem 0 2rem;
+      display: flex;
+      min-height: calc(100svh - 65px);
+    }
+    .hero .lede { font-size: 1.05rem; margin-bottom: 1.5rem; }
+    .hero-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .hero-inner { flex-shrink: 0; }
+    /* Float the ledger mark above the copy on mobile — `order` puts the
+       animation first, then the copy (h1, lede, CTAs) follows. The
+       column takes the leftover viewport height (flex: 1, with a floor
+       so the mark never vanishes on short screens) and the SVG sizes
+       itself height-first into it via aspect-ratio, instead of the
+       width-driven sizing used elsewhere. */
+    .hero-mark-col {
+      order: -1;
+      flex: 1 1 0;
+      min-height: 110px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-mark-col :global(.hero-mark) {
+      height: 100%;
+      width: auto;
+      aspect-ratio: 280 / 340;
+      max-height: 400px;
+      max-width: min(80vw, 340px);
+    }
+  }
+  @media (min-width: 920px) {
+    /* Fill the first viewport exactly: 100svh minus the sticky nav
+       (30px logo + 2 x 0.95rem padding + 1px border = 62px), so the
+       hero owns the whole screen on load and the fold lands on its
+       bottom border. */
+    .hero { padding: 4rem 0; min-height: calc(100svh - 62px); display: grid; align-items: center; }
+    .hero-grid {
+      grid-template-columns: minmax(0, 56fr) minmax(0, 44fr);
+      gap: clamp(2rem, 5vw, 4rem);
+    }
+    .hero-mark-col {
+      width: auto;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* NARRATIVE — redacted prose. The bars are ink rectangles drawn by the
+     .redact::after pseudo-element over each word. Two states:
+       resting (no scroll-driven-animation support / reduced motion):
+         bars at scaleX(0), words visible.
+       supported + motion allowed: bars armed at scaleX(1), then a
+         scroll-driven animation on the section's view timeline wipes
+         each bar toward its right edge, uncovering the word left-to-
+         right in reading order, staggered by --i. Scrubs with scroll
+         (reverses on scroll-up) — unlike the old one-shot JS observer.
+     Ink on paper only; no navy, no fades over gaps. */
+  .narrative {
+    padding: 6.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .narrative-kicker { margin-bottom: 1.75rem; }
+  .narrative-prose {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+    font-size: clamp(1.6rem, 1.15rem + 2.2vw, 2.7rem);
+    line-height: 1.28;
+    letter-spacing: -0.012em;
+    color: var(--color-primary);
+    max-width: 30ch;
+    margin: 0 0 1.75rem;
+  }
+  .narrative-body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    max-width: 58ch;
+    margin: 0;
+  }
+  .narrative-body strong {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+  .narrative-cta {
+    margin: 1.75rem 0 0;
+  }
+  .narrative-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-cta);
+    text-decoration: none;
+  }
+  .narrative-cta a:hover {
+    color: var(--color-cta-hover);
+  }
+  .narrative-cta .arr {
+    transition: transform var(--duration-fast) var(--easing-soft);
+  }
+  .narrative-cta a:hover .arr {
+    transform: translateX(2px);
+  }
+  .redact {
+    position: relative;
+    white-space: nowrap;
+  }
+  .redact::after {
+    content: '';
+    position: absolute;
+    inset: 0.02em -0.09em -0.06em;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: 100% 50%;
+    pointer-events: none;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .narrative { view-timeline: --narrative-reveal block; }
+      .redact::after {
+        transform: scaleX(1);
+        animation: redact-lift linear both;
+        animation-timeline: --narrative-reveal;
+        /* First bar starts lifting once ~40% of the section has entered
+           the viewport; each later word trails by 10% of the entry range
+           so the wipe reads left-to-right. */
+        animation-range: entry calc(40% + var(--i) * 10%)
+          entry calc(100% + var(--i) * 5%);
+      }
+    }
+  }
+  @keyframes redact-lift {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+  }
+  @media (max-width: 720px) {
+    .narrative { padding: 4rem 0; }
   }
 
   /* ABOUT */
@@ -492,11 +684,12 @@ const faqTeasers = FEATURED_FAQ_QS
     max-width: 64ch;
   }
   .about-grid h2 {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(2.15rem, 3.8vw, 2.85rem);
-    line-height: 1.14;
-    letter-spacing: -0.025em;
+    font-family: var(--font-display);
+    font-weight: 420;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+    font-size: clamp(2.15rem, 3.8vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: -0.012em;
     color: var(--color-primary);
     max-width: 22ch;
     margin-bottom: 0.5rem;
@@ -521,7 +714,7 @@ const faqTeasers = FEATURED_FAQ_QS
   .path {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 2.25rem 2rem 0;
+    padding: 2.5rem 2rem;
     background: var(--color-bg-card);
     display: flex;
     flex-direction: column;
@@ -533,7 +726,7 @@ const faqTeasers = FEATURED_FAQ_QS
     position: relative;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    min-height: 560px;
+    min-height: 300px;
   }
   .path:hover {
     border-color: var(--color-cta);
@@ -553,11 +746,12 @@ const faqTeasers = FEATURED_FAQ_QS
   .path:hover::after { width: 100%; }
   .path-content { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; flex: 1; }
   .path h3 {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 1.85rem;
-    letter-spacing: -0.022em;
-    line-height: 1.15;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+    font-size: 1.95rem;
+    letter-spacing: -0.012em;
+    line-height: 1.06;
     color: var(--color-primary);
   }
   .path p {
@@ -580,18 +774,6 @@ const faqTeasers = FEATURED_FAQ_QS
   }
   .path-link .arr { transition: transform var(--duration-fast) var(--easing-soft); }
   .path:hover .path-link .arr { transform: translateX(3px); }
-  .path-img {
-    margin-top: auto;
-    width: 80%;
-    height: auto;
-    display: block;
-    /* Image sits inside the card's horizontal padding so it lines up
-       with the title, body, and link above it. Scaled to 80% so the
-       artwork doesn't dominate the card visually. */
-    margin-bottom: 1.5rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
 
   /* WHO IS THIS FOR */
   .glance {
@@ -793,7 +975,7 @@ const faqTeasers = FEATURED_FAQ_QS
     margin: 0;
   }
 
-  /* Visual half — hosts PipelineAnimation. position: relative so the
+  /* Visual half — hosts MarkDither. position: relative so the
      canvas (absolute, inset: 0) fills exactly this box. With the grid
      stretching, this column inherits the content column's height —
      no fixed aspect-ratio needed on desktop. */
@@ -950,11 +1132,12 @@ const faqTeasers = FEATURED_FAQ_QS
   }
   @media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; gap: 2rem; } }
   .contact h2 {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(2.15rem, 3.8vw, 2.85rem);
-    line-height: 1.14;
-    letter-spacing: -0.025em;
+    font-family: var(--font-display);
+    font-weight: 420;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+    font-size: clamp(2.15rem, 3.8vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: -0.012em;
     color: var(--color-primary);
     max-width: 16ch;
     margin-bottom: 0.7rem;
@@ -1017,7 +1200,7 @@ const faqTeasers = FEATURED_FAQ_QS
   }
   .contact-option:hover .arr { color: var(--color-cta); transform: translateX(3px); }
 
-  /* HOME FAQ teaser — paired with PipelineAnimation on the right so
+  /* HOME FAQ teaser — paired with MarkDither on the right so
      the FAQ accordion column sits at ~58% of the container width and
      the diamond visual carries the rest. Animation hides on mobile so
      the FAQ takes full width again. */
@@ -1040,10 +1223,12 @@ const faqTeasers = FEATURED_FAQ_QS
   .home-faq-content { min-width: 0; }
   .home-faq-visual {
     position: relative;
-    background: var(--color-bg);
-    /* Square aspect ratio — height derives from the column's current
-       width instead of stretching to the FAQ accordion's height. Keeps
-       the WebGL canvas surface stable when a FAQ expands. */
+    background: transparent;
+    /* Square aspect ratio — the mark-dither SVG sits centered in a stable
+       square so expanding a FAQ accordion never resizes the glyph. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     aspect-ratio: 1 / 1;
     width: 100%;
   }

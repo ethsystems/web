@@ -30,7 +30,7 @@ const useCaseById = new Map(useCases.map((uc) => [uc.id, uc]));
 const domainIndex = buildDomainIndex(domains);
 
 // Per-domain primer is the domain's frontmatter `description` (a curated
-// one-liner, iptf-map PR #173). Falls back to the first ## TLDR bullet
+// one-liner, ethsystems/map PR #173). Falls back to the first ## TLDR bullet
 // where no description exists yet. Links to the domain detail page.
 function domainPrimer(d: Domain): { html: string; href: string } | undefined {
   const entry = domainIndex.entryFor(d) as
@@ -104,6 +104,7 @@ const tabs = orderedDomains.map((d) => ({
   pageTitle="Approaches"
   description="Approaches"
   current="/approaches/"
+  image="/og/approaches.png"
 >
   <Fragment slot="anchor-nav">
     <AnchorNav tabs={tabs} ariaLabel="Domain navigation" />

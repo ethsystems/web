@@ -8,10 +8,11 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://iptf.ethereum.org',
+  site: process.env.OVERRIDE_URL || 'https://ethsystems.org',
   trailingSlash: 'always',
   build: {
     format: 'directory',
+    inlineStylesheets: 'always',
   },
   // Legacy Jekyll URLs (permalink: /:title/, slug from filename) → new
   // title-derived slugs under /blog/. Keeps inbound links alive post-migration.
@@ -41,5 +42,9 @@ export default defineConfig({
       wrap: true,
     },
   },
-  integrations: [mdx(), react(), sitemap()],
+  integrations: [
+    mdx(),
+    react(),
+    sitemap(),
+  ],
 });

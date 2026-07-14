@@ -11,6 +11,8 @@ interface Pill {
 
 interface Props {
   breadcrumbs?: Crumb[];
+  /** Optional mono eyebrow rendered above the title (e.g. "Work with us"). */
+  eyebrow?: string;
   title: string;
   /** Lede may contain inline HTML (e.g. <strong>) — passed through set:html. */
   lede?: string;
@@ -24,7 +26,7 @@ interface Props {
   centered?: boolean;
 }
 
-const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centered = false } = Astro.props;
+const { breadcrumbs = [], eyebrow, title, lede, ledeBullets, metaRow, pills = [], centered = false } = Astro.props;
 ---
 
 <header class:list={['page-header', { 'page-header--centered': centered }]}>
@@ -39,6 +41,7 @@ const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centere
         ))}
       </nav>
     )}
+    {eyebrow && <p class="kicker eyebrow">{eyebrow}</p>}
     <h1>{title}</h1>
     {ledeBullets && ledeBullets.length > 0 && (
       <ul class="lede-bullets">
@@ -60,7 +63,7 @@ const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centere
 <style>
   .page-header {
     padding: 4.5rem 0 2rem;
-    background: radial-gradient(ellipse 60% 50% at 90% 10%, rgba(49, 130, 206, 0.05), transparent 60%);
+    background: radial-gradient(ellipse 60% 50% at 90% 10%, rgba(19, 62, 135, 0.05), transparent 60%);
   }
   /* Centered variant — used by blog post details (per 2026-05-22
      meeting: writeups should read centred). Centres breadcrumb,
@@ -101,15 +104,20 @@ const { breadcrumbs = [], title, lede, ledeBullets, metaRow, pills = [], centere
   .breadcrumb a:hover { color: var(--color-cta); }
   .breadcrumb .sep { color: var(--color-border-strong); margin: 0 0.4rem; }
 
+  /* Mono eyebrow above the title (reuses the global .kicker styling). */
+  .page-header .eyebrow { margin: 0 0 1rem; }
+  .page-header--centered .eyebrow { text-align: center; }
+
   .page-header h1 {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(2.25rem, 4.4vw, 3.05rem);
-    line-height: 1.08;
-    letter-spacing: -0.028em;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+    font-size: clamp(2.25rem, 4.4vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.014em;
     color: var(--color-primary);
     margin-bottom: 1.25rem;
-    max-width: 26ch;
+    max-width: 24ch;
     text-wrap: balance;
     min-width: 0;
   }

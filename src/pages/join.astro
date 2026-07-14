@@ -1,0 +1,166 @@
+---
+/*
+ * Join page — public careers page. Listed in the nav, footer, and mobile
+ * overlay, and included in the sitemap. Mirrors about.astro's structure
+ * (BaseLayout + PageHeader) and reuses the .contact-card pattern from that
+ * page, copied locally into this file's scoped styles.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../lib/site';
+
+const pageDescription =
+  "We're hiring the first team at EthSystems, building confidential systems for institutional Ethereum.";
+
+const roles = [
+  {
+    title: 'Business development (New York)',
+    blurb:
+      "Own our US institutional accounts from New York, working the pipeline we've built over the past year to land signed, scoped engagements early. You've closed deals with banks, asset managers, or market infrastructure, and you know what procurement and vendor onboarding actually involve.",
+  },
+  {
+    title: 'Protocol research engineer',
+    blurb:
+      'Design and build confidential systems, from shielded pools and selective disclosure to private settlement and ZK identity, taking work from spec to PoC to production in the open. You bring applied cryptography and protocol design experience, have built on Ethereum, and ship production code, not just research prototypes.',
+  },
+  {
+    title: 'EA / Operations',
+    blurb:
+      "Run day-to-day operations for a young company, from entity admin and contracts to scheduling, travel, and events, building light process where it pays off. You've done this before at a startup, ideally one selling to institutions, and you work with high autonomy and discretion across time zones.",
+  },
+];
+---
+
+<BaseLayout
+  title="Join us"
+  description={pageDescription}
+  current="/join/"
+  image="/og/join.png"
+>
+  <PageHeader
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Join us' },
+    ]}
+    title="Join EthSystems"
+  />
+
+  <section class="join-section">
+    <div class="container join-inner">
+      <div class="join-roles">
+        <h2>We're hiring for</h2>
+        <ul class="join-role-list">
+          {roles.map((role) => (
+            <li class="join-role">
+              <h3 class="join-role-title">{role.title}</h3>
+              <p class="join-role-blurb">{role.blurb}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="join-apply">
+        <p class="join-apply-lede">Email us a short note and links to things you've built, sold, or run. No cover letters.</p>
+        <div class="contact-row">
+          <a href={`mailto:${site.careersEmail}`} class="contact-card">
+            <div class="contact-label">Apply</div>
+            <div class="contact-value">{site.careersEmail}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" /></svg></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .join-section {
+    padding: 2rem 0 5rem;
+  }
+  .join-roles h2 {
+    font-family: var(--font-sans);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+  }
+  .join-role-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 720px;
+    border-top: 1px solid var(--color-border);
+  }
+  .join-role {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .join-role-title {
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem;
+  }
+  .join-role-blurb {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+  .join-apply {
+    margin-top: 3rem;
+  }
+  .join-apply-lede {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin: 0 0 1.5rem;
+    max-width: 640px;
+  }
+  /* .contact-row + .contact-card copied from about.astro so the careers
+     CTA reads identically to the About page's contact card. */
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    text-decoration: none;
+    transition: border-color var(--duration-fast) var(--easing-soft),
+      background var(--duration-fast) var(--easing-soft);
+    min-width: 240px;
+  }
+  .contact-card:hover {
+    border-color: var(--color-cta-border);
+    background: var(--color-cta-tint);
+  }
+  .contact-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .contact-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-cta);
+  }
+  .contact-value svg { width: 12px; height: 12px; }
+</style>

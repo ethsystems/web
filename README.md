@@ -1,21 +1,21 @@
-# IPTF Website
+# EthSystems Website
 
-Static website for the Institutional Privacy Task Force (IPTF), live at [https://iptf.ethereum.org/](https://iptf.ethereum.org/).
+Static website for EthSystems, live at [https://ethsystems.org/](https://ethsystems.org/).
 
-Astro static site. Content for patterns, approaches, use-cases, vendors, domains, and jurisdictions is sourced from the [`iptf-map`](https://github.com/ethereum/iptf-map) repo via a git submodule at `content/`. Writeups (blog posts) live in `src/posts/`.
+Astro static site. Content for patterns, approaches, use-cases, vendors, domains, and jurisdictions is sourced from the [`map`](https://github.com/ethsystems/map) repo via a git submodule at `content/`. Writeups (blog posts) live in `src/posts/`.
 
 ## How it works
 
-- **Astro** generates every page at build time from data in `content/` (iptf-map) and `src/posts/` (writeups).
+- **Astro** generates every page at build time from data in `content/` (the map submodule) and `src/posts/` (writeups).
 - **GitHub Pages** auto-deploys from `main` via `.github/workflows/deploy.yml`. Changes go live within a few minutes.
-- **CNAME** (`public/CNAME`) points the deployment at `iptf.ethereum.org`.
+- **CNAME** (`public/CNAME`) points the deployment at `ethsystems.org`.
 
 ## Repository layout
 
 ```
-iptf-web/
+web/
 ├── astro.config.mjs       Astro configuration (site URL, integrations)
-├── content/               iptf-map submodule (patterns, approaches, etc.)
+├── content/               map submodule (patterns, approaches, etc.)
 ├── public/                Static assets served verbatim
 │   ├── assets/images/     Post hero images, diagrams
 │   ├── assets/css/
@@ -24,7 +24,7 @@ iptf-web/
 │   ├── CNAME
 │   └── robots.txt
 ├── scripts/
-│   └── build-graph.mjs    Reads iptf-map → src/data/graph.json
+│   └── build-graph.mjs    Reads the map submodule → src/data/graph.json
 ├── src/
 │   ├── data/              Generated at build (graph.json, glossary.json)
 │   ├── posts/             Blog post markdown
@@ -79,17 +79,17 @@ The published URL is derived from the title (`/<title-slugified>/`). Hero images
 
 Set `published: false` in frontmatter to keep a post out of the deployed site.
 
-## Updating the iptf-map content
+## Updating the map content
 
 ```bash
 git submodule update --remote content
 git add content
-git commit -m "chore(content): bump iptf-map submodule"
+git commit -m "chore(content): bump map submodule"
 ```
 
 ## Source-of-truth rule
 
-iptf-map main is the only source of truth for patterns, approaches, vendors, etc. Anything sourced from the submodule renders verbatim. Pages that emit map content mark each render site with `SOURCE: iptf-map field — do not alter`.
+The map repo (`ethsystems/map`) main is the only source of truth for patterns, approaches, vendors, etc. Anything sourced from the submodule renders verbatim. Pages that emit map content mark each render site with `SOURCE: map field — do not alter`.
 
 UI chrome (landing copy, FAQ, blog index, post layout) is the site's own and stays curated here.
 
@@ -101,9 +101,8 @@ UI chrome (landing copy, FAQ, blog index, post layout) is the site's own and sta
 
 ## Contact
 
-- Email: [iptf@ethereum.org](mailto:iptf@ethereum.org)
-- [Institutions form](https://forms.gle/6Za8suF5QHyRamcW7)
-- [Vendors form](https://forms.gle/znifD8h9Uw6VEX6Q9)
+- Email: [hello@ethsystems.org](mailto:hello@ethsystems.org)
+- [Book a call](https://calendar.app.google/yFK6o5Mzk7fKuu91A)
 
 ## License
 

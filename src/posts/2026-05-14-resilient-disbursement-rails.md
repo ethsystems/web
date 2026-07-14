@@ -4,7 +4,7 @@ title: "Resilient Disbursement Rails"
 description: "Aid payments on Ethereum that protect recipients even when local partners are compromised, or when recipients cash out into local currency."
 date: 2026-05-14 15:00:00 +0200
 author: "Aaryamann"
-image: /assets/images/2026-05-14-resilient-disbursement-rails/hero.png
+image: ../assets/posts/2026-05-14-resilient-disbursement-rails/hero.png
 tags:
   - disbursement
   - shielded-pool
@@ -14,6 +14,8 @@ tags:
   - zero-knowledge
   - proof-of-concept
 ---
+
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *This is the second post in our three-part resilience series, after [Resilient Plural Identity](/resilient-plural-identity/). The identity post asked how a person can keep proving who they are when the authority that vouched for them disappears or turns hostile. This one asks how money can reach that person when the local partner handing out the funds can be forced to share its records, and when the exchange where they cash out into local currency records their identity.*
 
@@ -27,7 +29,7 @@ We have run into versions of this in our own work. The [shielded pool](/building
 
 The constraint set is sharper when recipients live somewhere the authorities are hostile to the funder, the implementing partner, or the recipients themselves. Recipients cannot be assumed to have a phone or an internet connection. Implementing partners may get breached, coerced, or inherited by successor regimes. The protocol assumes every party in the path between funder and recipient will eventually be compromised.
 
-The implementation is [open source](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/resilient-disbursement-rails), with a detailed [specification](https://github.com/ethereum/iptf-pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md).
+The implementation is [open source](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/resilient-disbursement-rails), with a detailed [specification](https://github.com/ethsystems/pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md).
 
 ## How aid disbursement breaks today
 
@@ -45,7 +47,7 @@ The recipient constraint set is the hardest part. Recipients hold tamper-resista
 
 ## What we built
 
-![The funder shields per-recipient amounts atomically; recipients claim through smartcard-signed vouchers relayed through mesh and anonymous transports; the off-ramp is the trust boundary](/assets/images/2026-05-14-resilient-disbursement-rails/what_we_built.png)
+![The funder shields per-recipient amounts atomically; recipients claim through smartcard-signed vouchers relayed through mesh and anonymous transports; the off-ramp is the trust boundary](../assets/posts/2026-05-14-resilient-disbursement-rails/what_we_built.png)
 
 A round runs in four stages. The funder publishes the round and shields the full disbursement in one atomic transaction. Recipients sign an offline voucher on a smartcard, under a stealth key derived on-card. In the production path, a relay turns the voucher into two zero-knowledge proofs and submits through Tor, Nym, or HOPR; the PoC keeps those as explicit transport boundaries and uses direct in-process adapters. The claim contract verifies, unshields to a one-time stealth destination, and burns the nullifier. After the round closes plus a 30-day timelock, the funder multisig can sweep any residual via balance accounting; there is no zero-knowledge proof on the residual path.
 
@@ -53,13 +55,13 @@ Two things are out of scope. Cross-funder anonymity, because each claim contract
 
 ## How a round publishes
 
-![Round publication is atomic. The factory verifies cohort identity against the Registry, deposits one Poseidon commitment per active card into the claim contract's sub-tree, and registers the header](/assets/images/2026-05-14-resilient-disbursement-rails/how_a_round_publishes.png)
+![Round publication is atomic. The factory verifies cohort identity against the Registry, deposits one Poseidon commitment per active card into the claim contract's sub-tree, and registers the header](../assets/posts/2026-05-14-resilient-disbursement-rails/how_a_round_publishes.png)
 
 Round publication is the only on-chain event in which the funder appears, and it is one atomic transaction. The factory pulls the funder's tokens, deposits one commitment per active card into the claim contract's pool sub-tree, and registers the signed header. A revert at any step reverts the whole thing.
 
 ## How recipients claim
 
-![The smartcard derives the per-claim stealth public key on-card via HMAC, constructs the 308-byte preimage internally, and signs with secp256k1 ECDSA.](/assets/images/2026-05-14-resilient-disbursement-rails/how_recipients_claim.png)
+![The smartcard derives the per-claim stealth public key on-card via HMAC, constructs the 308-byte preimage internally, and signs with secp256k1 ECDSA.](../assets/posts/2026-05-14-resilient-disbursement-rails/how_recipients_claim.png)
 
 The recipient inserts the smartcard into a companion device. The companion verifies the funder's signature on the round header (the only point in the protocol where that signature is checked) and passes the voucher context to the card. The card derives a per-claim stealth keypair from the master secret via HMAC-SHA256, builds the voucher preimage internally, and signs it with secp256k1 ECDSA. The card must construct the preimage internally rather than accept a pre-hashed digest, otherwise a malicious companion could substitute a different derived public key and have the card sign over the lie.
 
@@ -69,7 +71,7 @@ This split is what makes Registry compromise survivable. The nullifier folds the
 
 ## How relays close the loop
 
-![The relay decrypts the voucher, generates the claim and pool-withdraw proofs, and submits through Tor, Nym, or HOPR. The claim contract verifies both proofs, enforces cross-proof binding via the shared nullifier, and unshields to the stealth destination.](/assets/images/2026-05-14-resilient-disbursement-rails/how_relays_close_the_loop.png)
+![The relay decrypts the voucher, generates the claim and pool-withdraw proofs, and submits through Tor, Nym, or HOPR. The claim contract verifies both proofs, enforces cross-proof binding via the shared nullifier, and unshields to the stealth destination.](../assets/posts/2026-05-14-resilient-disbursement-rails/how_relays_close_the_loop.png)
 
 The companion hands the encrypted voucher to mesh transport (Briar over Bluetooth LE plus Tor, Meshtastic over LoRa, Reticulum over LoRa or packet radio, or any conforming adapter). A relay decrypts, generates the two zero-knowledge proofs, and submits the claim transaction through Tor, Nym, or HOPR. Relays sign with rotating EOAs to bound cross-round linkability.
 
@@ -162,4 +164,4 @@ There also exist multiple large-scale humanitarian cash-and-voucher programs tha
 
 Three threads we want to pull on. Forward-secure signature chains on-card, to retire the long-lived master secret and bound past-claim disclosure under card seizure. Cross-funder anonymity, by lifting the per-claim-contract sub-tree partition into a shared association set with a compatible compliance witness. Batch-withdraw circuits, to amortize verification gas across multiple claims per transaction.
 
-The [specification](https://github.com/ethereum/iptf-pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md) has the full circuit constraints, data structures, and security considerations. The IPTF Map [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/resilient-disbursement-rails.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-payments.md) documents place this in the broader institutional-privacy work. Pull requests are welcome.
+The [specification](https://github.com/ethsystems/pocs/blob/master/pocs/private-payment/resilient-disbursement-rails/SPEC.md) has the full circuit constraints, data structures, and security considerations. The IPTF Map [use case](https://github.com/ethsystems/map/blob/master/use-cases/resilient-disbursement-rails.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-payments.md) documents place this in the broader institutional-privacy work. Pull requests are welcome.

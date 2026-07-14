@@ -1,55 +1,112 @@
 /*
- * IPTF design tokens — single source of truth.
+ * EthSystems design tokens — single source of truth.
  * Every CSS custom property used by the visual system lives here.
  * No other stylesheet is allowed to declare :root vars.
- * Naming convention: semantic (purpose), not positional (--color-text-2 etc).
+ *
+ * Two layers:
+ *   1. BASE — the ethsystems paper/ink/navy system (from ~/Repos/web).
+ *      Fraunces display, Geist sans, Geist Mono. Warm paper surfaces.
+ *   2. BRIDGE — the legacy semantic names (--color-*) repointed at the
+ *      base layer, so the ~30 existing components reskin through this
+ *      file without touching their call sites.
  */
 
 :root {
+  /* ============================================================= *
+   * 1. BASE — ethsystems system. Values are exact, do not improvise. *
+   * ============================================================= */
+
+  /* Surfaces (warm paper, tuned to read expensive) */
+  --paper:   #F4F1E6; /* canvas */
+  --surface: #FBF9F1; /* raised cards, framed panels */
+  --sunken:  #ECE8DA; /* recessed bands, hairline fills */
+
+  /* Ink and text */
+  --ink:    #0A0A0A;  /* headlines, primary text */
+  --ink-2:  #333029;  /* secondary text */
+  --muted:  #5A5347;  /* mono labels, captions */
+
+  /* Accent (rare) */
+  --navy:     #133E87; /* links, focus, hero glint */
+  --navy-2:   #0E2E66; /* hover / pressed */
+  --blue:     #3E6BA8; /* deeper mid blue, decorative or large text only */
+  --blue-soft:#608BC1; /* decorative only, never body text */
+  --sky:      #CBDCEB; /* faint fills only, never text */
+
+  /* Lines */
+  --line:   rgba(10, 10, 10, 0.12);
+  --line-2: rgba(10, 10, 10, 0.20);
+
+  /* Type families. Geist Fallback (metric-matched Arial) sits after Geist
+     so the font swap causes no layout shift. Defined in fonts.css. */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Geist", "Geist Fallback", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Fluid type + mono/kicker sizes used by ported chrome (nav, footer,
+     kicker, HeroMark). */
+  --fs-body:   clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
+  --fs-lead:   clamp(1.3rem, 1.05rem + 1.05vw, 1.8rem);
+  --fs-small:  0.875rem;
+  --fs-mono:   0.75rem;
+  --fs-kicker: 0.8125rem;
+  --tr-kicker: 0.22em;
+  --tr-mono:   0.2em;
+
+  /* Spacing scale (rem) — used by ported chrome/utilities. */
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem;
+  --s-6: 1.5rem; --s-8: 2rem; --s-12: 3rem; --s-16: 4rem;
+  --s-24: 6rem; --s-32: 8rem;
+
+  /* Radii (new system) */
+  --r-sm: 6px; --r: 8px; --r-lg: 12px; --r-pill: 999px;
+
+  /* Shadow (very subtle, warm-neutral) */
+  --shadow-1: 0 1px 2px rgba(10, 10, 10, 0.04), 0 8px 24px rgba(10, 10, 10, 0.06);
+
+  /* Motion (new system) */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 0.2s; --dur-2: 0.5s; --dur-3: 0.9s;
+
+  /* ============================================================= *
+   * 2. BRIDGE — legacy semantic names → base layer.                *
+   *    Repointed, not renamed. Components stay untouched.           *
+   * ============================================================= */
+
   /* brand */
-  --color-primary:         #1a365d;
-  --color-primary-light:   #2c5282;
+  --color-primary:         var(--ink);   /* headings / brand text */
+  --color-primary-light:   var(--blue);
 
-  /* Interactive blue. Single source of truth — every interactive
-     element (button, link, hover border, action icon) idles on
-     --color-cta and resolves to --color-cta-hover (navy primary)
-     on hover. --color-on-cta is the text/ink rendered on top of
-     any blue/navy interactive surface, locked white so on-blue
-     contrast can never drift back to blue-on-blue. */
-  --color-cta:             #2257e9;
-  --color-cta-hover:       #1a365d;
-
-  --color-on-cta:          #ffffff;
-  --color-on-primary:      #ffffff;
-
-  /* Subtle CTA-blue tints — used as background washes for hover
-     states, accent panels, and pills that need a brand tone without
-     full saturation. Three steps so the appropriate weight can be
-     picked per context (8% / 12% for backgrounds, 25% for borders). */
-  --color-cta-tint:         rgba(34, 87, 233, 0.08);
-  --color-cta-tint-strong:  rgba(34, 87, 233, 0.12);
-  --color-cta-border:       rgba(34, 87, 233, 0.25);
+  /* interactive (was CTA-blue) → navy accent */
+  --color-cta:             var(--navy);
+  --color-cta-hover:       var(--navy-2);
+  --color-on-cta:          var(--paper);
+  --color-on-primary:      var(--paper);
+  --color-cta-tint:         rgba(19, 62, 135, 0.08);
+  --color-cta-tint-strong:  rgba(19, 62, 135, 0.12);
+  --color-cta-border:       rgba(19, 62, 135, 0.28);
 
   /* text */
-  --color-text:            #1a202c;
-  --color-text-secondary:  #4a5568;
-  --color-text-muted:      #718096;
-  --color-text-faint:      #a0aec0;
+  --color-text:            var(--ink);
+  --color-text-secondary:  var(--ink-2);
+  --color-text-muted:      var(--muted);
+  --color-text-faint:      color-mix(in srgb, var(--muted) 60%, var(--paper));
 
   /* surfaces */
-  --color-bg:              #ffffff;
-  --color-bg-subtle:       #f7fafc;
-  --color-bg-muted:        #edf2f7;
+  --color-bg:              var(--surface); /* raised cards / panels */
+  --color-bg-subtle:       var(--sunken);  /* recessed bands */
+  --color-bg-muted:        var(--sunken);
+  --color-bg-card:          var(--surface);
 
   /* lines and borders */
-  --color-border:          #e2e8f0;
-  --color-border-strong:   #cbd5e0;
+  --color-border:          var(--line);
+  --color-border-strong:   var(--line-2);
 
-  /* Quality / tone palette — emerald / amber / slate "traffic light"
-     applied wherever the UI signals a quality level (CROPS axes,
-     maturity, status, case-study availability). The *-strong variants
-     are the darker text colours used on top of *-tint backgrounds so
-     foreground contrast remains WCAG-safe. */
+  /* ---- Quality / tone palette (signal colours) ----
+     Hues kept so the traffic-light / CROPS / context signals still read
+     at a glance; the *-tint fills are translucent so they warm over paper.
+     Retuned further for the explorer in Phase 3. */
   --color-success:              #10b981;
   --color-success-strong:       #047857;
   --color-success-tint:         rgba(16, 185, 129, 0.14);
@@ -68,34 +125,18 @@
   --color-danger-tint:          rgba(220, 38, 38, 0.07);
   --color-danger-tint-strong:   rgba(220, 38, 38, 0.22);
 
-  /* Context coloring — applied to the two threat-model contexts the
-     IPTF body distinguishes throughout the guide:
-       --color-i2i  institution-to-institution (indigo)
-       --color-i2u  institution-to-user (teal)
-     Picked to be visually distinct from the brand blue and from each
-     other while staying within an enterprise-safe palette. */
+  /* Threat-model contexts: i2i (indigo) / i2u (teal) */
   --color-i2i:                  #4f46e5;
   --color-i2i-tint:             rgba(99, 102, 241, 0.10);
   --color-i2u:                  #0d9488;
   --color-i2u-tint:             rgba(20, 184, 166, 0.10);
 
-  /* Violet — third step of the EntryFacts neutral-palette rotation.
-     Not a traffic-light tone; purely a visual variant so consecutive
-     neutral fact-blocks read as distinct cards. */
+  /* Violet — EntryFacts neutral rotation */
   --color-violet:               #6d28d9;
   --color-violet-tint:          rgba(139, 92, 246, 0.06);
   --color-violet-tint-strong:   rgba(139, 92, 246, 0.2);
 
-  /* Path-card surface — neutral light gray distinct from the blue-tinted
-     --color-bg-subtle / --color-bg-muted. Used by the reading-path cards
-     on the homepage. */
-  --color-bg-card:              #f4f5f6;
-
-  /* CROPS pie palette — saturated traffic-light specifically scoped
-     to the pie + tooltip pill + crops-context-table. Deliberately
-     brighter than the design-system success/warning/danger so the
-     pie reads as an at-a-glance signal panel. Strong variants are
-     the darker text colour for tooltip pills on the tinted background. */
+  /* CROPS pie palette — brighter, scoped to the pie + tooltip + table. */
   --color-crops-full:           #50e35f;
   --color-crops-full-tint:      rgba(80, 227, 95, 0.18);
   --color-crops-full-strong:    #15803d;
@@ -106,27 +147,20 @@
   --color-crops-low-tint:       rgba(249, 74, 36, 0.18);
   --color-crops-low-strong:     #b91c1c;
 
-  /* type */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+  /* ---- Legacy scales kept (radii / shadows / layout / motion) ---- */
+  --shadow-sm:  0 1px 2px 0 rgba(10, 10, 10, 0.04);
+  --shadow-md:  0 1px 3px 0 rgba(10, 10, 10, 0.06), 0 1px 2px -1px rgba(10, 10, 10, 0.05);
+  --shadow-lg:  0 4px 12px -2px rgba(10, 10, 10, 0.08), 0 2px 4px -2px rgba(10, 10, 10, 0.05);
+  --shadow-xl:  0 12px 32px -8px rgba(10, 10, 10, 0.12), 0 4px 8px -4px rgba(10, 10, 10, 0.07);
 
-  /* depth — 4 tiers, mapped from prototype --shadow-1..4 */
-  --shadow-sm:  0 1px 2px 0 rgba(13, 20, 36, 0.04);
-  --shadow-md:  0 1px 3px 0 rgba(13, 20, 36, 0.06), 0 1px 2px -1px rgba(13, 20, 36, 0.04);
-  --shadow-lg:  0 4px 12px -2px rgba(13, 20, 36, 0.08), 0 2px 4px -2px rgba(13, 20, 36, 0.04);
-  --shadow-xl:  0 12px 32px -8px rgba(13, 20, 36, 0.12), 0 4px 8px -4px rgba(13, 20, 36, 0.06);
-
-  /* radii — 4 tiers, mapped from prototype --r-1..4 */
   --radius-sm:  4px;
   --radius-md:  8px;
   --radius-lg:  12px;
   --radius-xl:  16px;
 
-  /* layout */
   --container-max:  1200px;
   --container-pad:  clamp(1.25rem, 3vw, 2rem);
 
-  /* motion */
   --easing-soft:    cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast:  120ms;
   --duration-base:  180ms;

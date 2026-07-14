@@ -4,7 +4,7 @@ title: "Building Private Transfers on Ethereum with Shielded Pools"
 description: "A proof-of-concept for compliance-first private stablecoin transfers using a shielded pool on Ethereum L1: covering KYC-gated entry, UTXO commitments, dual-key architecture, and ZK circuits in Noir."
 date: 2026-02-19 10:00:00 +0100
 author: "Aaryamann"
-image: /assets/images/2026-02-19-building-private-transfers-on-ethereum/hero.png
+image: ../assets/posts/2026-02-19-building-private-transfers-on-ethereum/hero.png
 tags:
   - private-transfers
   - shielded-pools
@@ -14,13 +14,15 @@ tags:
   - proof-of-concept
 ---
 
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
+
 Every stablecoin transfer on Ethereum is public. When an institution moves USDC to a supplier, that payment is visible to every competitor, analyst, and observer on the network. Treasury positions, supplier relationships, settlement timing and payment frequency are visible to anyone with a block explorer.
 
 Traditional banking solved this decades ago. Payment details are visible only to the counterparties and their banks. On public blockchains, institutions don't have that option, unless we build it.
 
 In a [previous post](/building-private-bonds-on-ethereum/), we built private zero-coupon bonds using a UTXO model and ZK proofs. That PoC demonstrated the cryptographic primitives: commitments, nullifiers, Merkle trees, encrypted memos. This one tackles a different problem: stablecoin payments where compliance gating, not just privacy, is the primary design constraint.
 
-This post walks through a proof-of-concept that brings banking-grade payment privacy to stablecoin transfers on Ethereum L1. The design prioritizes compliance-first privacy: only KYC-verified participants can enter the system, and viewing keys enable selective disclosure for regulators. The full implementation is [open source](https://github.com/ethereum/iptf-pocs/pull/15), with a detailed [specification](https://github.com/ethereum/iptf-pocs/tree/main/pocs/private-payment/shielded-pool/SPEC.md).
+This post walks through a proof-of-concept that brings banking-grade payment privacy to stablecoin transfers on Ethereum L1. The design prioritizes compliance-first privacy: only KYC-verified participants can enter the system, and viewing keys enable selective disclosure for regulators. The full implementation is [open source](https://github.com/ethsystems/pocs/pull/15), with a detailed [specification](https://github.com/ethsystems/pocs/tree/main/pocs/private-payment/shielded-pool/SPEC.md).
 
 ## The Gated Shielded Pool
 
@@ -62,7 +64,7 @@ The deposit proof's public inputs are the commitment, token address, amount, and
 
 One caveat: deposit and withdrawal amounts are public, so matching amounts can reveal a link, especially in small pools. Transfers hide amounts, but shielding and unshielding do not. Split notes via transfers before withdrawing to reduce correlation.
 
-![Deposit Flow](/assets/images/2026-02-19-building-private-transfers-on-ethereum/deposit.png)
+![Deposit Flow](../assets/posts/2026-02-19-building-private-transfers-on-ethereum/deposit.png)
 
 ### Transfer
 
@@ -81,13 +83,13 @@ After verification, the contract marks both input nullifiers as spent and append
 
 The sender encrypts each output note for its recipient using ECDH: the sender generates an ephemeral key pair, computes a shared secret with the recipient's viewing public key, derives an encryption key via HKDF, and encrypts the note contents with [ChaCha20-Poly1305](https://datatracker.ietf.org/doc/html/rfc7539). The ciphertext is included in the transaction's `Transfer` event. Recipients scan these events, attempt decryption with their viewing key, and discover notes addressed to them.
 
-![Transfer Flow](/assets/images/2026-02-19-building-private-transfers-on-ethereum/transfer.png)
+![Transfer Flow](../assets/posts/2026-02-19-building-private-transfers-on-ethereum/transfer.png)
 
 ### Withdraw
 
 Converts a private note back to public tokens. The user proves they own a note in the commitment tree and that the claimed amount and recipient match. The contract verifies the proof, marks the nullifier as spent, and transfers tokens to the specified address.
 
-![Withdrawal Flow](/assets/images/2026-02-19-building-private-transfers-on-ethereum/withdraw.png)
+![Withdrawal Flow](../assets/posts/2026-02-19-building-private-transfers-on-ethereum/withdraw.png)
 
 ## Architecture
 
@@ -151,4 +153,4 @@ The immediate next steps for the PoC are variable input/output circuits for effi
 
 For institutions tokenizing fiat on Ethereum, a gated shielded pool offers payment privacy with a compliance model that maps directly to existing banking practice: identity at onboarding, selective disclosure for auditors, revocable access. The tradeoff is a smaller anonymity set than permissionless alternatives and tooling that is not yet production-grade. But the cryptography is proven, the architecture works end-to-end, and the anonymity set grows with every customer onboarded.
 
-The implementation is [open source](https://github.com/ethereum/iptf-pocs/pull/15). The [specification](https://github.com/ethereum/iptf-pocs/tree/master/pocs/private-payment/shielded-pool/SPEC.md) covers every circuit constraint, data structure, and security consideration in detail. The [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/private-stablecoins.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-payments.md) documents on the IPTF Map provide additional context on how this fits into the broader institutional privacy landscape. Pull requests are welcome.
+The implementation is [open source](https://github.com/ethsystems/pocs/pull/15). The [specification](https://github.com/ethsystems/pocs/tree/master/pocs/private-payment/shielded-pool/SPEC.md) covers every circuit constraint, data structure, and security consideration in detail. The [use case](https://github.com/ethsystems/map/blob/master/use-cases/private-stablecoins.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-payments.md) documents on the IPTF Map provide additional context on how this fits into the broader institutional privacy landscape. Pull requests are welcome.

@@ -2,7 +2,7 @@ import type { GraphNode } from '../../lib/graph-types';
 import { getNodeColor, TYPE_LABELS } from '../../lib/graph-layout';
 
 /*
- * Hover tooltip for graph nodes — ported from iptf-web with our
+ * Hover tooltip for graph nodes — ported from ethsystems/web with our
  * light-theme palette. Background flips white-on-token,
  * accent border still encodes the node type via getNodeColor().
  */
@@ -27,7 +27,7 @@ export function NodeTooltip({ node, x, y }: Props) {
         position: 'fixed',
         left: x + 16,
         top: y - 10,
-        background: '#ffffff',
+        background: 'var(--surface)',
         border: `1px solid ${getNodeColor(node)}`,
         borderRadius: 8,
         padding: '8px 12px',
@@ -37,7 +37,7 @@ export function NodeTooltip({ node, x, y }: Props) {
         boxShadow: '0 4px 24px rgba(13, 20, 36, 0.12)',
       }}
     >
-      <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, color: '#1a365d' }}>
+      <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, color: 'var(--ink)' }}>
         {node.title}
       </div>
       <div style={{ display: 'flex', gap: 4, marginBottom: 4, flexWrap: 'wrap' }}>
@@ -45,8 +45,8 @@ export function NodeTooltip({ node, x, y }: Props) {
           <span
             key={i}
             style={{
-              background: '#edf2f7',
-              color: '#4a5568',
+              background: 'var(--sunken)',
+              color: 'var(--ink-2)',
               padding: '1px 6px',
               borderRadius: 4,
               fontSize: 10,
@@ -60,7 +60,7 @@ export function NodeTooltip({ node, x, y }: Props) {
         ))}
       </div>
       {node.summary && (
-        <div style={{ fontSize: 12, color: '#4a5568', lineHeight: 1.5 }}>
+        <div style={{ fontSize: 12, color: 'var(--ink-2)', lineHeight: 1.5 }}>
           {node.summary.slice(0, 150)}
           {node.summary.length > 150 ? '…' : ''}
         </div>

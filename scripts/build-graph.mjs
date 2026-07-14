@@ -2,10 +2,10 @@
 /**
  * build-graph.mjs
  *
- * Parses all markdown content files in the IPTF Map repository and produces
+ * Parses all markdown content files in the EthSystems map repository and produces
  * a graph.json file with nodes (content items) and edges (cross-references).
  *
- * Source of truth: iptf-map main branch. All field reads pass through verbatim;
+ * Source of truth: ethsystems/map main branch. All field reads pass through verbatim;
  * the only fields this script invents are derived links between nodes.
  */
 
@@ -27,19 +27,19 @@ const __dirname = dirname(__filename);
 // Config
 // ---------------------------------------------------------------------------
 
-// Our submodule path is `content/` (upstream `iptf-web` uses `content/`).
+// Our submodule path is `content/` (upstream `ethsystems/web` uses `content/`).
 const CONTENT_SUBMODULE = join(__dirname, "..", "content");
-const candidates = [process.env.IPTF_MAP_PATH, CONTENT_SUBMODULE].filter(
+const candidates = [process.env.MAP_PATH, CONTENT_SUBMODULE].filter(
   Boolean,
 );
 const REPO_ROOT = candidates.find((p) => existsSync(join(p, "patterns")));
 if (!REPO_ROOT) {
   throw new Error(
-    `No iptf-map content directory found. Tried:\n` +
+    `No ethsystems/map content directory found. Tried:\n` +
       candidates.map((c) => `  - ${c}`).join("\n") +
       `\n\nIf you cloned without submodules, run:\n` +
       `  git submodule update --init --recursive\n` +
-      `(or set IPTF_MAP_PATH to a local iptf-map checkout).`,
+      `(or set MAP_PATH to a local ethsystems/map checkout).`,
   );
 }
 const OUTPUT_DIR = join(__dirname, "..", "src", "data");
@@ -75,7 +75,7 @@ export function parseFrontmatter(content) {
 }
 
 /** Recursively convert Date instances to YYYY-MM-DD strings (js-yaml parses
- *  unquoted YAML 1.1 timestamps as Date objects; iptf-map writes them
+ *  unquoted YAML 1.1 timestamps as Date objects; ethsystems/map writes them
  *  as plain dates and renders them as strings). */
 function normalizeDates(value) {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
@@ -313,7 +313,7 @@ export function buildGraph(repoRoot = REPO_ROOT) {
         content: body,
       };
 
-      // Pass-through scalar fields (from iptf-map frontmatter, verbatim)
+      // Pass-through scalar fields (from ethsystems/map frontmatter, verbatim)
       const passthrough = [
         "layer",
         "maturity",
@@ -480,7 +480,7 @@ if (isMain) {
     throw new Error(
       `Graph built 0 nodes from ${REPO_ROOT}.\n` +
         `The directory exists but contains no markdown content.\n` +
-        `The iptf-map submodule may be empty/uninitialized — run:\n` +
+        `The ethsystems/map submodule may be empty/uninitialized — run:\n` +
         `  git submodule update --init --recursive`,
     );
   }

@@ -4,7 +4,7 @@ title: "Resilient Civic Participation"
 description: "Petitions on Ethereum where the signer list never exists and the outcome stays verifiable from chain state alone."
 date: 2026-05-29 15:00:00 +0200
 author: "Aaryamann"
-image: /assets/images/2026-05-28-resilient-civic-participation/hero.png
+image: ../assets/posts/2026-05-28-resilient-civic-participation/hero.png
 tags:
   - civic-participation
   - petition
@@ -15,13 +15,15 @@ tags:
   - proof-of-concept
 ---
 
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
+
 *This is the third and final post in the resilience series, after [Resilient Plural Identity](/resilient-plural-identity/) and [Resilient Disbursement Rails](/resilient-disbursement-rails/). The identity post asked how a person can keep proving who they are when the authority that vouched for them disappears. The disbursement post asked how money can reach that person when the rail handing it out can be subpoenaed. This post asks the third question in the same shape: how can a person co-sign a public decision (a petition, an initiative, a citizen-led inquiry) without ending up on a list that a future regime can use against them.*
 
 Petitions create signed lists. Whoever holds that list gets the leverage to make signing dangerous. The best petition system is the one that never produces a list at all; what survives the round is a count.
 
 The protocol described here removes the list. Signers prove eligibility against an external credential layer, sign at most once per petition, and submit through a relayer that aggregates many signatures into a single batched proof on Ethereum. The on-chain artifacts are per-class counts and a Boolean outcome, verifiable from L1 as long as the [EIP-4844](https://eips.ethereum.org/EIPS/eip-4844) blob payloads remain reachable through consensus retention or, past that window, a voluntary archive. A future government, a successor regime, or a coerced platform operator can demand the list, but the protocol does not produce one to hand over.
 
-The implementation is [open source](https://github.com/ethereum/iptf-pocs/tree/master/pocs/civic-participation/resilient-civic-participation), with a detailed [specification](https://github.com/ethereum/iptf-pocs/blob/master/pocs/civic-participation/resilient-civic-participation/SPEC.md). Sybil resistance is delegated to the [ResilientIdentity](/resilient-plural-identity/) credential layer from the first post in this series.
+The implementation is [open source](https://github.com/ethsystems/pocs/tree/master/pocs/civic-participation/resilient-civic-participation), with a detailed [specification](https://github.com/ethsystems/pocs/blob/master/pocs/civic-participation/resilient-civic-participation/SPEC.md). Sybil resistance is delegated to the [ResilientIdentity](/resilient-plural-identity/) credential layer from the first post in this series.
 
 ## How petition signing breaks today
 
@@ -33,7 +35,7 @@ Signers in adversarial jurisdictions face additional constraints: intermittent n
 
 ## What we built
 
-![Organizer registers and funds a petition against the ResilientIdentity root R; signers build SNARKs that relayers aggregate into batches against the petition registry; disputants can repudiate active batches and a resolver closes the round.](/assets/images/2026-05-28-resilient-civic-participation/what_we_built.png)
+![Organizer registers and funds a petition against the ResilientIdentity root R; signers build SNARKs that relayers aggregate into batches against the petition registry; disputants can repudiate active batches and a resolver closes the round.](../assets/posts/2026-05-28-resilient-civic-participation/what_we_built.png)
 
 A petition round runs in five stages. The organiser registers a petition under an existing ResilientIdentity (RI) Merkle root and escrows a bounty in an ERC-20 token. Eligible signers, each holding an RI credential, build a signer zero-knowledge proof against the registered petition and submit it through any reachable relayer. The relayer aggregates many signer proofs into a single batch proof that recursively verifies every inner proof, and publishes the batch as an EIP-4844 blob transaction. A two-week dispute window opens; anyone can repudiate a batch by submitting KZG openings that prove a specific record violates the batch rules. After the dispute window closes, anyone can compute the outcome from the blob payloads and the on-chain Indexed Merkle Tree roots, submit a resolution proof, and claim the bounty.
 
@@ -47,7 +49,7 @@ In every documented case where a signer list became evidence, the evidence was s
 
 ## How a petition publishes
 
-![Registration is one atomic transaction: the registry validates the class-bound predicate, asserts the bounty floor, derives petition_id, advances the global slot counter, escrows the bounty, and emits PetitionRegistered.](/assets/images/2026-05-28-resilient-civic-participation/how_a_petition_publishes.png)
+![Registration is one atomic transaction: the registry validates the class-bound predicate, asserts the bounty floor, derives petition_id, advances the global slot counter, escrows the bounty, and emits PetitionRegistered.](../assets/posts/2026-05-28-resilient-civic-participation/how_a_petition_publishes.png)
 
 Registration is a single atomic transaction. The organiser supplies a predicate over signer attributes (for example, "is a citizen of one of these EU member states"), a class set (the per-jurisdiction buckets the threshold tally counts over), a per-class threshold (the minimum signatures required in each bucket), and a close-at-block deadline. The bounty must clear a calibration floor that scales with the threshold sum and the predicate's operation count, so a resolver always has economic incentive to produce the outcome proof.
 
@@ -55,7 +57,7 @@ The registry rejects predicates that are not *class-bound*, meaning predicates w
 
 ## How signing works
 
-![The signer advances the local FSRT to the petition's slot, derives the nullifier and identity tag, sends a signer SNARK to a relayer, and zeroises the slot's seed material once the petition's dispute window closes.](/assets/images/2026-05-28-resilient-civic-participation/how_signing_works.png)
+![The signer advances the local FSRT to the petition's slot, derives the nullifier and identity tag, sends a signer SNARK to a relayer, and zeroises the slot's seed material once the petition's dispute window closes.](../assets/posts/2026-05-28-resilient-civic-participation/how_signing_works.png)
 
 A signer reads the petition's metadata from the registry and advances their local FSRT to the petition's slot. The advance is monotone, so once a signer passes slot k the local state cannot regress back to k without re-enrolment; that is what enforces "at most one signature per signer per petition" even under partial device compromise. The signer derives two values from the slot. A *nullifier* is a one-time tag that lets the chain reject a second signature without revealing who signed; it hashes the slot value, petition identifier, class index, class tag, and identity secret, and the registry deduplicates on it. An *identity tag* hashes the slot value and petition identifier, and the batch SNARK uses it to reject any two records in the same batch that share a signer.
 
@@ -65,13 +67,13 @@ The signer SNARK's public inputs commit to the petition identifier, class index,
 
 The relayer collects up to a configured maximum of signer submissions per petition, sorts them by the canonical leaf hash, and recursively verifies all inner proofs inside a single outer batch proof, which keeps on-chain verifier cost sub-linear in batch size. The batch proof commits to the prior and new Indexed Merkle Tree (IMT) roots, to the prior and new leaf counts, and to the field-element decomposition of the blob payload that the registry uses to verify on-chain that the batch and the blob agree byte-for-byte. The IMT shape gives cheap non-membership proofs, which the intra-batch-duplicate-identity-tag dispute path needs to verify cheaply on L1.
 
-![The relayer recursively verifies N signer proofs into one batch SNARK and publishes the records as an EIP-4844 blob; the registry verifies the SNARK against its prior state and binds the batch to the blob via the 0x0a KZG precompile before advancing roots and leaf count.](/assets/images/2026-05-28-resilient-civic-participation/how_batches_publish.png)
+![The relayer recursively verifies N signer proofs into one batch SNARK and publishes the records as an EIP-4844 blob; the registry verifies the SNARK against its prior state and binds the batch to the blob via the 0x0a KZG precompile before advancing roots and leaf count.](../assets/posts/2026-05-28-resilient-civic-participation/how_batches_publish.png)
 
 One subtle piece is the cross-field binding. The batch SNARK operates over BN254 (the curve Ethereum's pairing precompiles support); EIP-4844 blob payloads live in BLS12-381. The batch SNARK exposes the per-record BLS12-381 field-element decomposition as public inputs, and the registry calls the KZG point-evaluation precompile at address `0x0a` for each one against the blob's versioned hash (a short on-chain commitment that identifies the blob). The two sides together close the binding without any of the SNARK doing BLS12-381 verification in-circuit. A relayer that publishes a blob disagreeing with what the batch SNARK committed to fails the on-chain KZG check before the batch enters state. A relayer that publishes a blob agreeing with the batch SNARK but containing a record that violates petition rules can still be repudiated during the dispute window.
 
 ## How disputes work
 
-![A disputant repudiates a batch by submitting KZG openings that prove a record violates the batch rules; the registry verifies the openings against the batch's versioned hash and either rolls back the batch and every later active batch, or reverts ViolationFalse.](/assets/images/2026-05-28-resilient-civic-participation/how_disputes_work.png)
+![A disputant repudiates a batch by submitting KZG openings that prove a record violates the batch rules; the registry verifies the openings against the batch's versioned hash and either rolls back the batch and every later active batch, or reverts ViolationFalse.](../assets/posts/2026-05-28-resilient-civic-participation/how_disputes_work.png)
 
 A disputant repudiates a batch by producing one of three enumerated violations against blob records: a class tag outside the petition's class set, two records in the same batch sharing an identity tag, or two adjacent records out of canonical leaf order. Each is also enforced by the batch SNARK; the dispute window is the defense-in-depth backstop against circuit bugs or proof-system unsoundness. A successful dispute repudiates the offending batch and every later active batch, because later batches' prior-state bindings are no longer canonical. In production, the cascade requires the relayer ecosystem to be diverse enough that a successor relayer can rebuild from the repudiation point. A single-relayer deployment has no liveness if the only relayer is the malicious one.
 
@@ -179,6 +181,6 @@ The pieces compose. A holder enrolled in [Resilient Plural Identity](/resilient-
 
 ## Working with us
 
-If you are running a humanitarian organisation, a govtech platform, a civil-society campaign, an NGO, or a regulator with a use case where the existence of a list is itself the risk, we want to hear from you. The three protocols described in this series cover identity continuity, private disbursement, and credentialed petition signing; the wider [IPTF Map](https://github.com/ethereum/iptf-map) catalogues a broader set of primitives that Ethereum can support. Reach out by [opening an issue](https://github.com/ethereum/iptf-pocs/issues) on the PoC repository, or via the contact information on the [IPTF home page](https://iptf.ethereum.org/).
+If you are running a humanitarian organisation, a govtech platform, a civil-society campaign, an NGO, or a regulator with a use case where the existence of a list is itself the risk, we want to hear from you. The three protocols described in this series cover identity continuity, private disbursement, and credentialed petition signing; the wider [IPTF Map](https://github.com/ethsystems/map) catalogues a broader set of primitives that Ethereum can support. Reach out by [opening an issue](https://github.com/ethsystems/pocs/issues) on the PoC repository, or via the contact information on the [IPTF home page](https://ethsystems.org/).
 
-The [specification](https://github.com/ethereum/iptf-pocs/blob/master/pocs/civic-participation/resilient-civic-participation/SPEC.md) has the full circuit constraints, contract semantics, and security considerations. The IPTF Map [use case](https://github.com/ethereum/iptf-map/blob/master/use-cases/resilient-civic-participation.md) and [approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-civic-participation.md) documents place this in the broader institutional-privacy work.
+The [specification](https://github.com/ethsystems/pocs/blob/master/pocs/civic-participation/resilient-civic-participation/SPEC.md) has the full circuit constraints, contract semantics, and security considerations. The IPTF Map [use case](https://github.com/ethsystems/map/blob/master/use-cases/resilient-civic-participation.md) and [approach](https://github.com/ethsystems/map/blob/master/approaches/approach-civic-participation.md) documents place this in the broader institutional-privacy work.

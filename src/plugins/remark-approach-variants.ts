@@ -110,7 +110,7 @@ function summaryHtml(headingText: string, meta: VariantMeta): string {
 function pocButtonHtml(meta: VariantMeta): string {
   const links: string[] = [];
   if (meta.poc_spec) {
-    const url = `https://github.com/ethereum/iptf-pocs/blob/master/${meta.poc_spec}`;
+    const url = `https://github.com/ethsystems/pocs/blob/master/${meta.poc_spec}`;
     links.push(
       `<a href="${esc(url)}" class="variant-poc-btn" target="_blank" rel="noopener">View PoC spec <span class="arr">↗</span></a>`,
     );

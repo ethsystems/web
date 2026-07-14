@@ -4,13 +4,15 @@ title: "Cypherpunk x Institutional Privacy"
 description: "Exploring the overlap and tension between cypherpunks and institutions - and how the Institutional Privacy Task Force is mapping real institutional privacy requirements to solutions on Ethereum."
 date: 2026-01-09
 author: "Oskar"
-image: /assets/images/2026-01-09-cypherpunk-institutional-privacy/cypherpunk_institutional_privacy.webp
+image: ../assets/posts/2026-01-09-cypherpunk-institutional-privacy/cypherpunk_institutional_privacy.webp
 tags:
   - institutional-privacy
   - cypherpunks
   - ethereum
   - privacy-map
 ---
+
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 *The following write-up is based on a [talk](https://youtu.be/NkgErrMXuIk?si=vrccSYpwruI1DK3J) given at Cypherpunk Congress, Devconnect in Buenos Aires, November, 2025.*
 
@@ -120,7 +122,7 @@ How is the map structured? We have the following categories:
 
 Regarding jurisdictions: we aren't legal experts, but it is useful to have a TL;DR of various regulations. For example: how does the GENIUS Act impact stablecoin design?
 
-![The map: structure on GitHub](/assets/images/2026-01-09-cypherpunk-institutional-privacy/iptf-map-github.png)
+![The map: structure on GitHub](../assets/posts/2026-01-09-cypherpunk-institutional-privacy/iptf-map-github.png)
 
 ### The Map: how to navigate
 Depending on what type of user you are, you might navigate the map differently. We have identified three primary personas: business, technical, and legal/compliance. These reflect different levels of expertise as well as concern.
@@ -186,9 +188,9 @@ Institutions want privacy on Ethereum. We're building an open, shared privacy ma
 ## Join us
 
 ### Resources
-- GitHub: [ethereum/iptf-map](https://github.com/ethereum/iptf-map)
-- Web: [iptf.ethereum.org](https://iptf.ethereum.org/)
-- X: [@iptf_updates](https://twitter.com/iptf_updates)
+- GitHub: [ethsystems/map](https://github.com/ethsystems/map)
+- Web: [ethsystems.org](https://ethsystems.org/)
+- X: [@eth_systems](https://x.com/eth_systems)
 
 You can contribute patterns, approaches, and vendor notes. Also feel free to come talk with us - bring real constraints and feedback.
 

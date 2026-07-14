@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 /*
- * Content collections wired directly to the iptf-map submodule at
+ * Content collections wired directly to the ethsystems/map submodule at
  * ../content-source/. Upstream frontmatter is the single source of
  * truth — schemas declare every field we consume in the renderer so
  * the build catches missing or mistyped values early. Unknown extras
@@ -158,7 +158,7 @@ const domains = defineCollection({
     .object({
       title: z.string(),
       status: z.string().optional(),
-      // One-line domain summary (iptf-map PR #173). Used as the section
+      // One-line domain summary (ethsystems/map PR #173). Used as the section
       // primer on the /use-cases/ and /approaches/ listings.
       description: z.string().optional(),
     })
@@ -215,25 +215,31 @@ const weeklyUpdates = defineCollection({
 });
 
 /*
- * Long-form posts authored upstream at ethereum/iptf-web (NOT in
- * iptf-map). Wired in via the posts-source/ submodule pinned to the
- * test_guide branch, so build-time pulls always reflect upstream and
- * we never copy markdown into this repo. Filenames follow Jekyll's
+ * Long-form posts, tracked directly in this repo under src/posts/ (NOT
+ * sourced from the ethsystems/map submodule). Filenames follow Jekyll's
  * YYYY-MM-DD-slug.md convention.
+ *
+ * `image` uses the image() schema helper (not z.string()) so frontmatter
+ * hero images are resolved and optimized by Astro's asset pipeline at
+ * build time — entry.data.image is an ImageMetadata object ({ src, width,
+ * height, format }), not a plain path string. Referenced images must live
+ * under src/ (see src/assets/posts/) since files in public/ are served
+ * verbatim and never processed.
  */
 const posts = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/posts' }),
-  schema: z
-    .object({
-      title: z.string(),
-      description: z.string().optional(),
-      date: z.union([z.string(), z.date()]),
-      author: z.string().optional(),
-      image: z.string().optional(),
-      layout: z.string().optional(),
-      tags: z.array(z.string()).optional(),
-    })
-    .passthrough(),
+  schema: ({ image }) =>
+    z
+      .object({
+        title: z.string(),
+        description: z.string().optional(),
+        date: z.union([z.string(), z.date()]),
+        author: z.string().optional(),
+        image: image().optional(),
+        layout: z.string().optional(),
+        tags: z.array(z.string()).optional(),
+      })
+      .passthrough(),
 });
 
 export const collections = {

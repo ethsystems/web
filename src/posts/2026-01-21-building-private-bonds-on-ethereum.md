@@ -4,7 +4,7 @@ title: "Building Private Bonds on Ethereum"
 description: "A walkthrough of a proof-of-concept for private zero-coupon bonds using zero-knowledge proofs on Ethereum - covering the UTXO model, JoinSplit circuits, atomic swaps, and the relayer architecture."
 date: 2026-01-21
 author: "Yanis"
-image: /assets/images/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
+image: ../assets/posts/2026-01-16-building-private-bonds-on-ethereum/building_private_bonds_on_ethereum.png
 tags:
   - private-bonds
   - zero-knowledge-proofs
@@ -12,6 +12,8 @@ tags:
   - ethereum
   - proof-of-concept
 ---
+
+*This post was written when IPTF (now EthSystems) was at the Ethereum Foundation*
 
 2025 has been a turning point and an unprecedented wave of tokenization is on the horizon. For those new to the topic, tokenization means representing traditional financial assets (like bonds, stocks, or real estate) as digital tokens on a blockchain. The main standard for tokens on Ethereum is [ERC-20](https://eips.ethereum.org/EIPS/eip-20), a representation of fungible tokens that is very versatile and can represent any form of asset. This article explores solutions for the problem encountered when using the straight ERC-20 standard. Ethereum being a fully transparent ledger, using ERC-20 exposes too much: who holds what, every transfer, every counterparty relationship. For institutions, that's a dealbreaker.
 
@@ -25,7 +27,7 @@ Zero-coupon bonds are bonds sold at a discount that pay their full face value at
 
 A simple example is: Alice buys a bond from Bob for $950 today that will be worth $1,000 in one year. Alice holds the bond until maturity, then redeems it for the full $1,000. The $50 difference is her return, no interest payments needed in between.
 
-Private bonds are one of the use cases documented in the [IPTF Map](https://github.com/ethereum/iptf-map), specifically in the [private bonds approach](https://github.com/ethereum/iptf-map/blob/master/approaches/approach-private-bonds.md) where we're drawing the foundation of the explored PoC. The Map is the knowledge base we're building to help institutions navigate privacy on Ethereum. This particular use case emerged from discussions with a major European bank, who laid out their requirements in detail.
+Private bonds are one of the use cases documented in the [IPTF Map](https://github.com/ethsystems/map), specifically in the [private bonds approach](https://github.com/ethsystems/map/blob/master/approaches/approach-private-bonds.md) where we're drawing the foundation of the explored PoC. The Map is the knowledge base we're building to help institutions navigate privacy on Ethereum. This particular use case emerged from discussions with a major European bank, who laid out their requirements in detail.
 
 When you're trying to bring privacy to financial products on-chain, you want to start with the simplest possible instrument. Zero-coupon bonds are ideal: no periodic coupon payments, no price feeds from oracles, no daily rebalancing. A single timestamp check is enough to enforce the entire contract.
 
@@ -80,11 +82,11 @@ Commitment = hash(value, salt, owner, assetId, maturityDate)
 Nullifier  = hash(salt, private_key)
 ```
 
-![Commitment and nullifier derivation](/assets/images/2026-01-16-building-private-bonds-on-ethereum/img-6-commitment-and-nullifier.png)
+![Commitment and nullifier derivation](../assets/posts/2026-01-16-building-private-bonds-on-ethereum/img-6-commitment-and-nullifier.png)
 
 The protocol has four operations.
 
-![Bond lifecycle](/assets/images/2026-01-16-building-private-bonds-on-ethereum/img-2-bond-lifecycle.png)
+![Bond lifecycle](../assets/posts/2026-01-16-building-private-bonds-on-ethereum/img-2-bond-lifecycle.png)
 
 When an issuer creates a bond tranche--a specific issuance or series of bonds with identical characteristics like maturity date and terms--they generate a note for the full amount and mint its commitment on-chain. No proof is needed here because the issuer is trusted. The Merkle tree grows by one leaf.
 
@@ -98,11 +100,11 @@ The circuit enforces several constraints:
 4. **Asset Consistency:** All notes use the same `assetId`
 5. **Maturity Match:** `input_maturity = output_maturity`. Maturity preserved
 
-![Circuit constraints](/assets/images/2026-01-16-building-private-bonds-on-ethereum/img-4-circuit-constraints.png)
+![Circuit constraints](../assets/posts/2026-01-16-building-private-bonds-on-ethereum/img-4-circuit-constraints.png)
 
 When two parties trade, things get more interesting. Alice wants to swap her bond for Bob's. They can't just do two separate transfers because one might fail. Instead, both create proofs that spend their notes and output to the counterparty. The relayer submits both proofs in a single `atomicSwap` transaction. Either both execute or neither does.
 
-![Atomic swap flow](/assets/images/2026-01-16-building-private-bonds-on-ethereum/img-5-atomic-swap-flow.png)
+![Atomic swap flow](../assets/posts/2026-01-16-building-private-bonds-on-ethereum/img-5-atomic-swap-flow.png)
 
 But there's a coordination problem. After the swap, Bob needs to know the details of his new note (value, salt) to spend it later. The commitment is public, but it's just a hash.
 

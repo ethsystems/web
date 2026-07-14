@@ -1,0 +1,113 @@
+---
+/*
+  MarkDither.astro — the EthSystems mark rendered as a navy dot-matrix cloud.
+  Build-time deterministic: a fixed grid of dots, each dot's opacity computed here
+  from whether it falls inside the mark glyph (solid navy) or outside it (a faint
+  halo that fades radially), plus a small seeded jitter so it reads as a dither
+  rather than a clean gradient. No WebGL and no per-dot animation (WebKit-safe);
+  the only motion is one gentle group "breathe", disabled under reduced motion.
+  The glyph is the same three polygons as the favicon / HeroMark / mark-black.svg.
+*/
+
+// Mark glyph polygons, local space x 0..100, y 0..160.
+const POLYS_LOCAL = [
+  '50,0 80,48 20,48',
+  '13.75,58 86.25,58 100,80 83.75,106 16.25,106 0,80',
+  '22.5,116 77.5,116 50,160',
+].map((s) => s.split(' ').map((p) => p.split(',').map(Number)));
+
+// Square viewBox with the 100x160 glyph centred, leaving room for the halo.
+const VB = 224;
+const OX = (VB - 100) / 2; // 62
+const OY = (VB - 160) / 2; // 32
+const CX = VB / 2;
+const CY = VB / 2;
+const POLYS = POLYS_LOCAL.map((pts) => pts.map(([x, y]) => [x + OX, y + OY]));
+
+// Ray-casting point-in-polygon; a dot is "in the glyph" if inside any polygon.
+const inPoly = (x: number, y: number, pts: number[][]) => {
+  let inside = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const [xi, yi] = pts[i];
+    const [xj, yj] = pts[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+};
+const inGlyph = (x: number, y: number) => POLYS.some((pts) => inPoly(x, y, pts));
+
+// Deterministic 0..1 hash from grid position — the dither texture.
+const jitter = (x: number, y: number) => {
+  const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+  return n - Math.floor(n);
+};
+
+const PITCH = 6;
+const R = 1.15;
+const HALF = 92; // radial normalizer (~glyph half-extent)
+
+type Dot = { x: number; y: number; o: number };
+const dots: Dot[] = [];
+for (let y = PITCH / 2; y < VB; y += PITCH) {
+  for (let x = PITCH / 2; x < VB; x += PITCH) {
+    const d = Math.hypot(x - CX, y - CY) / HALF;
+    const jt = jitter(x, y);
+    let o: number;
+    if (inGlyph(x, y)) {
+      o = 0.55 + 0.38 * (1 - Math.min(d, 1)) + 0.06 * (jt - 0.5);
+    } else {
+      const fall = Math.max(0, 1 - d / 1.25);
+      o = fall * 0.26 * (0.35 + jt);
+    }
+    if (o < 0.025) continue;
+    dots.push({ x: Number(x.toFixed(1)), y: Number(y.toFixed(1)), o: Number(Math.min(o, 0.9).toFixed(3)) });
+  }
+}
+---
+
+<svg
+  class="mark-dither"
+  viewBox={`0 0 ${VB} ${VB}`}
+  width={VB}
+  height={VB}
+  aria-hidden="true"
+  role="presentation"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g class="md-cloud">
+    {dots.map((dot) => <circle cx={dot.x} cy={dot.y} r={R} opacity={dot.o} />)}
+  </g>
+</svg>
+
+<style>
+  .mark-dither {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .md-cloud circle {
+    fill: var(--navy);
+  }
+  /* One gentle breathe — a single animated transform on one group (WebKit-safe). */
+  .md-cloud {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: md-breathe 7s var(--ease-inout) infinite;
+  }
+  @keyframes md-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.015);
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .md-cloud {
+      animation: none;
+    }
+  }
+</style>
