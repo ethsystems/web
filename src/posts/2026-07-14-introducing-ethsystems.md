@@ -73,6 +73,6 @@ This acts as a feedback loop between traditional institutions with real demand a
 
 If you represent an institution that wants to build on Ethereum and you think we can be useful, please contact us [here](https://docs.google.com/forms/d/e/1FAIpQLSd_89XMoNNUbqzJOZFsFsf1ibk2BK4vb5KV1SLre5naNdt6IA/viewform).
 
-We are also hiring. Specifically, BD people, protocol research engineers and operations. See [join us](https://ethsystems.org/join) for more detail. You can also follow us on X [here](https://x.com/eth_systems).
+We are also hiring. Specifically, BD people, protocol research engineers and operations. See [join us](/join/) for more detail. You can also follow us on X [here](https://x.com/eth_systems).
 
 Many institutions in the future will run on Ethereum. One of the biggest challenges is how to make these systems confidential, and there won't be a single solution that fits all. We've got a lot of work ahead of us. Come join us if this future is exciting to you, either as a contributor or as a customer.
