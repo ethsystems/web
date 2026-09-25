@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { renderMarkdown } from '../src/lib/render';
+import { renderMarkdown, resolveHref } from '../src/lib/render';
 import { inlineMd } from '../src/lib/inlineMarkdown';
 
 function href(md: string): string {
@@ -32,9 +32,32 @@ describe('renderMarkdown link rewriting', () => {
     );
     expect(href('[map](/map/)')).toBe('/map/');
   });
+
+  it('routes root map documents to their GitHub source', () => {
+    expect(resolveHref('CONTRIBUTING.md#crops-evaluation')).toBe(
+      'https://github.com/ethsystems/map/blob/master/CONTRIBUTING.md#crops-evaluation',
+    );
+  });
+
 });
 
 describe('inlineMd link rewriting', () => {
+  it('renders glossary definition links', () => {
+    expect(
+      inlineMd('See [RFC 9497](https://www.rfc-editor.org/rfc/rfc9497.html).'),
+    ).toContain('href="https://www.rfc-editor.org/rfc/rfc9497.html"');
+
+    expect(
+      inlineMd('See [Pattern](patterns/pattern-verifiable-attestation.md).'),
+    ).toContain('<a href="/patterns/pattern-verifiable-attestation/">Pattern</a>');
+
+    expect(
+      inlineMd('See [CROPS](CONTRIBUTING.md#crops-evaluation).'),
+    ).toContain(
+      'href="https://github.com/ethsystems/map/blob/master/CONTRIBUTING.md#crops-evaluation"',
+    );
+  });
+
   it('rewrites map hrefs in frontmatter strings', () => {
     // Regression: pattern-page `post_quantum.mitigation` shipped verbatim.
     expect(inlineMd('See [Post-Quantum Threats](../domains/post-quantum.md).')).toContain(

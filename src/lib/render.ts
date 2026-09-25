@@ -22,6 +22,7 @@ import type { Tokens } from 'marked';
 import graphData from '../data/graph.json';
 import type { GraphData } from './graph-types';
 import { toContentSlug } from './slugify';
+import { site } from './site';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONTENT_DIRS — must agree with guide/scripts/build-graph.mjs#CONTENT_DIRS.
@@ -155,6 +156,14 @@ function isMdHref(href: string): boolean {
   return href.endsWith('.md') || href.includes('.md#') || href.includes('.md?');
 }
 
+function resolveMapRootDocHref(href: string): string | null {
+  const match = href.match(
+    /^(README|CONTRIBUTING|CHANGELOG|GLOSSARY)\.md((?:[?#].*)?)$/,
+  );
+  if (!match) return null;
+  return `${site.mapRepo}/blob/master/${match[1]}.md${match[2]}`;
+}
+
 /**
  * Map one ethsystems/map href to a Guide route, or return it unchanged.
  *
@@ -165,6 +174,8 @@ function isMdHref(href: string): boolean {
  */
 export function resolveHref(href: string): string {
   if (isAbsoluteOrAnchor(href)) return href;
+  const rootDocHref = resolveMapRootDocHref(href);
+  if (rootDocHref) return rootDocHref;
   if (isMdHref(href)) return resolveMdHref(href)?.route ?? resolveRouteHref(href) ?? href;
   return resolveRouteHref(href) ?? href;
 }

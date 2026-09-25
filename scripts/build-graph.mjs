@@ -247,14 +247,16 @@ export function parseGlossary(repoRoot) {
       continue;
     }
     const termMatch = line.match(
-      /^\*\*\[?([^\]*]+)\]?\s*(?:\([^)]*\))?\*\*:\s*(.*)/,
+      /^\*\*(?:\[([^\]]+)\]\(([^)]+)\)|([^*]+))\*\*:\s*(.*)/,
     );
     if (termMatch) {
-      terms.push({
-        term: termMatch[1].trim().replace(/\[|\]/g, ""),
-        definition: termMatch[2].trim(),
+      const term = {
+        term: (termMatch[1] ?? termMatch[3]).trim(),
+        definition: termMatch[4].trim(),
         category: currentCategory,
-      });
+      };
+      if (termMatch[2]) term.href = termMatch[2].trim();
+      terms.push(term);
     }
   }
   return terms;

@@ -15,9 +15,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import glossaryData from '../data/glossary.json';
+import { resolveHref } from '../lib/render';
+import { inlineMd } from '../lib/inlineMarkdown';
 
 interface Term {
   term: string;
+  href?: string;
   definition: string;
   category: string;
 }
@@ -114,8 +117,10 @@ const pageDescription = `${allTerms.length} terms used across the EthSystems gui
                   data-term={entry.term.toLowerCase()}
                   data-def={entry.definition.toLowerCase()}
                 >
-                  <div class="g-term-name">{entry.term}</div>
-                  <div class="g-term-def">{entry.definition}</div>
+                  <div class="g-term-name">
+                    {entry.href ? <a href={resolveHref(entry.href)}>{entry.term}</a> : entry.term}
+                  </div>
+                  <div class="g-term-def" set:html={inlineMd(entry.definition)} />
                 </div>
               ))}
             </div>

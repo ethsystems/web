@@ -6,9 +6,12 @@ import {
   extractSummary,
   extractLinks,
   classifyEdge,
+  parseGlossary,
   buildGraph,
 } from '../scripts/build-graph.mjs';
 import { join } from 'path';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { tmpdir } from 'os';
 
 // ---------------------------------------------------------------------------
 // parseFrontmatter
@@ -222,6 +225,43 @@ describe('classifyEdge', () => {
 
   it('classifies links to jurisdictions as regulated-by', () => {
     expect(classifyEdge('use-case', 'jurisdiction', 'Requirements')).toBe('regulated-by');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// parseGlossary
+// ---------------------------------------------------------------------------
+
+describe('parseGlossary', () => {
+  it('preserves linked term hrefs and definition markdown', () => {
+    const repoRoot = mkdtempSync(join(tmpdir(), 'ethsystems-glossary-'));
+    try {
+      writeFileSync(
+        join(repoRoot, 'GLOSSARY.md'),
+        `### Standards
+
+**[ERC-3643](https://eips.ethereum.org/EIPS/eip-3643)**: Permissioned token standard.
+**vOPRF (Verifiable OPRF)**: See [RFC 9497](https://www.rfc-editor.org/rfc/rfc9497.html).
+**Attestations**: See [Pattern](patterns/pattern-verifiable-attestation.md).
+`,
+      );
+
+      const glossary = parseGlossary(repoRoot);
+
+      expect(glossary[0]).toEqual({
+        term: 'ERC-3643',
+        href: 'https://eips.ethereum.org/EIPS/eip-3643',
+        definition: 'Permissioned token standard.',
+        category: 'Standards',
+      });
+      expect(glossary[1].href).toBeUndefined();
+      expect(glossary[1].definition).toContain('[RFC 9497]');
+      expect(glossary[2].definition).toContain(
+        '[Pattern](patterns/pattern-verifiable-attestation.md)',
+      );
+    } finally {
+      rmSync(repoRoot, { recursive: true, force: true });
+    }
   });
 });
 
