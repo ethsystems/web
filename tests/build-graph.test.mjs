@@ -233,6 +233,93 @@ describe('classifyEdge', () => {
 // ---------------------------------------------------------------------------
 
 describe('parseGlossary', () => {
+  it('reads a definition from the immediate continuation line', () => {
+    const repoRoot = mkdtempSync(join(tmpdir(), 'ethsystems-glossary-'));
+    try {
+      writeFileSync(
+        join(repoRoot, 'GLOSSARY.md'),
+        `### Blockchain Architecture
+
+**Data Availability Layer (DA Layer)**:
+A dedicated network or service that publishes and stores the data required for DA.
+
+**Sequencer**: Orders L2 transactions.
+`,
+      );
+
+      const glossary = parseGlossary(repoRoot);
+
+      expect(glossary).toHaveLength(2);
+      expect(glossary[0]).toEqual({
+        term: 'Data Availability Layer (DA Layer)',
+        definition:
+          'A dedicated network or service that publishes and stores the data required for DA.',
+        category: 'Blockchain Architecture',
+      });
+      expect(glossary[1]).toEqual({
+        term: 'Sequencer',
+        definition: 'Orders L2 transactions.',
+        category: 'Blockchain Architecture',
+      });
+    } finally {
+      rmSync(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it('does not consume the next term when a definition is missing', () => {
+    const repoRoot = mkdtempSync(join(tmpdir(), 'ethsystems-glossary-'));
+    try {
+      writeFileSync(
+        join(repoRoot, 'GLOSSARY.md'),
+        `### Blockchain Architecture
+
+**Missing Definition**:
+**Sequencer**: Orders L2 transactions.
+`,
+      );
+
+      const glossary = parseGlossary(repoRoot);
+
+      expect(glossary).toHaveLength(2);
+      expect(glossary[0].definition).toBe('');
+      expect(glossary[1].definition).toBe('Orders L2 transactions.');
+    } finally {
+      rmSync(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it('does not consume the next category when a definition is missing', () => {
+    const repoRoot = mkdtempSync(join(tmpdir(), 'ethsystems-glossary-'));
+    try {
+      writeFileSync(
+        join(repoRoot, 'GLOSSARY.md'),
+        `### Blockchain Architecture
+
+**Missing Definition**:
+### Next Category
+
+**Sequencer**: Orders L2 transactions.
+`,
+      );
+
+      const glossary = parseGlossary(repoRoot);
+
+      expect(glossary).toHaveLength(2);
+      expect(glossary[0]).toEqual({
+        term: 'Missing Definition',
+        definition: '',
+        category: 'Blockchain Architecture',
+      });
+      expect(glossary[1]).toEqual({
+        term: 'Sequencer',
+        definition: 'Orders L2 transactions.',
+        category: 'Next Category',
+      });
+    } finally {
+      rmSync(repoRoot, { recursive: true, force: true });
+    }
+  });
+
   it('preserves linked term hrefs and definition markdown', () => {
     const repoRoot = mkdtempSync(join(tmpdir(), 'ethsystems-glossary-'));
     try {

@@ -239,20 +239,39 @@ export function parseGlossary(repoRoot) {
   const content = readFileSync(glossaryPath, "utf-8");
   const terms = [];
   let currentCategory = "";
+  const lines = content.split("\n");
+  const termPattern =
+    /^\*\*(?:\[([^\]]+)\]\(([^)]+)\)|([^*]+))\*\*:\s*(.*)/;
 
-  for (const line of content.split("\n")) {
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     const catMatch = line.match(/^### (.+)/);
     if (catMatch) {
       currentCategory = catMatch[1].trim();
       continue;
     }
-    const termMatch = line.match(
-      /^\*\*(?:\[([^\]]+)\]\(([^)]+)\)|([^*]+))\*\*:\s*(.*)/,
-    );
+    const termMatch = line.match(termPattern);
     if (termMatch) {
+      let definition = termMatch[4].trim();
+
+      // GLOSSARY.md occasionally puts a term's definition on the next line.
+      // Only consume the immediate continuation line, and never swallow the
+      // next category or glossary term if the definition is actually missing.
+      if (!definition) {
+        const continuation = lines[i + 1]?.trim();
+        if (
+          continuation &&
+          !continuation.startsWith("### ") &&
+          !termPattern.test(continuation)
+        ) {
+          definition = continuation;
+          i += 1;
+        }
+      }
+
       const term = {
         term: (termMatch[1] ?? termMatch[3]).trim(),
-        definition: termMatch[4].trim(),
+        definition,
         category: currentCategory,
       };
       if (termMatch[2]) term.href = termMatch[2].trim();

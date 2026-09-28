@@ -56,7 +56,7 @@
   },
   {
     "term": "Data Availability Layer (DA Layer)",
-    "definition": "",
+    "definition": "A dedicated network or service that publishes and stores the data required for DA (for example, rollup or application data), separate from the main execution chain.",
     "category": "Blockchain Architecture"
   },
   {
