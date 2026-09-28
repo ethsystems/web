@@ -26,6 +26,27 @@ describe('renderMarkdown link rewriting', () => {
     expect(href('[MiCA](../jurisdictions/eu-MiCA.md)')).toBe('/jurisdictions/eu-mica/');
   });
 
+  it('rewrites bare sibling RFP links to RFP routes', () => {
+    expect(href('[Benchmark Dashboard](rfp-benchmark-dashboard.md)')).toBe(
+      '/rfps/rfp-benchmark-dashboard/',
+    );
+    expect(href('[Trust Assurance](rfp-trust-assurance.md)')).toBe(
+      '/rfps/rfp-trust-assurance/',
+    );
+    expect(href('[Privacy Pools](rfp-privacy-pools.md)')).toBe(
+      '/rfps/rfp-privacy-pools/',
+    );
+    expect(href('[Compliance Primitives](rfp-compliance-primitives.md)')).toBe(
+      '/rfps/rfp-compliance-primitives/',
+    );
+    expect(href('[Trust scope](rfp-trust-assurance.md#scope)')).toBe(
+      '/rfps/rfp-trust-assurance/#scope',
+    );
+    expect(href('[Trust view](rfp-trust-assurance.md?view=compact#scope)')).toBe(
+      '/rfps/rfp-trust-assurance/?view=compact#scope',
+    );
+  });
+
   it('leaves absolute and external links untouched', () => {
     expect(href('[EIP](https://eips.ethereum.org/EIPS/eip-5564)')).toBe(
       'https://eips.ethereum.org/EIPS/eip-5564',

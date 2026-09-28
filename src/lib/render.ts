@@ -92,8 +92,8 @@ function fileToSlug(filename: string, prefix: string): string {
 
 interface ResolvedLink {
   route: string;     // e.g. '/patterns/foo'
-  exists: boolean;   // true if the resolved node ID is in the current graph
-  nodeId: string;    // graph node id, used to look up the real title
+  isResolved: boolean; // true when the renderer can identify the route shape
+  nodeId: string;    // graph node id when available, used to look up the real title
 }
 
 /**
@@ -116,6 +116,20 @@ function resolveMdHref(href: string): ResolvedLink | null {
   const filename = parts[parts.length - 1];
   const dirName = parts.length > 1 ? parts[parts.length - 2] : null;
 
+  // RFP pages intentionally sit outside the graph. Bare sibling links inside
+  // content/rfps therefore have no directory component to disambiguate them
+  // from use-cases/domains/vendors, all of which use an empty filename prefix.
+  if (!dirName && /^rfp-[^/]+\.md$/i.test(filename)) {
+    const routeSlug = toContentSlug(filename.replace(/\.md$/, ''));
+    return {
+      route: `/rfps/${routeSlug}/${suffix}`,
+      // RFPs are not graph nodes, so this records successful route resolution
+      // rather than claiming filesystem-level existence.
+      isResolved: true,
+      nodeId: `rfp/${routeSlug}`,
+    };
+  }
+
   // Collect every structurally plausible candidate, then prefer one that
   // resolves to a real node. Multiple dirs can share prefix='' (use-cases,
   // domains, jurisdictions, vendors) so first-match-wins gives wrong answers
@@ -133,12 +147,12 @@ function resolveMdHref(href: string): ResolvedLink | null {
     const routeSlug = toContentSlug(filename.replace(/\.md$/, ''));
     candidates.push({
       route: `${cfg.route}/${routeSlug}/${suffix}`,
-      exists: nodeIds.has(id),
+      isResolved: nodeIds.has(id),
       nodeId: id,
     });
   }
   if (candidates.length === 0) return null;
-  return candidates.find(c => c.exists) ?? candidates[0];
+  return candidates.find(c => c.isResolved) ?? candidates[0];
 }
 
 function isAbsoluteOrAnchor(href: string): boolean {
@@ -211,11 +225,11 @@ marked.use({
             // for the target's real title from graph.json. Authored labels like
             // `[Noir](../patterns/pattern-noir-private-contracts.md)` are left
             // untouched because they don't look like filenames.
-            if (resolved.exists && isFilenameLabel(rawLabel)) {
+            if (resolved.isResolved && isFilenameLabel(rawLabel)) {
               const t = nodeTitles.get(resolved.nodeId);
               if (t) innerHtml = escapeAttr(stripTypePrefix(t));
             }
-            if (!resolved.exists && !warnedHrefs.has(href)) {
+            if (!resolved.isResolved && !warnedHrefs.has(href)) {
               warnedHrefs.add(href);
               console.warn(`[render] unresolved ethsystems/map link: ${href} → ${resolved.route} (node not in graph)`);
             }
