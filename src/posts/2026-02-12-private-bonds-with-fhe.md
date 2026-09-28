@@ -17,6 +17,7 @@ map_refs:
   - approach-private-bonds
   - pattern-privacy-l2s
   - pattern-co-snark
+  - pattern-shielding
   - pattern-private-shared-state-fhe
   - pattern-verifiable-dkg-threshold-decryption
   - private-bonds
@@ -182,7 +183,7 @@ We've now built the same bond (whitelisted participants, private amounts, regula
 
 ## Trade-offs
 
-[Custom UTXO](https://github.com/ethsystems/map/blob/master/patterns/pattern-zk-shielded-balances.md) offers the strongest privacy guarantees: even addresses are obscured via nullifiers, and users control their own keys. Railgun and similar systems prove the model works in production. But implementation complexity is significant. Our PoC required building notes, Merkle trees, and nullifier management from scratch. Nullifiers also accumulate forever, creating storage concerns at scale (mitigations like [epoch-based pruning](https://eprint.iacr.org/2025/2031) are being researched but not yet deployed).
+[Custom UTXO](https://github.com/ethsystems/map/blob/master/patterns/pattern-shielding.md) offers the strongest privacy guarantees: even addresses are obscured via nullifiers, and users control their own keys. Railgun and similar systems prove the model works in production. But implementation complexity is significant. Our PoC required building notes, Merkle trees, and nullifier management from scratch. Nullifiers also accumulate forever, creating storage concerns at scale (mitigations like [epoch-based pruning](https://eprint.iacr.org/2025/2031) are being researched but not yet deployed).
 
 [Privacy L2s](https://github.com/ethsystems/map/blob/master/patterns/pattern-privacy-l2s.md) like Aztec handle the hard parts for you: notes, proofs, encryption. Our contract was just 200 lines. Private composability is native, meaning your bonds could interact with private lending or swaps on the same L2. The catch: neither Aztec nor Miden are live yet (both scheduled for launch later in 2026), so we can't measure real costs. And the learning curve exists: Noir is not Solidity.
 
