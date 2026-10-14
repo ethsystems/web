@@ -175,8 +175,8 @@ export const faqCategories: FaqCategory[] = [
       {
         q: 'UTXO vs account model: which is better for privacy?',
         a: [
-          'UTXO-based privacy (Railgun, Zcash-style) provides stronger unlinkability by default — each transaction consumes and creates new notes, breaking the connection between sender and receiver. Account-based privacy (Aztec, FHE-based) is more familiar to Ethereum developers and supports richer programmability, but requires more careful design to prevent linkability.',
-          'For institutional payments, UTXO models are simpler and better understood. For complex smart contract interactions (DeFi, derivatives), account-based privacy L2s offer more flexibility. The right choice depends on your use case rather than any absolute technical superiority.',
+          "Note-based privacy systems such as Railgun, as well as Aztec's private state, use notes and nullifiers to improve unlinkability. Some FHE-based confidential-token designs instead preserve an account-style balance model using encrypted mappings. Aztec is hybrid: its private state is note-based, while its public contract state is mutable and transparent.",
+          'The practical choice is not UTXO versus account-based in the abstract. It depends on the threat model, composability requirements, operational trust assumptions, and deployment environment. Privacy L2s with private contracts and FHE-enabled contracts can support richer stateful logic, while note-based systems provide an established model for unlinkable asset transfers.',
         ],
         links: [
           { label: 'Private Payments', href: '/approaches/approach-private-payments/' },
