@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:11.5px}
+.k{fill:#5A5347;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.y{fill:#5A5347;font-size:11px}
+.grid{stroke:#0A0A0A;stroke-opacity:0.10;stroke-width:1}
+.base{stroke:#0A0A0A;stroke-opacity:0.35;stroke-width:1.4}
+.step{fill:none;stroke:#0A0A0A;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.plan{fill:none;stroke:#0A0A0A;stroke-opacity:0.55;stroke-width:2;stroke-dasharray:5 4;stroke-linejoin:round}
+</style>
+
+<text x="540" y="24" text-anchor="middle" class="k">capacity since 2021</text>
+
+<!-- x scale: 2021.0 at x=110, 2027.5 at x=1000 (136.9 px per year) -->
+<!-- today: 6 October 2026 -->
+<path d="M899.3 62 V345" fill="none" stroke="#0A0A0A" stroke-opacity="0.20" stroke-width="1"/>
+<text x="899.3" y="52" text-anchor="middle" class="k">today</text>
+
+<!-- panel A: gas limit per block, 0 at y=200, 200M at y=70 -->
+<text x="110" y="52" class="n">gas limit per block</text>
+<path class="grid" d="M110 70 H1000 M110 135 H1000"/>
+<path class="base" d="M110 200 H1000"/>
+<g class="y" text-anchor="end">
+  <text x="100" y="74">200M</text><text x="100" y="139">100M</text><text x="100" y="204">0</text>
+</g>
+<!-- 30M from London (Aug 2021), 36M Feb 2025, 45M Jul 2025, 60M Nov 2025 -->
+<path class="step" d="M191 180.5 H670.6 V176.6 H732.9 V170.8 H781.5 V161 H899.3"/>
+<!-- 60M until Glamsterdam (planned Dec 2026), then 200M agreed -->
+<path class="plan" d="M899.3 161 H920.5 V70 H1000"/>
+<text x="196" y="172" class="m">30M</text>
+<text x="840" y="153" text-anchor="middle" class="m">60M</text>
+<text x="912" y="90" text-anchor="end" class="m">200M agreed for after Glamsterdam</text>
+
+<!-- panel B: blob target per block, 0 at y=345, 16 at y=260 -->
+<text x="110" y="246" class="n">blob target per block</text>
+<path class="grid" d="M110 260 H1000 M110 302.5 H1000"/>
+<path class="base" d="M110 345 H1000"/>
+<g class="y" text-anchor="end">
+  <text x="100" y="264">16</text><text x="100" y="306.5">8</text><text x="100" y="349">0</text>
+</g>
+<!-- 3 from Dencun (Mar 2024), 6 May 2025, 10 Dec 2025, 14 Jan 2026 -->
+<path class="step" d="M548.1 329.1 H705.6 V313.1 H786.4 V291.9 H797.3 V270.6 H899.3"/>
+<text x="553" y="321" class="m">3</text>
+<text x="907" y="274" class="m">14</text>
+
+<!-- shared x axis -->
+<g stroke="#0A0A0A" stroke-opacity="0.35" stroke-width="1.2">
+  <path d="M110 345 V350 M246.9 345 V350 M383.8 345 V350 M520.7 345 V350 M657.6 345 V350 M794.5 345 V350 M931.4 345 V350"/>
+  <path d="M110 200 V205 M246.9 200 V205 M383.8 200 V205 M520.7 200 V205 M657.6 200 V205 M794.5 200 V205 M931.4 200 V205"/>
+</g>
+<g class="y" text-anchor="middle">
+  <text x="110" y="366">2021</text><text x="246.9" y="366">2022</text><text x="383.8" y="366">2023</text>
+  <text x="520.7" y="366">2024</text><text x="657.6" y="366">2025</text><text x="794.5" y="366">2026</text>
+  <text x="931.4" y="366">2027</text>
+</g>
+
+<line x1="20" y1="404" x2="1060" y2="404" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

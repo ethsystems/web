@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:11.5px}
+.k{fill:#5A5347;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.box{fill:#FBF9F1;stroke:#0A0A0A;stroke-width:1.4}
+.hl{fill:#ECE8DA;stroke:#0A0A0A;stroke-width:1.4}
+.arrow{fill:none;stroke:#0A0A0A;stroke-width:1.4}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<text x="540" y="30" text-anchor="middle" class="k">from sending a transfer to finality</text>
+
+<!-- the three states -->
+<rect class="box" x="60" y="90" width="180" height="56" rx="8"/>
+<text x="150" y="123" text-anchor="middle" class="n">sent</text>
+<rect class="box" x="450" y="90" width="180" height="56" rx="8"/>
+<text x="540" y="123" text-anchor="middle" class="n">in a block</text>
+<rect class="hl" x="840" y="90" width="180" height="56" rx="8"/>
+<text x="930" y="123" text-anchor="middle" class="n">final</text>
+<text x="930" y="166" text-anchor="middle" class="m">where a treasury desk settles</text>
+
+<!-- step one: a slot -->
+<path class="arrow" d="M240 118 L446 118" marker-end="url(#a)"/>
+<text x="343" y="106" text-anchor="middle" class="n">one slot</text>
+<text x="343" y="138" text-anchor="middle" class="m">12 s today</text>
+<text x="343" y="153" text-anchor="middle" class="m">10 s considered for Hegotá</text>
+
+<!-- step two: finality -->
+<path class="arrow" d="M630 118 L836 118" marker-end="url(#a)"/>
+<text x="733" y="106" text-anchor="middle" class="n">finality</text>
+<text x="733" y="138" text-anchor="middle" class="m">about 15 minutes today</text>
+<text x="733" y="153" text-anchor="middle" class="m">seconds in research</text>
+
+<!-- today, drawn to scale: 15 minutes across 960 px -->
+<text x="60" y="246" class="k">today drawn to scale</text>
+<rect x="60" y="262" width="960" height="28" rx="4" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<rect x="60" y="262" width="13" height="28" rx="2" fill="#0A0A0A"/>
+<path d="M66.5 296 V318" fill="none" stroke="rgba(10,10,10,0.20)" stroke-width="1.2"/>
+<text x="60" y="334" class="m">one 12 s slot</text>
+<text x="540" y="334" text-anchor="middle" class="m">about 15 minutes until the block is final</text>
+
+<line x1="20" y1="404" x2="1060" y2="404" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

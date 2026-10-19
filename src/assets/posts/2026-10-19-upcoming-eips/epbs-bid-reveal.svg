@@ -1,0 +1,83 @@
+<svg id="fig-epbs" class="anim" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+#fig-epbs .n{fill:#0A0A0A;font-size:14px;font-weight:600}
+#fig-epbs .m{fill:#5A5347;font-size:11.5px}
+#fig-epbs .k{fill:#5A5347;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+#fig-epbs .d{fill:#0A0A0A;font-size:11px;font-weight:600}
+#fig-epbs .s1{animation:fig-step-on .4s .4s both}
+#fig-epbs .s2{animation:fig-step-on .4s 1.2s both}
+#fig-epbs .s3{animation:fig-step-on .4s 2s both}
+#fig-epbs .s4{animation:fig-step-on .4s 2.8s both}
+#fig-epbs .s5{animation:fig-step-on .4s 3.6s both}
+@keyframes fig-step-on{from{opacity:.12}to{opacity:1}}
+#fig-epbs.armed:not(.in-view) :is(.s1,.s2,.s3,.s4,.s5){animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){#fig-epbs :is(.s1,.s2,.s3,.s4,.s5){animation:none}}
+</style>
+<defs>
+  <marker id="fig-epbs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<!-- left: MEV-Boost today, static -->
+<text x="210" y="30" text-anchor="middle" class="k">mev-boost today</text>
+<rect x="130" y="60" width="160" height="44" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="210" y="87" text-anchor="middle" class="n">builder</text>
+<rect x="130" y="184" width="160" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="210" y="211" text-anchor="middle" class="n">relay</text>
+<rect x="130" y="308" width="160" height="44" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="210" y="335" text-anchor="middle" class="n">proposer</text>
+<path d="M210 104 L210 178" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#fig-epbs-a)"/>
+<text x="222" y="146" class="m">payload and bid</text>
+<path d="M186 228 L186 302" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#fig-epbs-a)"/>
+<text x="174" y="270" text-anchor="end" class="m">header</text>
+<path d="M234 308 L234 234" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#fig-epbs-a)"/>
+<text x="246" y="270" class="m">signed header</text>
+
+<line x1="420" y1="20" x2="420" y2="380" stroke="#0A0A0A" stroke-opacity="0.12"/>
+
+<!-- right: ePBS, steps light up in order -->
+<text x="715" y="30" text-anchor="middle" class="k">epbs</text>
+<rect x="470" y="60" width="160" height="44" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="550" y="87" text-anchor="middle" class="n">builder</text>
+<rect x="800" y="60" width="160" height="44" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="880" y="87" text-anchor="middle" class="n">proposer</text>
+
+<g class="s1">
+  <path d="M630 82 L794 82" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#fig-epbs-a)"/>
+  <circle cx="672" cy="66" r="9" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="672" y="70" text-anchor="middle" class="d">1</text>
+  <text x="688" y="70" class="m">signed bid</text>
+</g>
+
+<g class="s2">
+  <path d="M880 104 L880 178" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#fig-epbs-a)"/>
+  <circle cx="902" cy="141" r="9" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="902" y="145" text-anchor="middle" class="d">2</text>
+  <text x="918" y="145" class="m">publishes</text>
+  <rect x="800" y="184" width="160" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+  <text x="880" y="204" text-anchor="middle" class="n">beacon block</text>
+  <text x="880" y="220" text-anchor="middle" class="m">holds the bid</text>
+</g>
+
+<g class="s3">
+  <path d="M550 104 L550 302" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#fig-epbs-a)"/>
+  <circle cx="528" cy="203" r="9" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="528" y="207" text-anchor="middle" class="d">3</text>
+  <text x="512" y="207" text-anchor="end" class="m">reveals later</text>
+  <rect x="470" y="308" width="160" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+  <text x="550" y="335" text-anchor="middle" class="n">payload</text>
+</g>
+
+<g class="s4">
+  <rect x="800" y="308" width="160" height="44" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+  <text x="880" y="328" text-anchor="middle" class="n">PTC</text>
+  <text x="880" y="344" text-anchor="middle" class="m">512 validators</text>
+  <path d="M800 330 L636 330" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#fig-epbs-a)"/>
+  <circle cx="660" cy="314" r="9" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="660" y="318" text-anchor="middle" class="d">4</text>
+  <text x="676" y="318" class="m">votes on the payload</text>
+</g>
+
+<line x1="20" y1="404" x2="1060" y2="404" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

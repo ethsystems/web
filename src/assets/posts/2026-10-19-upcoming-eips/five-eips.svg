@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:11.5px}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<!-- the path of one transaction -->
+<rect x="40" y="170" width="190" height="52" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="135" y="201" text-anchor="middle" class="n">account</text>
+
+<rect x="310" y="170" width="190" height="52" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="405" y="201" text-anchor="middle" class="n">public mempool</text>
+
+<rect x="580" y="170" width="190" height="52" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="675" y="201" text-anchor="middle" class="n">builder</text>
+
+<rect x="850" y="170" width="190" height="52" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="945" y="201" text-anchor="middle" class="n">proposer</text>
+
+<path d="M230 196 L304 196" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M500 196 L574 196" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M770 196 L844 196" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+
+<!-- where each change acts -->
+<rect x="30" y="40" width="210" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="135" y="60" text-anchor="middle" class="n">frame transactions</text>
+<text x="135" y="76" text-anchor="middle" class="m">EIP-8141</text>
+<path d="M135 84 L135 164" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4"/>
+
+<rect x="30" y="258" width="210" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="135" y="278" text-anchor="middle" class="n">state diff check</text>
+<text x="135" y="294" text-anchor="middle" class="m">EIP-7906</text>
+<path d="M135 222 L135 258" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4"/>
+
+<rect x="437" y="40" width="200" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="537" y="60" text-anchor="middle" class="n">FOCIL lists</text>
+<text x="537" y="76" text-anchor="middle" class="m">EIP-7805</text>
+<path d="M537 84 L537 188" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4"/>
+
+<rect x="707" y="40" width="200" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="807" y="60" text-anchor="middle" class="n">ePBS bid</text>
+<text x="807" y="76" text-anchor="middle" class="m">EIP-7732</text>
+<path d="M807 84 L807 188" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4"/>
+
+<!-- the gas bundle under the whole path -->
+<rect x="40" y="340" width="1000" height="40" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="540" y="365" text-anchor="middle" class="n">six gas EIPs reprice each step</text>
+<g stroke="rgba(10, 10, 10, 0.20)" stroke-width="1.2" stroke-dasharray="4 4">
+  <path d="M135 302 L135 340"/><path d="M405 222 L405 340"/><path d="M675 222 L675 340"/><path d="M945 222 L945 340"/>
+</g>
+
+<line x1="20" y1="404" x2="1060" y2="404" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

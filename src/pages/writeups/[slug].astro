@@ -89,6 +89,22 @@ const postSchema = blogPostingSchema({
     <Content />
   </div>
 
+  <script>
+    // Animated figures are inlined by src/plugins/remark-inline-animated-svg.ts.
+    // Each one waits until half of it is on screen, then plays once.
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.post-prose svg.anim').forEach((svg) => {
+      svg.classList.add('armed');
+      io.observe(svg);
+    });
+  </script>
+
   <Fragment slot="after-content">
     <ArticleFooter sibling={sibling} lastReviewed={date || undefined} />
   </Fragment>
@@ -139,6 +155,12 @@ const postSchema = blogPostingSchema({
     max-width: 100%;
     height: auto;
     border-radius: var(--radius-sm);
+    margin: 1.25rem auto;
+    display: block;
+  }
+  :global(.post-prose svg.anim) {
+    width: 100%;
+    height: auto;
     margin: 1.25rem auto;
     display: block;
   }

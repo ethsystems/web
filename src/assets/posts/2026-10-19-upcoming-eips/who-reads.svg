@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:11.5px}
+.k{fill:#5A5347;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.box{fill:#FBF9F1;stroke:#0A0A0A;stroke-width:1.4}
+.arrow{fill:none;stroke:#0A0A0A;stroke-width:1.4}
+.guide{fill:none;stroke:rgba(10,10,10,0.20);stroke-width:1.2}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<text x="540" y="30" text-anchor="middle" class="k">who reads a USDC transfer</text>
+
+<!-- encrypted mempool bracket over the public mempool and the builder -->
+<path class="guide" d="M460 152 V142 H820 V152"/>
+<text x="640" y="112" text-anchor="middle" class="n">encrypted mempool</text>
+<text x="640" y="130" text-anchor="middle" class="m">hides contents until inclusion</text>
+
+<!-- the path of the transfer -->
+<rect class="box" x="40" y="170" width="150" height="56" rx="8"/>
+<text x="115" y="203" text-anchor="middle" class="n">wallet</text>
+<rect class="box" x="250" y="170" width="150" height="56" rx="8"/>
+<text x="325" y="203" text-anchor="middle" class="n">RPC provider</text>
+<rect class="box" x="460" y="170" width="150" height="56" rx="8"/>
+<text x="535" y="203" text-anchor="middle" class="n">public mempool</text>
+<rect class="box" x="670" y="170" width="150" height="56" rx="8"/>
+<text x="745" y="203" text-anchor="middle" class="n">builder</text>
+<rect class="box" x="880" y="170" width="150" height="56" rx="8"/>
+<text x="955" y="203" text-anchor="middle" class="n">chain</text>
+
+<path class="arrow" d="M190 198 L246 198" marker-end="url(#a)"/>
+<path class="arrow" d="M400 198 L456 198" marker-end="url(#a)"/>
+<path class="arrow" d="M610 198 L666 198" marker-end="url(#a)"/>
+<path class="arrow" d="M820 198 L876 198" marker-end="url(#a)"/>
+
+<!-- private route from the RPC provider to a builder, under the mempool -->
+<path d="M325 226 C325 290, 745 290, 741 230" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#a)"/>
+<text x="535" y="258" text-anchor="middle" class="m">sent privately to a builder</text>
+
+<!-- what each party after the wallet can read -->
+<rect x="250" y="314" width="780" height="36" rx="8" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="640" y="337" text-anchor="middle" class="n">counterparties and amount readable at each step</text>
+
+<line x1="20" y1="404" x2="1060" y2="404" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

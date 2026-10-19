@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import { remarkRewriteLinks } from './src/plugins/remark-rewrite-links.ts';
 import { remarkApproachVariants } from './src/plugins/remark-approach-variants.ts';
+import { remarkInlineAnimatedSvg } from './src/plugins/remark-inline-animated-svg.ts';
 import { contentCaseRedirects } from './src/lib/content-redirects.ts';
 
 import react from '@astrojs/react';
@@ -45,7 +46,7 @@ export default defineConfig({
     ...contentCaseRedirects(),
   },
   markdown: {
-    remarkPlugins: [remarkRewriteLinks, remarkApproachVariants],
+    remarkPlugins: [remarkRewriteLinks, remarkApproachVariants, remarkInlineAnimatedSvg],
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-light',

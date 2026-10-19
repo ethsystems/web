@@ -1,0 +1,80 @@
+<svg id="fig-frames" class="anim" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+#fig-frames .n{fill:#0A0A0A;font-size:14px;font-weight:600}
+#fig-frames .m{fill:#5A5347;font-size:11.5px}
+#fig-frames .k{fill:#5A5347;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+#fig-frames .d{fill:#0A0A0A;font-size:11px;font-weight:600}
+#fig-frames .s1{animation:fig-step-on .4s .4s both}
+#fig-frames .s2{animation:fig-step-on .4s 1.2s both}
+#fig-frames .s3{animation:fig-step-on .4s 2s both}
+#fig-frames .s4{animation:fig-step-on .4s 2.8s both}
+#fig-frames .s5{animation:fig-step-on .4s 3.6s both}
+@keyframes fig-step-on{from{opacity:.12}to{opacity:1}}
+#fig-frames.armed:not(.in-view) :is(.s1,.s2,.s3,.s4,.s5){animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){#fig-frames :is(.s1,.s2,.s3,.s4,.s5){animation:none}}
+</style>
+<defs>
+  <marker id="fig-frames-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<text x="440" y="24" text-anchor="middle" class="k">sponsored usdc example</text>
+
+<!-- validation prefix bracket over frames 0 and 1 -->
+<path d="M150 42 L138 42 L138 150 L150 150" fill="none" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="128" y="92" text-anchor="end" class="m">validation</text>
+<text x="128" y="108" text-anchor="end" class="m">prefix</text>
+
+<g class="s1">
+  <rect x="160" y="40" width="560" height="48" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+  <circle cx="186" cy="64" r="11" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="186" y="68" text-anchor="middle" class="d">0</text>
+  <rect x="208" y="51" width="86" height="26" rx="4" fill="#ECE8DA"/>
+  <text x="251" y="68" text-anchor="middle" class="d">VERIFY</text>
+  <text x="312" y="69" class="n">account checks its signature</text>
+  <text x="740" y="69" class="m">execution approved</text>
+</g>
+
+<g class="s2">
+  <rect x="160" y="104" width="560" height="48" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+  <circle cx="186" cy="128" r="11" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="186" y="132" text-anchor="middle" class="d">1</text>
+  <rect x="208" y="115" width="86" height="26" rx="4" fill="#ECE8DA"/>
+  <text x="251" y="132" text-anchor="middle" class="d">VERIFY</text>
+  <text x="312" y="133" class="n">sponsor reads the fee in frame 2</text>
+  <text x="740" y="133" class="m">payer set to the sponsor</text>
+</g>
+
+<g class="s3">
+  <rect x="160" y="168" width="560" height="48" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+  <circle cx="186" cy="192" r="11" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="186" y="196" text-anchor="middle" class="d">2</text>
+  <rect x="208" y="179" width="86" height="26" rx="4" fill="#ECE8DA"/>
+  <text x="251" y="196" text-anchor="middle" class="d">SENDER</text>
+  <text x="312" y="197" class="n">USDC fee to the sponsor</text>
+</g>
+
+<g class="s4">
+  <rect x="160" y="232" width="560" height="48" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+  <circle cx="186" cy="256" r="11" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="186" y="260" text-anchor="middle" class="d">3</text>
+  <rect x="208" y="243" width="86" height="26" rx="4" fill="#ECE8DA"/>
+  <text x="251" y="260" text-anchor="middle" class="d">SENDER</text>
+  <text x="312" y="261" class="n">the account's own call</text>
+</g>
+
+<g class="s5">
+  <rect x="160" y="296" width="560" height="48" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4"/>
+  <circle cx="186" cy="320" r="11" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.2"/>
+  <text x="186" y="324" text-anchor="middle" class="d">4</text>
+  <rect x="208" y="307" width="86" height="26" rx="4" fill="#ECE8DA"/>
+  <text x="251" y="324" text-anchor="middle" class="d">optional</text>
+  <text x="312" y="325" class="n">sponsor follow-up</text>
+  <text x="740" y="325" class="m">such as a swap to ETH</text>
+</g>
+
+<text x="440" y="378" text-anchor="middle" class="m">the receipt records the payer</text>
+
+<line x1="20" y1="404" x2="1060" y2="404" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

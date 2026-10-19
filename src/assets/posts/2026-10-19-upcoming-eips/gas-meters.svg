@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:11.5px}
+.k{fill:#5A5347;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<text x="540" y="30" text-anchor="middle" class="k">median block in our replay</text>
+
+<!-- the 60M limit, scale 260px for 60M -->
+<path d="M320 100 L760 100" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="772" y="105" class="n">60M gas limit</text>
+
+<!-- execution gas: 36.6M -->
+<rect x="380" y="201" width="120" height="159" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="440" y="191" text-anchor="middle" class="n">36.6M</text>
+<text x="440" y="384" text-anchor="middle" class="n">execution gas</text>
+
+<!-- state gas: 17.3M -->
+<rect x="580" y="285" width="120" height="75" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="640" y="275" text-anchor="middle" class="n">17.3M</text>
+<text x="640" y="384" text-anchor="middle" class="n">state gas</text>
+
+<!-- baseline -->
+<path d="M320 360 L760 360" fill="none" stroke="#0A0A0A" stroke-opacity="0.35" stroke-width="1.4"/>
+
+<!-- gas_used reads the taller meter -->
+<text x="300" y="198" text-anchor="end" class="n">gas_used</text>
+<text x="300" y="214" text-anchor="end" class="m">the larger meter</text>
+<path d="M308 202 L374 202" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+
+<line x1="20" y1="404" x2="1060" y2="404" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>
