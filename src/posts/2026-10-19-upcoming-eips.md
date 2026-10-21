@@ -24,6 +24,8 @@ map_refs:
 
 ---
 
+*Thanks to EthLabs for their feedback on this post.*
+
 Apart from the 2022 move to proof of stake, most of the banks and custodians we talk to have not followed Ethereum's forks. Since London in 2021, the gas limit has doubled from 30M, and the forks have changed what accounts and rollups can do. Of the next two forks, Glamsterdam is mostly about capacity. Hegotá turns to account control and to who decides what goes into a block.
 
 The Merge moved the chain to proof of stake in September 2022, which cut its energy use by about 99.95% ([ethereum.org](https://ethereum.org/en/roadmap/merge/)). Staked ETH became withdrawable with Shapella in April 2023 ([EIP-4895](https://eips.ethereum.org/EIPS/eip-4895)). Rollups, the L2 chains that settle on Ethereum, got blobs, a data space of their own, with Dencun in March 2024. Median fees on the largest of them fell by roughly 90 to 98% within days ([DL News, from growthepie data](https://www.dlnews.com/articles/defi/ethereums-dencun-upgrade-cuts-layer-2-fees-as-much-as-98/)). Pectra followed in May 2025 with smart account code for existing addresses ([EIP-7702](https://eips.ethereum.org/EIPS/eip-7702)) and validators of up to 2,048 ETH ([EIP-7251](https://eips.ethereum.org/EIPS/eip-7251)). Validators raised the gas limit to 60M through 2025 ([pumpthegas.org](https://pumpthegas.org/)). Fusaka added a built-in check for P-256 signatures, the curve passkeys use, that December ([EIP-7951](https://eips.ethereum.org/EIPS/eip-7951)).
@@ -83,10 +85,10 @@ On the receiving side, Glamsterdam gives ETH moved by contract code a log entry,
 
 **In short**
 
-- **Bank treasury:** at today's 60M gas limit, Glamsterdam raises your costs. At 200M, seven of the eight transactions in our replay cost less than today.
+- **Bank treasury:** a transaction sent with a gas limit from before Glamsterdam can run out of gas after the fork. In our replay, 209 of 255 mainnet transactions failed this way. Gas limits set in your gateway or custody signing policy need updating before December.
 - **FMI:** Glamsterdam prepares clients for a gas limit of 200M.
 - **Custodian:** an emptied deposit address pays the new-holder price on each refill. A dust balance keeps the refill at 53,960 gas against 140,264. Wallets with a hard-coded 21,000 gas limit fail on transfers to new addresses.
-- **Transfer agent:** a dividend run that writes new storage slots for each holder used about 2.4 times today's gas in our replay. Updating existing entries in place prices each write at 12,100 gas against 97,920.
+- **Transfer agent:** a dividend run that writes new storage slots for each holder used about 2.4 times today's gas in our replay. Updating existing entries in place prices each write at 12,100 gas against 97,920. 
 - **Stablecoin issuer:** under Glamsterdam, a USDC transfer to a new holder uses 2.44 times today's gas.
 - **Staking provider:** the gas limit your validators signal after Glamsterdam decides whether transactions end up cheaper than today.
 
@@ -116,45 +118,52 @@ In wallet code, the first thing to break is gas estimation. A transfer to a new 
 
 ### Replaying the gas changes
 
-We replayed 86 mainnet transactions through geth against their captured pre-state. Under today's rules, all 86 matched mainnet gas. The Glamsterdam run used a raised gas limit to keep transactions from running out of gas. We also replayed 48 recent blocks, 12,531 transactions, through a shared gas pool, where 98.4% of transactions matched mainnet exactly. Sent with their original gas limits, 73 of the 86 transactions fail under Glamsterdam, as do 41% of the transactions in the replayed blocks.
+We replayed 255 mainnet transactions through geth against their captured pre-state. Under today's rules, all 255 matched mainnet gas. The Glamsterdam run used a raised gas limit to keep transactions from running out of gas. We also replayed 48 recent blocks, 12,531 transactions, through a shared gas pool, where 98.4% of transactions matched mainnet exactly. Sent with their original gas limits, 209 of the 255 transactions fail under Glamsterdam, as do 41% of the transactions in the replayed blocks.
 
 | Transaction | Gas today | Gas under Glamsterdam | Ratio |
 | - | -: | -: | -: |
-| USDC to an existing holder | 45,160 | 53,960 | 1.19x |
-| USDC from a sender emptying its balance | 40,360 | 43,168 | 1.07x |
-| USDC to a new holder | 57,460 | 140,264 | 2.44x |
-| ETH to a fresh address | 21,000 | 204,600 | 9.7x |
-| BUIDL daily dividend | 4,854,334 | 11,648,314 | 2.40x |
-| Railgun transfer | 1,109,404 | 1,460,864 | 1.24x to 1.32x |
-| Privacy Pools relayed withdrawal | 604,241 | 990,330 | 1.42x to 1.88x |
-| [ERC-7984](https://ercs.ethereum.org/ERCS/erc-7984) confidential transfer | 478,846 | 1,157,396 | 2.36x to 2.47x |
+| [USDC to an existing holder](https://etherscan.io/tx/0xa1f4aac4e64ea51f45afe2abb4942e71bcf87de52c4a689f3b6564e8e93bf5cc) | 45,160 | 53,960 | 1.19x |
+| [USDC from a sender emptying its balance](https://etherscan.io/tx/0x47abaf1a56663e14e024352eae32100d46fecf8495304adf0ec826e7613c886c) | 40,360 | 43,168 | 1.07x |
+| [USDC to a new holder](https://etherscan.io/tx/0x71d83d62648c049d2b0ca70e5d472cdb55f63c3baf10d72396cdbaa9aab55fe8) | 57,460 | 140,264 | 2.44x |
+| [ETH to a fresh address](https://etherscan.io/tx/0xda449807d1f52210b0d06ef7ade822b963fa18ad45544f7fce266b4c3c2d74c7) | 21,000 | 204,600 | 9.7x |
+| [BUIDL daily dividend](https://etherscan.io/tx/0x2ded00f9bfd5639fe1e568d0c843437d65e337b72449a892ce7da29bd5d18800) | 4,854,334 | 11,648,314 | 2.40x |
+| [CMTAT token to an existing holder](https://etherscan.io/tx/0x03afa700a3f1e2b8bb662ae629a3071eda345e548cd0bac78a1ea9051737615a) | 59,367 | 68,567 | 1.15x to 1.17x |
+| [CMTAT token to a new holder](https://etherscan.io/tx/0xfc7a10b5f23a04a02f8b92d118f6f4c702dd68dae2f0695b167256155d2119bd) | 76,455 | 166,475 | 2.16x to 2.32x |
+| [T-REX issuance to existing holders](https://etherscan.io/tx/0xa18b87d7073546e6491b1d5e353cd1b118f8b13f38a9738c0190f98a20a80380) | 415,959 | 512,159 | 1.22x to 1.23x |
+| [T-REX issuance to new holders](https://etherscan.io/tx/0xbc5ecfd8da7072627376d1355db93027084f831be7afc9c1db2fe6bac4ca5ab6) | 545,985 | 1,222,325 | 2.13x to 2.63x |
+| [T-REX investor onboarding](https://etherscan.io/tx/0xb42deb3647df849b8c11a62bccae4020c631e97bb436758ba4abc01932fd1567) | 604,757 | 2,430,265 | 4.02x |
+| [Railgun transfer](https://etherscan.io/tx/0xf520d47bd3a631133a47c0e1e01c6e3553bf9171635db5f2e76371fbafcfd463) | 1,109,404 | 1,460,864 | 1.24x to 1.32x |
+| [Privacy Pools relayed withdrawal](https://etherscan.io/tx/0x01c1e4bf65310ff5b842c43f449df5450a367db8493437df475ed42e0cf37ce3) | 604,466 | 1,027,506 | 1.46x to 1.88x |
+| [ERC-7984](https://ercs.ethereum.org/ERCS/erc-7984) [confidential transfer](https://etherscan.io/tx/0x223eca270a092a2dd7cac990a4e28a15c72acfdf61bc1423df9d9833f5f59b69) | 450,628 | 1,088,068 | 2.36x to 2.47x |
 
-*Gas values are medians for rows with several mainnet transactions. Ratio ranges cover the individual transactions. The ETH row follows from the numbers in [EIP-2780](https://eips.ethereum.org/EIPS/eip-2780). Replayed with geth v1.17.7 on 4 October 2026.*
+*Each row links one replayed transaction. Its gas values are from that transaction. Ratio ranges cover the transactions we replayed for that row. Replayed with geth v1.17.7.*
 
 The increases follow storage writes, with each new slot adding about 87,920 gas more. The daily dividend of BUIDL, BlackRock's tokenized money market fund, is [one `bulkIssuance` call](https://etherscan.io/tx/0x2ded00f9bfd5639fe1e568d0c843437d65e337b72449a892ce7da29bd5d18800) to 33 holders that creates 69 new storage slots. BUIDL's compliance contract takes 66 of them for its issuance log, two per holder for each dividend. Updating one log entry per holder in place would price those writes as writes to an existing slot: 12,100 gas against 97,920 for a new one.
 
 The block replay shows the base fee moving as well. The median block's execution gas rises 23%, because EIP-8038 makes writes and cold access more expensive and [EIP-7778](https://eips.ethereum.org/EIPS/eip-7778) stops refunds from reducing a block's counted gas. Counting state gas, users pay for 1.75 times as much gas in the median block. Forty of the 48 blocks land above the 30M target, half the limit, up from 25 today, which pushes the base fee up about 4% per block on average. Five of the blocks would no longer fit under 60M.
 
-At 60M the fork raises users' costs. How far validators take the gas limit after the fork decides whether it ends up cheaper. Dollar figures are scenarios on top of this. Taking the 2026 median gas price of 0.683 gwei (billionths of an ETH) and ETH at $2,110, a transaction at 2.44 times the gas breaks even once the gas price falls to 0.28 gwei. At 200M, with prices falling in proportion to 0.205 gwei, seven of the eight rows in the table cost less than today. ETH to a fresh address is the exception, at $0.089 against $0.030 today.
+At 60M the fork raises users' costs. How far validators take the gas limit after the fork decides whether it ends up cheaper.
+
+*Cost scenarios: taking the 2026 median gas price of 0.683 gwei (billionths of an ETH) and ETH at $2,110, a transaction at 2.44 times the gas breaks even once the gas price falls to 0.28 gwei. At 200M, with prices falling in proportion to 0.205 gwei, seven of the eight rows in the table cost less than today. ETH to a fresh address is the exception, at $0.089 against $0.030 today.*
 
 ## Speed and finality
 
 **In short**
 
 - **Bank treasury:** the Fast Confirmation Rule confirms a block within about one slot, with no fork needed. Finality itself takes about 15 minutes today.
-- **FMI:** 10-second slots, considered for Hegotá, shorten the wait for inclusion. Finality in seconds is research, aimed at the fork after Hegotá.
+- **FMI:** 10-second slots, considered for Hegotá, shorten the wait for inclusion. A new consensus model is the leading candidate for I*, the fork that follows Hegotá. It should cut finality from about 15 minutes to 4 minutes or less.
 - **Custodian:** No material change.
 - **Transfer agent:** No material change.
 - **Stablecoin issuer:** No material change.
 - **Staking provider:** No material change.
 
-Slots have been 12 seconds long since the Merge. Finality takes about 15 minutes ([Vitalik Buterin's notes](https://notes.ethereum.org/@vbuterin/single_slot_finality)). A treasury desk that settles on finality waits that long today. The [Fast Confirmation Rule](https://fastconfirm.it/) needs no fork. It was [merged into the consensus specifications](https://github.com/ethereum/consensus-specs/pull/4747) in April. A client running it confirms a block within about one slot, as long as messages reach validators on time. The client returns that block for the `safe` block tag. When messages arrive late, a confirmed block can still be reorged without any validator being slashed.
+Slots have been 12 seconds long since the Merge. Finality takes about 15 minutes ([Vitalik Buterin's notes](https://notes.ethereum.org/@vbuterin/single_slot_finality)). A treasury desk that settles on finality waits that long today. The [Fast Confirmation Rule](https://fastconfirm.it/) needs no fork. It was [merged into the consensus specifications](https://github.com/ethereum/consensus-specs/pull/4747) in April. A client running it confirms a block within about one slot, as long as messages reach validators on time. The client returns that block for the `safe` block tag. When messages arrive late, a confirmed block can still be reorged without any validator being slashed. Settlement policy should use the `finalized` tag when the Fast Confirmation Rule does not meet your risk model.
 
 Quick Slots, considered for Hegotá since 1 October, turns slot length into a setting ([EIP-8198](https://eips.ethereum.org/EIPS/eip-8198)). Gas limits and blob counts scale down per slot with it, which keeps throughput per second constant. The proposed length is 10 seconds ([ACDC #188](https://forkcast.org/artifacts/acdc/2026-10-01_188/key_decisions.json)). The cut from 12 still needs validation before core developers schedule it for Hegotá.
 
-Finality within seconds is still research. The current design separates finality from block production and is aimed at the fork after Hegotá ([protocol priorities](https://blog.ethereum.org/2026/09/07/protocol-priorities)). The [strawmap](https://strawmap.org), a draft roadmap of upcoming forks, puts one-round finality in 2029 or 2030.
+A new consensus model, which separates finality from block production, is the leading candidate for I*, the fork that follows Hegotá ([protocol priorities](https://blog.ethereum.org/2026/09/07/protocol-priorities)). We expect it to cut finality from about 15 minutes to 4 minutes or less. The [strawmap](https://strawmap.org), a draft roadmap of upcoming forks, puts one-round finality in 2029 or 2030.
 
-![A transfer goes from sent, to in a block, to final. The first step takes one slot, 12 seconds today, with 10-second slots under consideration for Hegotá. The second step, finality, takes about 15 minutes today. Research aims for seconds. A bar drawn to scale shows the 12-second slot as a sliver of the 15 minutes.](../assets/posts/2026-10-19-upcoming-eips/settlement-wait.svg)
+![A transfer goes from sent, to in a block, to final. The first step takes one slot, 12 seconds today, with 10-second slots under consideration for Hegotá. The second step, finality, takes about 15 minutes today. A new consensus model, a candidate for the fork that follows Hegotá, should cut it to 4 minutes or less. A bar drawn to scale shows the 12-second slot as a sliver of the 15 minutes.](../assets/posts/2026-10-19-upcoming-eips/settlement-wait.svg)
 
 *Figure 6: what a treasury desk waits for between sending a transfer and finality.*
 
@@ -247,7 +256,7 @@ Statuses are as of 6 October 2026, from forkcast and the meta EIPs for each fork
 
 | Firm | Glamsterdam, December 2026 | Hegotá, 2027 |
 | - | - | - |
-| Bank treasury | At the 60M gas limit, costs rise. At 200M, seven of the eight replayed transactions cost less than today. | An account can choose its own signature scheme. Counterparties and amounts remain public. |
+| Bank treasury | A transaction sent with a gas limit from before the fork can run out of gas. Gas limits in gateway and custody signing policies need updating before December. | An account can choose its own signature scheme. Counterparties and amounts remain public. |
 | FMI | A slot can carry a beacon block with no executed payload. Settlement monitors have to wait for the payload. | A committee of validators can force waiting public transactions into the next block. |
 | Custodian | Gas estimates need a state gas dimension, with no hard-coded 21,000 limit. A dust balance keeps a deposit address refill at 53,960 gas against 140,264. | Frame transactions move signing policy into account code. A required assertion frame (considered) would have prevented some hacks in the past. |
 | Transfer agent | A dividend run that writes new storage slots for each holder used about 2.4 times today's gas in our replay. Entries updated in place cost 12,100 gas per write against 97,920. | A fund can pay gas for an investor's transfer through frame transactions. |

@@ -34,7 +34,7 @@
 <path class="arrow" d="M630 118 L836 118" marker-end="url(#a)"/>
 <text x="733" y="106" text-anchor="middle" class="n">finality</text>
 <text x="733" y="138" text-anchor="middle" class="m">about 15 minutes today</text>
-<text x="733" y="153" text-anchor="middle" class="m">seconds in research</text>
+<text x="733" y="153" text-anchor="middle" class="m">4 min or less, candidate for I*</text>
 
 <!-- today, drawn to scale: 15 minutes across 960 px -->
 <text x="60" y="246" class="k">today drawn to scale</text>
