@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 390" width="760" height="390" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:12px}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<!-- the fund and its public token -->
+<rect x="570" y="20" width="170" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="655" y="44" text-anchor="middle" class="n">Fund</text>
+<text x="655" y="62" text-anchor="middle" class="m">reinvests income daily</text>
+
+<rect x="570" y="130" width="170" height="64" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="655" y="158" text-anchor="middle" class="n">Fund's public token</text>
+<text x="655" y="177" text-anchor="middle" class="m">its compliance rules</text>
+
+<path d="M655 76 L655 124" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="645" y="105" text-anchor="end" class="m">daily reinvestment</text>
+
+<!-- the investor -->
+<rect x="20" y="130" width="190" height="64" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="115" y="158" text-anchor="middle" class="n">Investor</text>
+<text x="115" y="177" text-anchor="middle" class="m">wallet and custodian's signer</text>
+
+<!-- the pool -->
+<rect x="320" y="130" width="160" height="64" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="400" y="158" text-anchor="middle" class="n">Pool</text>
+<text x="400" y="177" text-anchor="middle" class="m">holds the fund's token</text>
+
+<path d="M210 162 L314 162" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="265" y="138" text-anchor="middle" class="m">transfer and</text>
+<text x="265" y="153" text-anchor="middle" class="m">withdraw proofs</text>
+
+<path d="M480 162 L564 162" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="525" y="138" text-anchor="middle" class="m">transferFrom,</text>
+<text x="525" y="153" text-anchor="middle" class="m">transfer</text>
+
+<!-- the transfer agent -->
+<rect x="300" y="290" width="200" height="60" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="400" y="316" text-anchor="middle" class="n">Transfer agent</text>
+<text x="400" y="335" text-anchor="middle" class="m">keeps the register of record</text>
+
+<path d="M370 290 L370 200" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="360" y="232" text-anchor="end" class="m">hand-out and claim proofs</text>
+<text x="360" y="248" text-anchor="end" class="m">daily deposit and withdrawal</text>
+<text x="360" y="264" text-anchor="end" class="m">attestation root</text>
+
+<path d="M430 194 L430 284" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#a)"/>
+<text x="440" y="232" class="n">register feed</text>
+<text x="440" y="248" class="m">encrypted to the agent,</text>
+<text x="440" y="264" class="m">checked by the proof</text>
+
+<line x1="20" y1="372" x2="740" y2="372" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

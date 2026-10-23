@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:12px}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<!-- the sender and the pool -->
+<rect x="20" y="150" width="130" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="85" y="183" text-anchor="middle" class="n">Sender's wallet</text>
+
+<rect x="250" y="150" width="90" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="295" y="183" text-anchor="middle" class="n">Pool</text>
+
+<path d="M150 178 L244 178" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="197" y="168" text-anchor="middle" class="m">one proof</text>
+
+<!-- three views -->
+<rect x="560" y="30" width="180" height="64" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="650" y="58" text-anchor="middle" class="n">Public observer</text>
+<text x="650" y="77" text-anchor="middle" class="m">a transfer happened</text>
+
+<rect x="560" y="146" width="180" height="64" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="650" y="174" text-anchor="middle" class="n">Recipient</text>
+<text x="650" y="193" text-anchor="middle" class="m">its own note</text>
+
+<rect x="560" y="262" width="180" height="64" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="650" y="290" text-anchor="middle" class="n">Transfer agent</text>
+<text x="650" y="309" text-anchor="middle" class="m">both new notes</text>
+
+<path d="M340 178 L380 178" fill="none" stroke="#0A0A0A" stroke-width="1.4"/>
+<path d="M380 178 L380 62 L554 62" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M380 178 L554 178" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M380 178 L380 294 L554 294" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+
+<text x="467" y="52" text-anchor="middle" class="m">commitments, nullifiers</text>
+<text x="467" y="153" text-anchor="middle" class="m">recipient payload,</text>
+<text x="467" y="168" text-anchor="middle" class="m">encrypted to the recipient</text>
+<text x="467" y="254" text-anchor="middle" class="m">register feed,</text>
+<text x="467" y="269" text-anchor="middle" class="m">encrypted to the agent,</text>
+<text x="467" y="284" text-anchor="middle" class="m">checked by the proof</text>
+
+<line x1="20" y1="344" x2="740" y2="344" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>

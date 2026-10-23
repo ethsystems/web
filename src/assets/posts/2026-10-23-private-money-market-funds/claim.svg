@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 392" width="760" height="392" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:12px}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+
+<!-- participants -->
+<rect x="25" y="20" width="170" height="44" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="110" y="47" text-anchor="middle" class="n">Agent's HSM</text>
+
+<rect x="295" y="20" width="170" height="44" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="380" y="47" text-anchor="middle" class="n">Transfer agent</text>
+
+<rect x="565" y="20" width="170" height="44" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="650" y="47" text-anchor="middle" class="n">Pool</text>
+
+<!-- lifelines -->
+<g stroke="#0A0A0A" stroke-opacity="0.25" stroke-width="1.2" stroke-dasharray="4 4">
+  <line x1="110" y1="64" x2="110" y2="360"/>
+  <line x1="380" y1="64" x2="380" y2="360"/>
+  <line x1="650" y1="64" x2="650" y2="360"/>
+</g>
+
+<!-- 1. open the note -->
+<path d="M380 92 L430 92 L430 114 L386 114" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="440" y="100" class="m">open the target note</text>
+<text x="440" y="115" class="m">from the register feed</text>
+
+<!-- 2. the plan to the HSM -->
+<path d="M380 160 L116 160" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="245" y="150" text-anchor="middle" class="m">claim-path plan (freeze in place)</text>
+
+<!-- 3. the signature back -->
+<path d="M110 206 L374 206" fill="none" stroke="#0A0A0A" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#a)"/>
+<text x="245" y="196" text-anchor="middle" class="m">signature with the claim key</text>
+
+<!-- 4. the proof to the pool -->
+<path d="M380 252 L644 252" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="515" y="242" text-anchor="middle" class="m">proof, through a private channel</text>
+
+<!-- 5. the pool verifies it -->
+<rect x="560" y="268" width="180" height="30" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="650" y="287" text-anchor="middle" class="m">verified like any transfer</text>
+
+<!-- 6. later -->
+<path d="M380 342 L644 342" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="515" y="318" text-anchor="middle" class="m">later: release, or seize</text>
+<text x="515" y="333" text-anchor="middle" class="m">to a beneficiary</text>
+
+<line x1="20" y1="376" x2="740" y2="376" stroke="#0A0A0A" stroke-opacity="0.12"/>
+</svg>
