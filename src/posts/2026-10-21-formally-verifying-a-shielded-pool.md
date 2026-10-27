@@ -2,7 +2,7 @@
 layout: post
 title: "Formally verifying a shielded pool: from spec to bytecode"
 description: "We took our shielded pool and pushed formal verification from the written spec down to the bytecode on a testnet: what it bought, what it cost, and where it stopped."
-date: 2026-10-27 10:00:00 +0100
+date: 2026-10-27 12:00:00 +0100
 author: "Oskar"
 image: ../assets/posts/2026-10-21-formally-verifying-a-shielded-pool/hero.png
 tags:
