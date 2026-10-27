@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 450" width="960" height="450" font-family="Geist, 'Liberation Sans', Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">The gap between the contract and the model, and the span across it</title>
+<desc id="d">Two piers with a span between them. On the left, the contract as it runs, in Solidity on the EVM. On the right, the model: three operations over lists and natural numbers. The span between them is a solid line, the composition lemma we proved: if all three premises hold, this withdraw lands in the model. Three supports hang from the span, drawn as thin grey lines that stop in mid-air, one per premise: the contract meets its post-conditions, the circuits say what we proved they say, and the hidden inputs can be recovered from an accepted proof. In the gap below them, what the model leaves out and the contract still has: loops, fixed-width words, an external verifier, an external hash, a Merkle tree updated in place, callers, gas and an owner.</desc>
+<text x="60" y="24" font-size="11.5" font-weight="600" letter-spacing="1.5" fill="#5A5347">ONE WITHDRAW, FROM THE CONTRACT TO THE MODEL</text>
+<rect x="60" y="56" width="170" height="104" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="74" y="82" font-size="16" font-weight="600" fill="#0A0A0A">The contract</text>
+<text x="74" y="104" font-size="13.5" fill="#5A5347">Solidity,</text>
+<text x="74" y="121" font-size="13.5" fill="#5A5347">on the EVM</text>
+<rect x="730" y="56" width="170" height="104" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="744" y="82" font-size="16" font-weight="600" fill="#0A0A0A">The model</text>
+<text x="744" y="104" font-size="13.5" fill="#5A5347">three operations</text>
+<text x="744" y="121" font-size="13.5" fill="#5A5347">over lists and</text>
+<text x="744" y="138" font-size="13.5" fill="#5A5347">natural numbers</text>
+<line x1="230" y1="166" x2="230" y2="350" stroke="#5A5347" stroke-width="0.8" stroke-dasharray="2 3"/>
+<line x1="730" y1="166" x2="730" y2="350" stroke="#5A5347" stroke-width="0.8" stroke-dasharray="2 3"/>
+<line x1="230" y1="108" x2="730" y2="108" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="480" y="96" font-size="12.5" fill="#5A5347" text-anchor="middle">proved: if all three hold, this withdraw lands in the model</text>
+<line x1="330" y1="110" x2="330" y2="182" stroke="#5A5347" stroke-width="1.4"/><circle cx="330" cy="185" r="3" fill="none" stroke="#5A5347" stroke-width="1.2"/>
+<text x="330" y="205" font-size="12" fill="#5A5347" text-anchor="middle">the contract meets</text>
+<text x="330" y="221" font-size="12" fill="#5A5347" text-anchor="middle">its post-conditions</text>
+<line x1="480" y1="110" x2="480" y2="182" stroke="#5A5347" stroke-width="1.4"/><circle cx="480" cy="185" r="3" fill="none" stroke="#5A5347" stroke-width="1.2"/>
+<text x="480" y="205" font-size="12" fill="#5A5347" text-anchor="middle">the circuits say what</text>
+<text x="480" y="221" font-size="12" fill="#5A5347" text-anchor="middle">we proved they say</text>
+<line x1="630" y1="110" x2="630" y2="182" stroke="#5A5347" stroke-width="1.4"/><circle cx="630" cy="185" r="3" fill="none" stroke="#5A5347" stroke-width="1.2"/>
+<text x="630" y="205" font-size="12" fill="#5A5347" text-anchor="middle">the hidden inputs can be</text>
+<text x="630" y="221" font-size="12" fill="#5A5347" text-anchor="middle">recovered from an</text>
+<text x="630" y="237" font-size="12" fill="#5A5347" text-anchor="middle">accepted proof</text>
+<text x="60" y="205" font-size="11.5" font-weight="600" letter-spacing="1.5" fill="#5A5347">THREE PREMISES,</text>
+<text x="60" y="221" font-size="11.5" font-weight="600" letter-spacing="1.5" fill="#5A5347">EACH ONE ASSUMED</text>
+<text x="480" y="292" font-size="12.5" fill="#5A5347" text-anchor="middle">the gap is everything the model leaves out:</text>
+<text x="480" y="316" font-size="13.5" fill="#0A0A0A" text-anchor="middle">loops &#160;&#183;&#160; fixed-width words &#160;&#183;&#160; an external verifier &#160;&#183;&#160; an external hash</text>
+<text x="480" y="336" font-size="13.5" fill="#0A0A0A" text-anchor="middle">a Merkle tree updated in place &#160;&#183;&#160; callers &#160;&#183;&#160; gas &#160;&#183;&#160; an owner</text>
+<text x="60" y="394" font-size="13" fill="#5A5347">Darker fill is proved, lighter fill is checked. A thin grey line that stops short is assumed: written and named, and not proved for the production system.</text>
+<text x="60" y="416" font-size="13" fill="#5A5347">A toy instance shows the three premises can hold at once. Closing the gap takes a post-condition for every entry point, over the whole state space.</text>
+</svg>

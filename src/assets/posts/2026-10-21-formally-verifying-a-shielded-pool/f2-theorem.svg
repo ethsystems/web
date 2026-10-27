@@ -1,0 +1,73 @@
+<svg id="fig-hood-theorem" class="anim" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" width="1000" height="640" font-family="Geist, 'Liberation Sans', Arial, sans-serif" role="img">
+<style>
+#fig-hood-theorem .t{fill:#0A0A0A;font-size:17px;font-weight:600}
+#fig-hood-theorem .n{fill:#0A0A0A;font-size:15px;font-weight:600}
+#fig-hood-theorem .m{fill:#5A5347;font-size:14px}
+#fig-hood-theorem .e{fill:#0A0A0A;font-size:15px}
+#fig-hood-theorem .g{fill:#5A5347;font-size:14px;font-style:italic}
+#fig-hood-theorem .c{fill:#0A0A0A;font-family:'Geist Mono', 'Liberation Mono', 'Noto Sans Mono', ui-monospace, monospace;font-size:13px;white-space:pre;font-variant-ligatures:none;font-feature-settings:'liga' 0,'calt' 0}
+#fig-hood-theorem .cl{fill:#0A0A0A;font-family:'Geist Mono', 'Liberation Mono', 'Noto Sans Mono', ui-monospace, monospace;font-size:14.5px;white-space:pre;font-variant-ligatures:none;font-feature-settings:'liga' 0,'calt' 0}
+#fig-hood-theorem .cb{fill:#0A0A0A;font-family:'Geist Mono', 'Liberation Mono', 'Noto Sans Mono', ui-monospace, monospace;font-size:13px;font-weight:700;white-space:pre;font-variant-ligatures:none;font-feature-settings:'liga' 0,'calt' 0}
+#fig-hood-theorem .cm{fill:#5A5347;font-family:'Geist Mono', 'Liberation Mono', 'Noto Sans Mono', ui-monospace, monospace;font-size:13px;white-space:pre;font-variant-ligatures:none;font-feature-settings:'liga' 0,'calt' 0}
+#fig-hood-theorem .s1{animation:fig-step-on .4s 0.4s both}
+#fig-hood-theorem .s2{animation:fig-step-on .4s 1.3s both}
+#fig-hood-theorem .s3{animation:fig-step-on .4s 2.2s both}
+#fig-hood-theorem .s4{animation:fig-step-on .4s 3.1s both}
+#fig-hood-theorem .s5{animation:fig-step-on .4s 4.0s both}
+#fig-hood-theorem .s6{animation:fig-step-on .4s 4.9s both}
+@keyframes fig-step-on{from{opacity:.12}to{opacity:1}}
+#fig-hood-theorem.armed:not(.in-view) :is(.s1,.s2,.s3,.s4,.s5,.s6){animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){#fig-hood-theorem :is(.s1,.s2,.s3,.s4,.s5,.s6){animation:none}}
+</style>
+<defs>
+  <marker id="fig-hood-theorem-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+<text x="30" y="32" class="t">No double spend, as Lean states it</text>
+<text x="30" y="54" class="m">shielded-pool-model 35965d9 · LeanShieldedPool/Statements/L3.lean:58-60</text>
+<rect x="30" y="72" width="940" height="292" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<g class="s1">
+<text x="134" y="108" class="cl" xml:space="preserve">def noDoubleSpend (P : PrimSpec) : Prop :=</text>
+<text x="134" y="146" class="cl" xml:space="preserve">∀ (sup : P.Token → Prop)</text>
+<text x="134" y="184" class="cl" xml:space="preserve">  (txs : List (Tx P))</text>
+<text x="134" y="222" class="cl" xml:space="preserve">  (st : St P),</text>
+<text x="134" y="260" class="cl" xml:space="preserve">  Run sup txs st →</text>
+<text x="134" y="298" class="cl" xml:space="preserve">  CryptoHyp P txs →</text>
+<text x="134" y="336" class="cl" xml:space="preserve">  noteSpentAtMostOnce txs</text>
+<text x="524" y="108" class="e">The claim, for any hash functions P:</text>
+</g>
+<g class="s2">
+<line x1="46" y1="123" x2="954" y2="123" stroke="#0A0A0A" stroke-opacity="0.18"/>
+<text x="50" y="146" class="g">for every</text>
+<text x="524" y="146" class="e">for every set of supported tokens,</text>
+<text x="524" y="184" class="e">every history of deposits, transfers and withdrawals,</text>
+<text x="524" y="222" class="e">and every end state:</text>
+</g>
+<g class="s3">
+<line x1="46" y1="237" x2="954" y2="237" stroke="#0A0A0A" stroke-opacity="0.18"/>
+<text x="50" y="260" class="g">if</text>
+<text x="524" y="260" class="e">if the pool, starting empty, accepts txs and ends in st,</text>
+<text x="524" y="298" class="e">and no two notes or keys in txs collide (the hash assumption),</text>
+</g>
+<g class="s4">
+<line x1="46" y1="313" x2="954" y2="313" stroke="#0A0A0A" stroke-opacity="0.18"/>
+<text x="50" y="336" class="g">then</text>
+<text x="524" y="336" class="e" font-weight="600">then no note in txs is spent twice.</text>
+</g>
+<g class="s5">
+<text x="30" y="398" class="n">What the proof rests on</text>
+<rect x="30" y="410" width="3" height="50" fill="#0A0A0A"/>
+<text x="46" y="428" class="cm" xml:space="preserve">#print axioms noDoubleSpend_proof</text>
+<text x="46" y="448" class="c" xml:space="preserve">'LeanShieldedPool.noDoubleSpend_proof' depends on axioms: [propext, Classical.choice, Quot.sound]</text>
+<text x="46" y="482" class="m">Lean's three standard axioms, and nothing else. The hash assumption is a premise of the sentence above.</text>
+</g>
+<g class="s6">
+<text x="30" y="520" class="n">The same check on a proof with a hole in it</text>
+<rect x="30" y="532" width="3" height="70" fill="#0A0A0A"/>
+<text x="46" y="550" class="cm" xml:space="preserve">theorem cheat (P : PrimSpec) : noDoubleSpend P := by sorry</text>
+<text x="46" y="570" class="c" xml:space="preserve">'cheat' depends on axioms: [propext, sorryAx]</text>
+<text x="46" y="590" class="cb" xml:space="preserve">$ bash scripts/gate.sh   →   GATE FAIL: sorry</text>
+</g>
+<text x="30" y="628" class="m">Darker fill: proved, a Lean theorem over every history the model allows.</text>
+</svg>

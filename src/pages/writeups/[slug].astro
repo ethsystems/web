@@ -167,6 +167,19 @@ const postSchema = blogPostingSchema({
   :global(.post-prose .figure-narrow img) {
     width: 40%;
   }
+  /* Dense figures: on narrow screens, scroll sideways instead of shrinking
+     the labels below legibility. */
+  :global(.post-prose .figure-scroll) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (max-width: 640px) {
+    :global(.post-prose .figure-scroll img),
+    :global(.post-prose .figure-scroll svg.anim) {
+      width: 800px;
+      max-width: none;
+    }
+  }
   :global(.post-prose a) {
     color: var(--color-cta);
     text-decoration: none;
@@ -179,6 +192,7 @@ const postSchema = blogPostingSchema({
   :global(.post-prose code) {
     font-family: var(--font-mono);
     font-size: 0.9em;
+    overflow-wrap: anywhere;
     background: var(--color-bg-subtle);
     padding: 0.05em 0.4em;
     border-radius: var(--radius-sm);
