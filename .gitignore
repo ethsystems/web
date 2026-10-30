@@ -5,6 +5,7 @@ node_modules/
 dist/
 .astro/
 src/data/graph.json
+src/data/drill.json
 
 # Local tooling
 .claude/worktrees/

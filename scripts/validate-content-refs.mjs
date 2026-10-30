@@ -246,7 +246,7 @@ async function main() {
       '  Fix by aligning primary_domain to a domains/*.md id or title, or',
     );
     console.error(
-      '  add an alias in PRIMARY_DOMAIN_ALIASES (src/lib/domain.ts + this script).',
+      '  add an alias in PRIMARY_DOMAIN_ALIASES (src/lib/domain.ts, this script, scripts/build-drill.mjs).',
     );
   }
 

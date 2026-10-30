@@ -35,7 +35,8 @@ const DISPLAY_ORDER: string[] = [
 ];
 
 /** Abbreviations / messy primary_domain values whose normalised form
- *  doesn't match a domain id or title. Maps to a domain id. */
+ *  doesn't match a domain id or title. Maps to a domain id. Mirrored in
+ *  scripts/validate-content-refs.mjs and scripts/build-drill.mjs. */
 const PRIMARY_DOMAIN_ALIASES: Record<string, string> = {
   identity: 'identity-compliance',
   compliance: 'identity-compliance',

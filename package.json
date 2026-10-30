@@ -7,7 +7,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "build:graph": "node scripts/build-graph.mjs",
+    "build:graph": "node scripts/build-graph.mjs && node scripts/build-drill.mjs",
     "predev": "npm run build:graph",
     "dev": "astro dev --host",
     "prebuild": "node scripts/validate-content-refs.mjs && npm run build:graph",

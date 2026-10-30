@@ -32,7 +32,7 @@ const CONTENT_SUBMODULE = join(__dirname, "..", "content");
 const candidates = [process.env.MAP_PATH, CONTENT_SUBMODULE].filter(
   Boolean,
 );
-const REPO_ROOT = candidates.find((p) => existsSync(join(p, "patterns")));
+export const REPO_ROOT = candidates.find((p) => existsSync(join(p, "patterns")));
 if (!REPO_ROOT) {
   throw new Error(
     `No ethsystems/map content directory found. Tried:\n` +
@@ -42,7 +42,7 @@ if (!REPO_ROOT) {
       `(or set MAP_PATH to a local ethsystems/map checkout).`,
   );
 }
-const OUTPUT_DIR = join(__dirname, "..", "src", "data");
+export const OUTPUT_DIR = join(__dirname, "..", "src", "data");
 const OUTPUT_PATH = join(OUTPUT_DIR, "graph.json");
 const GLOSSARY_OUTPUT_PATH = join(OUTPUT_DIR, "glossary.json");
 

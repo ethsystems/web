@@ -1,0 +1,88 @@
+---
+/*
+ * /drilldown/ — domain > use case > design. One static page; the
+ * path lives in the hash, so every pick links without a page per path.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { Drilldown, type Writeup } from '../components/explore/Drilldown';
+import { jekyllSlugify } from '../lib/jekyllSlug';
+import { isPublished } from '../lib/posts';
+
+// Newest first, so the panel's "Written up" keeps the newest among equals.
+const writeups: Writeup[] = (await getCollection('posts'))
+  .filter((p) => isPublished(p) && p.data.map_refs?.length)
+  .map((p) => ({ p, date: new Date(p.data.date) }))
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  .map(({ p, date }) => ({
+    slug: jekyllSlugify(p.data.title),
+    title: p.data.title,
+    description: p.data.description ?? '',
+    date: date.toISOString().slice(0, 10),
+    about: p.data.map_refs!,
+  }));
+
+const description =
+  'Start from a business line and drill down: the use cases in it, and the designs that solve them.';
+---
+
+<BaseLayout title="Drilldown" description={description} current="/explore/">
+  <PageHeader
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Explore', href: '/explore/browse/' },
+      { label: 'Drilldown' },
+    ]}
+    title="From a business line to the design space"
+    lede={description}
+  />
+
+  <div class="explore-nav">
+    <div class="container">
+      <a href="/map/" class="explore-tab">Galaxy</a>
+      <a href="/explore/tree/" class="explore-tab">Tree</a>
+      <a href="/explore/browse/" class="explore-tab">Browse</a>
+      <a href="/drilldown/" class="explore-tab active">Drilldown</a>
+    </div>
+  </div>
+
+  <section class="drilldown-section">
+    <div class="container">
+      <Drilldown client:only="react" writeups={writeups} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .explore-nav {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+  .explore-nav .container {
+    display: flex;
+    gap: 0.25rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0;
+  }
+  .explore-tab {
+    padding: 0.7rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color var(--duration-fast) var(--easing-soft),
+      border-color var(--duration-fast) var(--easing-soft);
+  }
+  .explore-tab:hover { color: var(--color-primary); }
+  .explore-tab.active {
+    color: var(--color-cta);
+    border-bottom-color: var(--color-cta);
+  }
+  .drilldown-section {
+    background: var(--color-bg);
+    padding-block: 2.5rem 6rem;
+  }
+</style>
