@@ -126,6 +126,9 @@ const postSchema = blogPostingSchema({
 
   /* Long-form prose styling — slightly more comfortable measure than
      the standard .prose used on detail pages. */
+  :global(.post-prose [id]) {
+    scroll-margin-top: calc(var(--nav-height) + 1rem);
+  }
   :global(.post-prose) {
     font-size: 1.02rem;
     line-height: 1.75;

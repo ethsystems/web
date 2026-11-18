@@ -357,6 +357,21 @@ section.block {
   color: var(--color-primary);
   font-weight: 600;
 }
+/* Opt-in sticky header for a post table (wrap it in <div class="table-sticky">).
+   The scroll-box display above traps position: sticky inside the table, so the
+   table renders as a normal table and the header row sticks. Wide screens: it
+   sticks under the sticky nav bar as the page scrolls. Narrow screens: the
+   wrapper becomes the scroll box in both directions and the header sticks to
+   its top. The first column also sticks as the table scrolls sideways. */
+.prose .table-sticky table { display: table; overflow: visible; }
+.prose .table-sticky thead th { position: sticky; top: var(--nav-height); z-index: 1; }
+.prose .table-sticky th:first-child,
+.prose .table-sticky td:first-child { position: sticky; left: 0; z-index: 1; background: var(--paper); }
+.prose .table-sticky thead th:first-child { z-index: 2; background: var(--color-bg-subtle); }
+@media (max-width: 767px) {
+  .prose .table-sticky { overflow: auto; max-height: 70vh; -webkit-overflow-scrolling: touch; }
+  .prose .table-sticky thead th { top: 0; }
+}
 
 /* ───── protocol-level tag ─────
    Inline chip rendered by `lib/render.ts#tagifyProtocolSteps()` for

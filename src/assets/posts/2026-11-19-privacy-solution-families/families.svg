@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1140" width="760" height="1140" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:12px}
+.t{fill:#5A5347;font-size:12px;font-weight:600;letter-spacing:1.5px}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+<text x="20" y="20" class="t">A SHIELDED POOL</text>
+<rect x="20" y="32" width="720" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="380" y="56" text-anchor="middle" class="n">Pool contract on Ethereum</text>
+<text x="380" y="74" text-anchor="middle" class="m">holds the bank's deposit tokens</text>
+<rect x="20" y="124" width="350" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="195" y="148" text-anchor="middle" class="n">Bank</text>
+<text x="195" y="166" text-anchor="middle" class="m">reads notes by selective disclosure</text>
+<path d="M195 124 L195 88" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="390" y="124" width="350" height="56" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="565" y="148" text-anchor="middle" class="n">Relayer</text>
+<text x="565" y="166" text-anchor="middle" class="m">submits payments and pays gas</text>
+<path d="M565 124 L565 88" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="20" y="202" class="m">Clients hold notes in the pool.</text>
+<path d="M20 218 L740 218" fill="none" stroke="#5A5347" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="20" y="252" class="t">A PRIVACY L2</text>
+<rect x="20" y="264" width="720" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="380" y="288" text-anchor="middle" class="n">Bridge contract on Ethereum</text>
+<text x="380" y="306" text-anchor="middle" class="m">holds the bridged deposit tokens</text>
+<rect x="20" y="356" width="350" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="195" y="380" text-anchor="middle" class="n">Bank</text>
+<text x="195" y="398" text-anchor="middle" class="m">reads its records by selective disclosure</text>
+<path d="M195 356 L195 320" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="390" y="356" width="350" height="56" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="565" y="380" text-anchor="middle" class="n">Sequencer</text>
+<text x="565" y="398" text-anchor="middle" class="m">puts payments in order</text>
+<path d="M565 356 L565 320" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="20" y="434" class="m">Accounts on the L2 stay sealed.</text>
+<path d="M20 450 L740 450" fill="none" stroke="#5A5347" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="20" y="484" class="t">AN FHE PRODUCT</text>
+<rect x="20" y="496" width="720" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="380" y="520" text-anchor="middle" class="n">Token contract on Ethereum</text>
+<text x="380" y="538" text-anchor="middle" class="m">keeps balances encrypted</text>
+<rect x="20" y="588" width="350" height="56" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="195" y="612" text-anchor="middle" class="n">FHE network</text>
+<text x="195" y="630" text-anchor="middle" class="m">computes on encrypted balances</text>
+<path d="M195 552 L195 588" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="390" y="588" width="350" height="56" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="565" y="612" text-anchor="middle" class="n">Key committee</text>
+<text x="565" y="630" text-anchor="middle" class="m">decrypts on request</text>
+<path d="M565 552 L565 588" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="20" y="666" class="m">Payer and payee addresses stay public.</text>
+<path d="M20 682 L740 682" fill="none" stroke="#5A5347" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="20" y="716" class="t">A TEE PRODUCT</text>
+<rect x="20" y="728" width="720" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="380" y="752" text-anchor="middle" class="n">Settlement contract on Ethereum</text>
+<text x="380" y="770" text-anchor="middle" class="m">checks the enclave's result</text>
+<rect x="20" y="820" width="350" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="195" y="844" text-anchor="middle" class="n">Hardware host</text>
+<text x="195" y="862" text-anchor="middle" class="m">the bank or a cloud provider</text>
+<path d="M195 784 L195 820" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="390" y="820" width="350" height="56" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="565" y="844" text-anchor="middle" class="n">Chip maker</text>
+<text x="565" y="862" text-anchor="middle" class="m">vouches for the enclave</text>
+<path d="M565 784 L565 820" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="20" y="898" class="m">Payments are opened inside the enclave.</text>
+<path d="M20 914 L740 914" fill="none" stroke="#5A5347" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="20" y="948" class="t">AN MPC PRODUCT</text>
+<rect x="20" y="960" width="720" height="56" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="380" y="984" text-anchor="middle" class="n">Settlement contract on Ethereum</text>
+<text x="380" y="1002" text-anchor="middle" class="m">checks the nodes' result</text>
+<rect x="205" y="1052" width="350" height="56" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="380" y="1076" text-anchor="middle" class="n">Node operators</text>
+<text x="380" y="1094" text-anchor="middle" class="m">hold shares of each payment and compute together</text>
+<path d="M380 1052 L380 1016" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="20" y="1130" class="m">Payer and payee addresses stay public in most setups.</text>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" width="760" height="290" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" role="img">
+<style>
+.n{fill:#0A0A0A;font-size:14px;font-weight:600}
+.m{fill:#5A5347;font-size:12px}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0A0A0A"/>
+  </marker>
+</defs>
+<rect x="20" y="16" width="720" height="40" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="36" y="41" class="n">Any observer reads</text>
+<text x="450" y="40" text-anchor="middle" class="m" xml:space="preserve"><tspan fill="#8A4B12" font-size="13">●</tspan> payer's address<tspan dx="20" fill="#8A4B12" font-size="13">●</tspan> payee's address<tspan dx="20" fill="#8A4B12" font-size="13">●</tspan> amount<tspan dx="20" fill="#8A4B12" font-size="13">●</tspan> time<tspan dx="20" fill="#8A4B12" font-size="13">●</tspan> earlier payments</text>
+<rect x="20" y="100" width="160" height="60" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="100" y="124" text-anchor="middle" class="n">Manufacturer</text>
+<text x="100" y="141" text-anchor="middle" class="m">pays USD 3.2M</text>
+<rect x="210" y="100" width="150" height="60" rx="6" fill="#ECE8DA" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="285" y="124" text-anchor="middle" class="n">Bank</text>
+<text x="285" y="141" text-anchor="middle" class="m">issues the token</text>
+<rect x="390" y="100" width="160" height="60" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="470" y="124" text-anchor="middle" class="n">Ethereum</text>
+<text x="470" y="141" text-anchor="middle" class="m">the bank's deposit token</text>
+<rect x="580" y="100" width="160" height="60" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="660" y="124" text-anchor="middle" class="n">Supplier</text>
+<text x="660" y="141" text-anchor="middle" class="m">client of the bank</text>
+<path d="M180 130 L204 130" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M360 130 L384 130" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M550 130 L574 130" fill="none" stroke="#0A0A0A" stroke-width="1.4" marker-end="url(#a)"/>
+<circle cx="470" cy="222" r="22" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="470" y="270" text-anchor="middle" class="m">competitor or anyone</text>
+<path d="M470 200 L470 160" fill="none" stroke="#5A5347" stroke-width="1.4" stroke-dasharray="4 4"/>
+<rect x="210" y="192" width="150" height="60" rx="6" fill="#FBF9F1" stroke="#0A0A0A" stroke-width="1.4"/>
+<text x="285" y="216" text-anchor="middle" class="n">Supervisor</text>
+<text x="285" y="233" text-anchor="middle" class="m">must see all of it</text>
+<path d="M285 192 L285 160" fill="none" stroke="#5A5347" stroke-width="1.4" stroke-dasharray="4 4"/>
+</svg>
